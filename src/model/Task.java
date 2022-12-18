@@ -1,5 +1,4 @@
 /**
- * @author Thibault Mayer
  * @file Task.java
  * @date 14/12/2022
  * @brief Use to describe a task

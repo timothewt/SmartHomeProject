@@ -1,5 +1,4 @@
 /**
- * @author Thibault Mayer
  * @file Person.java
  * @date 14/12/2022
  * @brief Person class
@@ -11,6 +10,7 @@ import java.util.ArrayList;
 
 public class Person {
 
+	private String name;
 	private int id;
 	private int maxStamina;
 	private int stamina;
@@ -21,6 +21,7 @@ public class Person {
 	 * Constructors
 	 */
 	public Person()	{
+		this.name = "default";
 		this.id = 0;
 		this.maxStamina = 10;
 		this.stamina = 0;
@@ -28,7 +29,8 @@ public class Person {
 		this.tasks = new ArrayList<Task>();
 	}
 
-	public Person(int id, int maxStamina, ArrayList<Task> tasks) {
+	public Person(String name, int id, int maxStamina, ArrayList<Task> tasks) {
+		this.name = name;
 		this.id = id;
 		this.maxStamina = maxStamina;
 		this.stamina = maxStamina;
@@ -44,10 +46,18 @@ public class Person {
 		this.tasks.add(task);
 	}
 
-
 	/**
 	 * Getters and setters
 	 */
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
 	public int getId() {
 		return id;
 	}

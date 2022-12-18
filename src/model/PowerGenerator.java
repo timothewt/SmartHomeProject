@@ -1,5 +1,4 @@
 /**
- * @author Thibault Mayer
  * @file PowerGenerator.java
  * @date 14/12/2022
  * @brief 

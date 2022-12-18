@@ -1,10 +1,8 @@
 /**
- * @author Thibault Mayer
  * @file Couple.java
  * @date 14/12/2022
  * @brief Use to manipulate people in the House
  */
-
 package model;
 
 import java.util.ArrayList;

@@ -1,13 +1,11 @@
 /**
- * @author Thibault Mayer
  * @file Room.java
  * @date 18/12/2022
  * @brief Class that create rooms
  */
 package model;
 
-import static java.lang.Math.max;
-import static java.lang.Math.min;
+import java.lang.Math;
 
 public class Room {
 
@@ -59,7 +57,7 @@ public class Room {
 			// Loss of humidity and temperature due to non-optimal isolation
 			int humidityChangeSign = this.humidityRate > outsideHumidityRate ? -1 : 1;
 			int temperatureChangeSign = this.temperature > outsideTemperature ? -1 : 1;
-			this.humidityRate = max(min(this.humidityRate + humidityChangeSign * (1 - this.isolationRate) * outsideHumidityRate, 1), 0);
+			this.humidityRate = Math.max(Math.min(this.humidityRate + humidityChangeSign * (1 - this.isolationRate) * outsideHumidityRate, 1), 0);
 			this.temperature = this.temperature + temperatureChangeSign * (1 - this.isolationRate) * outsideTemperature;
 
 		}
@@ -98,7 +96,7 @@ public class Room {
 	}
 
 	public void setHumidityRate(float humidityRate) {
-		this.humidityRate = max(min(humidityRate, 1), 0);
+		this.humidityRate = Math.max(Math.min(humidityRate, 1), 0);
 	}
 
 	public float getIsolationRate() {
@@ -106,7 +104,7 @@ public class Room {
 	}
 
 	public void setIsolationRate(float isolationRate) {
-		this.isolationRate = max(min(isolationRate, 1), 0);
+		this.isolationRate = Math.max(Math.min(isolationRate, 1), 0);
 	}
 
 	public boolean isWindowOpen() {
