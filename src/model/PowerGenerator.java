@@ -4,7 +4,7 @@
  * @date 14/12/2022
  * @brief 
  */
-package main;
+package model;
 
 public class PowerGenerator 
 {

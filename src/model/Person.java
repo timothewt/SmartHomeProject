@@ -4,7 +4,7 @@
  * @date 14/12/2022
  * @brief Person class
  */
-package main;
+package model;
 
 import java.util.ArrayList;
 

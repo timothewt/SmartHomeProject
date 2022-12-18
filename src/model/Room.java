@@ -4,7 +4,7 @@
  * @date 18/12/2022
  * @brief Class that create rooms
  */
-package main;
+package model;
 
 public class Room 
 {

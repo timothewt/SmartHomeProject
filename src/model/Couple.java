@@ -5,7 +5,7 @@
  * @brief Use to manipulate people in the House
  */
 
-package main;
+package model;
 
 import java.util.ArrayList;
 

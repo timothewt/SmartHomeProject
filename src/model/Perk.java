@@ -4,7 +4,7 @@
  * @date 14/12/2022
  * @brief Use to describe a Perk
  */
-package main;
+package model;
 
 public class Perk 
 {

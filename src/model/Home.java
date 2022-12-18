@@ -4,7 +4,7 @@
  * @date 18/12/2022
  * @brief Class that create a Home
  */
-package main;
+package model;
 
 import java.util.ArrayList;
 
