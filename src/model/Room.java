@@ -54,11 +54,11 @@ public class Room
 	{
 		if (this.humidityRate > humidityRate)
 		{
-			this.humidityRate = this.humidityRate + (1-this.isolationRate)*humidityRate;
+			this.humidityRate = this.humidityRate + (1 - this.isolationRate) * humidityRate;
 		}
 		else if (this.humidityRate < humidityRate)
 		{
-			this.humidityRate = this.humidityRate - (1-this.isolationRate)*humidityRate;
+			this.humidityRate = this.humidityRate - (1 - this.isolationRate) * humidityRate;
 		}
 		
 		/*

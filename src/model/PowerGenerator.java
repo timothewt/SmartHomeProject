@@ -9,7 +9,7 @@ package model;
 public class PowerGenerator 
 {
 	/*
-	 * @Attributs
+	 * @Attributes
 	 */
 	private String name;
 	private int installationCost;

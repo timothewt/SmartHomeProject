@@ -13,7 +13,7 @@ public class Couple
 {
 	
 	/*
-	 * @Attributs
+	 * @Attributes
 	 */
 	private int money;
 	private ArrayList<Person> persons;

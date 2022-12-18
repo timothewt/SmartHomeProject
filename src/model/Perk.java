@@ -51,6 +51,54 @@ public class Perk
 	 */
 	public String toString()
     {
-        return "Perk: " + this.name + " ID: " + this.id + " Installation Cost: " + this.installationCost + " Daily Money Cost: " + this.dailyMoneyCost + " Daily Energy Cost " + this.dailyEnergyCost + " isUpgraded " + this.isUpgraded;
+        return "Perk: " + this.name + "\nID: " + this.id + "\nInstallation Cost: " + this.installationCost + "\nDaily Money Cost: " + this.dailyMoneyCost + "\nDaily Energy Cost " + this.dailyEnergyCost + "\nisUpgraded " + this.isUpgraded;
     }
+
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public int getInstallationCost() {
+		return installationCost;
+	}
+
+	public void setInstallationCost(int installationCost) {
+		this.installationCost = installationCost;
+	}
+
+	public int getDailyMoneyCost() {
+		return dailyMoneyCost;
+	}
+
+	public void setDailyMoneyCost(int dailyMoneyCost) {
+		this.dailyMoneyCost = dailyMoneyCost;
+	}
+
+	public int getDailyEnergyCost() {
+		return dailyEnergyCost;
+	}
+
+	public void setDailyEnergyCost(int dailyEnergyCost) {
+		this.dailyEnergyCost = dailyEnergyCost;
+	}
+
+	public boolean isUpgraded() {
+		return isUpgraded;
+	}
+
+	public void setUpgraded(boolean upgraded) {
+		isUpgraded = upgraded;
+	}
 }

@@ -13,7 +13,7 @@ public class Person
 {
 
 	/*
-	 * @Attributs
+	 * @Attributes
 	 */
 	private int id;
 	private int maxStamina;
@@ -62,5 +62,45 @@ public class Person
 	public boolean doTask()
 	{
 		return this.isTasking;
+	}
+
+	public int getId() {
+		return id;
+	}
+
+	public int getMaxStamina() {
+		return maxStamina;
+	}
+
+	public int getStamina() {
+		return stamina;
+	}
+
+	public boolean isTasking() {
+		return isTasking;
+	}
+
+	public ArrayList<Task> getTasks() {
+		return tasks;
+	}
+
+	public void setId(int id) {
+		this.id = id;
+	}
+
+	public void setMaxStamina(int maxStamina) {
+		this.maxStamina = maxStamina;
+	}
+
+	public void setStamina(int stamina) {
+		this.stamina = stamina;
+	}
+
+	public void setTasking(boolean tasking) {
+		isTasking = tasking;
+	}
+
+	public void setTasks(ArrayList<Task> tasks) {
+		this.tasks = tasks;
 	}
 }
