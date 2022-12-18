@@ -11,9 +11,6 @@ import static java.lang.Math.min;
 
 public class Room {
 
-	/*
-	 * Attributes
-	 */
 	private String name;
 	private float heaterTemperature;
 	private boolean isHeaterTurnedOn;
@@ -22,8 +19,8 @@ public class Room {
 	private float isolationRate;
 	private boolean isWindowOpen;
 
-	/*
-	 * @brief Constructors
+	/**
+	 * Constructors
 	 */
 	public Room() {
 		this.heaterTemperature = 0f;
@@ -44,10 +41,10 @@ public class Room {
 		this.isWindowOpen = isWindowOpen;
 	}
 
-	/*
-	 * @brief Updates the room stats according to outsideHumidityRate and the temperature
-	 * @param float outsideHumidityRate : Weather's outsideHumidityRate
-	 * @return void
+	/**
+	 * Used to update the stats of the room at each task
+	 * @param outsideHumidityRate: humidity rate outside the house
+	 * @param outsideTemperature: temperature outside the house
 	 */
 	public void updateStats(float outsideHumidityRate, float outsideTemperature) {
 
@@ -69,6 +66,9 @@ public class Room {
 
 	}
 
+	/**
+	 * Getters and setters
+	 */
 	public float getHeaterTemperature() {
 		return heaterTemperature;
 	}
@@ -98,7 +98,7 @@ public class Room {
 	}
 
 	public void setHumidityRate(float humidityRate) {
-		this.humidityRate = max(min(humidityRate, 1), 0);;
+		this.humidityRate = max(min(humidityRate, 1), 0);
 	}
 
 	public float getIsolationRate() {

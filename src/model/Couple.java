@@ -9,57 +9,41 @@ package model;
 
 import java.util.ArrayList;
 
-public class Couple 
-{
-	
-	/*
-	 * @Attributes
-	 */
+public class Couple {
+
 	private int money;
-	private ArrayList<Person> persons;
-	
-	
-	/*
-	 * @brief Default constructor
+	private final ArrayList<Person> persons;
+
+	/**
+	 * Constructors
 	 */
-	public Couple()
-	{
+	public Couple() {
 		this.money = 500;
 		this.persons = new ArrayList<Person>();
 	}
-	
-	/*
-	 * 
-	 */
-	public Couple(int money, ArrayList<Person> persons)
-	{
+
+	public Couple(int money, ArrayList<Person> persons)	{
 		this.money = money;
 		this.persons = persons;
 	}
 	
-	/*
-	 * @brief add a person to the couple
-	 * @param Task p : The person to add
-	 * @return void
+	/**
+	 * Adds a person to the couple
+	 * @param person : The person to add
 	 */
-	public void addPerson(Person p)
-	{
-		this.persons.add(p);
+	public void addPerson(Person person) {
+		this.persons.add(person);
 	}
-	
-	
-	/*
-	 * Getters and Setters
+
+	/**
+	 * Getter and setter
 	 */
-	public int getMoney() 
-	{
+	public int getMoney() {
 		return money;
 	}
-	public void setMoney(int money) 
-	{
+
+	public void setMoney(int money) {
 		this.money = money;
 	}
-	
-	
-	
+
 }

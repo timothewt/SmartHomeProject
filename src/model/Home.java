@@ -4,16 +4,12 @@
  * @date 18/12/2022
  * @brief Class that create a Home
  */
-package main;
+package model;
 
 import java.util.ArrayList;
 
-public class Home 
-{
+public class Home {
 
-	/*
-	 * Attributs
-	 */
 	private int temperature;
 	private int humidity;
 	private int energy;
@@ -26,30 +22,23 @@ public class Home
 	private ArrayList<PowerGenerator> powerSupply;
 	private Couple couple;
 	
-	/*
-	 * @brief Default constructor
+	/**
+	 * Constructors
 	 */
-	public Home()
-	{
+	public Home() {
 		this.rooms = new ArrayList<Room>();
 		this.temperature = 18;
 		this.humidity = 0;
 		this.energy = 1;
 		this.energyUsed = 0;
-		
 		this.isolationRate = 0.5f;
-		
 		this.isPowered = false;
 		this.powerSupply = new ArrayList<PowerGenerator>();
 		
 		this.couple  = new Couple();
 	}
-	
-	/*
-	 * 
-	 */
-	public Home(int temperature, int humidity, int energy, int energyUsed, float isolationRate, boolean isPowered) 
-	{
+
+	public Home(int temperature, int humidity, int energy, int energyUsed, float isolationRate, boolean isPowered) {
 		this.temperature = temperature;
 		this.humidity = humidity;
 		this.energy = energy;
@@ -59,56 +48,51 @@ public class Home
 		
 		initPowerSupply();
 		initCouple();
-		initRoom();
+		initRooms();
 	}
-	
-	/*
-	 * @brief initialize PowerGenerator
+
+	/**
+	 * Used to initialize the power supplies of the house
 	 */
-	private void initPowerSupply()
-	{
+	private void initPowerSupply() {
 		PowerGenerator linky = new PowerGenerator("Linky", 0, 2, 1);
 		
 		this.powerSupply.add(linky);
 	}
-	/*
-	 * @brief initialize Person in couple
+
+	/**
+	 * Used to initialize the inhabitants of the house
 	 */
-	private void initCouple()
-	{
-		Person jean = new Person(1, 10, 10, false, new ArrayList<Task>());
-		Person marie = new Person(2, 10, 10, false, new ArrayList<Task>());
+	private void initCouple() {
+		Person jean = new Person(1, 10, new ArrayList<Task>());
+		Person marie = new Person(2, 10, new ArrayList<Task>());
 		
 		this.couple.addPerson(jean);
 		this.couple.addPerson(marie);
 	}
-	
-	/*
-	 * initialize Room is rooms
+
+	/**
+	 * Used to initialize the rooms of the house
 	 */
-	private void initRoom()
-	{
-		Room kitchen = new Room(0, 18, 0.2f, 0.5f);
+	private void initRooms() {
+		Room kitchen = new Room();
 		
 		this.rooms.add(kitchen);
 	}
 	
-	/*
-	 * @brief Calculate if the home is still viable or not
-	 * @return boolean 
+	/**
+	 * Tells if the home is still viable or not, used to determine if the player can keep playing
+	 * @return true if the house is still viable, false otherwise.
 	 */
-	public boolean isViable()
-	{
-		if (temperature < 40 && temperature > 10 && humidity < 40)
-			return true;
-		else	
-			return false;
+	public boolean isViable() {
+		return temperature < 40 && temperature > 10 && humidity < 40;
 	}
-	
-	
 
-	public void updateFromWeather()
-	{
+	/**
+	 * Updates all the house elements according to the current weather
+	 * @param weather: weather of the environment
+	 */
+	public void updateFromWeather(Weather weather) {
 		
 	}
 	

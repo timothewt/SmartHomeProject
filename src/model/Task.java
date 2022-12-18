@@ -6,27 +6,21 @@
  */
 package model;
 
-public class Task 
-{
+public class Task {
 
-	/*
-	 * @Attributs
-	 */
-	private int id;
-	private String name;
-	
-	private int staminaCost;
-	private int staminaGain;
-	private int moneyCost;
-	private int moneyGain;
-	private int energyCost;
+	private final int id;
+	private final String name;
+	private final int staminaCost;
+	private final int staminaGain;
+	private final int moneyCost;
+	private final int moneyGain;
+	private final int energyCost;
 	
 	
 	/*
-	 * Default constructor
+	 * Constructor
 	 */
-	public Task()
-	{
+	public Task() {
 		this.id = 0;
 		this.name = "default";
 		this.staminaCost = 0;
@@ -35,27 +29,50 @@ public class Task
 		this.moneyGain = 0;
 		this.energyCost = 0;
 	}
-	
-	/*
-	 * 
-	 */
-	public Task(int id, String name, int staC, int staG, int moneyC, int moneyG, int eC)
-	{
+
+	public Task(int id, String name, int staminaCost, int staminaGain, int moneyCost, int moneyGain, int energyCost) {
 		this.id = id;
 		this.name = name;
-		this.staminaCost = staC;
-		this.staminaGain = staG;
-		this.moneyCost = moneyC;
-		this.moneyGain = moneyG;
-		this.energyCost = eC;
+		this.staminaCost = staminaCost;
+		this.staminaGain = staminaGain;
+		this.moneyCost = moneyCost;
+		this.moneyGain = moneyGain;
+		this.energyCost = energyCost;
 	}
-	
-	/*
-	 * toString method to describe a task
+
+	/**
+	 * Stringifies the task in order to display it.
+	 * @return a string indicating all the information of the task
 	 */
-	public String toString()
-    {
-        return "Task: " + this.name + " ID: " + this.id + " Stamina Cost: " + this.staminaCost + " Stamina Gain: " + this.staminaGain + " Money Cost: " + this.moneyCost + " Money Gain: " + this.moneyGain + " Energy Cost: " + this.energyCost;
+	public String toString() {
+        return "Task: " + this.name + "\nID: " + this.id + "\nStamina Cost: " + this.staminaCost + "\nStamina Gain: " + this.staminaGain + "\nMoney Cost: " + this.moneyCost + "\nMoney Gain: " + this.moneyGain + "\nEnergy Cost: " + this.energyCost;
     }
-	
+
+	public int getId() {
+		return id;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public int getStaminaCost() {
+		return staminaCost;
+	}
+
+	public int getStaminaGain() {
+		return staminaGain;
+	}
+
+	public int getMoneyCost() {
+		return moneyCost;
+	}
+
+	public int getMoneyGain() {
+		return moneyGain;
+	}
+
+	public int getEnergyCost() {
+		return energyCost;
+	}
 }

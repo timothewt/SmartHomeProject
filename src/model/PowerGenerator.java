@@ -6,30 +6,24 @@
  */
 package model;
 
-public class PowerGenerator 
-{
-	/*
-	 * @Attributes
+public class PowerGenerator {
+
+	private final String name;
+	private final int installationCost;
+	private final int dailyCost;
+	private final int dailyProduction;
+
+	/**
+	 * Constructors
 	 */
-	private String name;
-	private int installationCost;
-	private int dailyCost;
-	private int dailyProduction;
-	
-	/*
-	 * @brief Default constructor
-	 */
-	public PowerGenerator() 
+	public PowerGenerator()
 	{
 		this.name = "Default Gen";
 		this.installationCost = 0;
 		this.dailyCost = 0;
 		this.dailyProduction = 0;
 	}
-	
-	/*
-	 * 
-	 */
+
 	public PowerGenerator(String name, int installationCost, int dailyCost, int dailyProduction) 
 	{
 		this.name = name;
@@ -38,6 +32,19 @@ public class PowerGenerator
 		this.dailyProduction = dailyProduction;
 	}
 
-	
-	
+	public String getName() {
+		return name;
+	}
+
+	public int getInstallationCost() {
+		return installationCost;
+	}
+
+	public int getDailyCost() {
+		return dailyCost;
+	}
+
+	public int getDailyProduction() {
+		return dailyProduction;
+	}
 }

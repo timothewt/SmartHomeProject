@@ -9,95 +9,79 @@ package model;
 import java.util.ArrayList;
 
 
-public class Person 
-{
+public class Person {
 
-	/*
-	 * @Attributes
-	 */
 	private int id;
 	private int maxStamina;
 	private int stamina;
-	private boolean isTasking;
+	private Task currentTask;
 	private ArrayList<Task> tasks;
 	
-	/*
-	 * @brief Default constructor
+	/**
+	 * Constructors
 	 */
-	public Person()
-	{
+	public Person()	{
 		this.id = 0;
 		this.maxStamina = 10;
 		this.stamina = 0;
+		this.currentTask = null;
 		this.tasks = new ArrayList<Task>();
-		this.isTasking = false;
-	}
-	
-	/*
-	 * 
-	 */
-	public Person(int id, int maxS, int sta, boolean isT, ArrayList<Task> t)
-	{
-		this.id = id;
-		this.maxStamina = maxS;
-		this.stamina = sta;
-		this.tasks = t;
-		this.isTasking = isT;
-	}
-	
-	/*
-	 * @brief add a task to the ArrayList link to the Person
-	 * @param Task t : The task to add
-	 * @return void
-	 */
-	public void addTask(Task t)
-	{
-		this.tasks.add(t);
-	}
-	
-	/*
-	 * @brief Use to know if the Person is doing a task
-	 * @return the boolean isTasking knowing if the Person is tasking or not
-	 */
-	public boolean doTask()
-	{
-		return this.isTasking;
 	}
 
+	public Person(int id, int maxStamina, ArrayList<Task> tasks) {
+		this.id = id;
+		this.maxStamina = maxStamina;
+		this.stamina = maxStamina;
+		this.currentTask = null;
+		this.tasks = tasks;
+	}
+
+	/**
+	 * Adds a task to the ArrayList link to the Person
+	 * @param task : Task to add
+	 */
+	public void addTask(Task task)	{
+		this.tasks.add(task);
+	}
+
+
+	/**
+	 * Getters and setters
+	 */
 	public int getId() {
 		return id;
-	}
-
-	public int getMaxStamina() {
-		return maxStamina;
-	}
-
-	public int getStamina() {
-		return stamina;
-	}
-
-	public boolean isTasking() {
-		return isTasking;
-	}
-
-	public ArrayList<Task> getTasks() {
-		return tasks;
 	}
 
 	public void setId(int id) {
 		this.id = id;
 	}
 
+	public int getMaxStamina() {
+		return maxStamina;
+	}
+
 	public void setMaxStamina(int maxStamina) {
 		this.maxStamina = maxStamina;
+	}
+
+	public int getStamina() {
+		return stamina;
 	}
 
 	public void setStamina(int stamina) {
 		this.stamina = stamina;
 	}
 
-	public void setTasking(boolean tasking) {
-		isTasking = tasking;
+	public Task getCurrentTask() {
+		return currentTask;
+	}
+
+	public void setCurrentTask(Task currentTask) {
+		this.currentTask = currentTask;
+	}
+
+	public ArrayList<Task> getTasks() {
+		return tasks;
 	}
 
 	public void setTasks(ArrayList<Task> tasks) {

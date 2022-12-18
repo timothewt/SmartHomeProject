@@ -6,25 +6,19 @@
  */
 package model;
 
-public class Perk 
-{
-	/*
-	 * @Attributs
-	 */
+public class Perk {
+
 	private int id;
 	private String name;
-	
 	private int installationCost;
 	private int dailyMoneyCost;
 	private int dailyEnergyCost;
-	
 	private boolean isUpgraded;
 	
-	/*
-	 * @brief Default constructor
+	/**
+	 * Constructors
 	 */
-	public Perk()
-	{
+	public Perk() {
 		this.id = 0;
 		this.name = "Default Perk";
 		this.installationCost = 0;
@@ -32,12 +26,8 @@ public class Perk
 		this.dailyEnergyCost = 0;
 		this.isUpgraded = false;
 	}
-	
-	/*
-	 * 
-	 */
-	public Perk(int id, String name, int installationCost, int dailyMoneyCost, int dailyEnergyCost, boolean isUpgraded)
-	{
+
+	public Perk(int id, String name, int installationCost, int dailyMoneyCost, int dailyEnergyCost, boolean isUpgraded) {
 		this.id = id;
 		this.name = name;
 		this.installationCost = installationCost;
@@ -46,14 +36,18 @@ public class Perk
 		this.isUpgraded = isUpgraded;
 	}
 
-	/*
-	 * toString method to describe a perk
+	/**
+	 * Stringifies the perk in order to display it
+	 * @return a string indicating all the infos of the perk
 	 */
 	public String toString()
     {
         return "Perk: " + this.name + "\nID: " + this.id + "\nInstallation Cost: " + this.installationCost + "\nDaily Money Cost: " + this.dailyMoneyCost + "\nDaily Energy Cost " + this.dailyEnergyCost + "\nisUpgraded " + this.isUpgraded;
     }
 
+	/**
+	 * Getters and setters
+	 */
 	public int getId() {
 		return id;
 	}
