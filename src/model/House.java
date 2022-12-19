@@ -29,13 +29,13 @@ public class House {
 		this.humidityRate = 0;
 		this.energy = 0;
 		this.isOnPowerOutage = false;
-		this.perks = new ArrayList<Perk>();
 		this.optimalTemperature = 21f;
 		this.optimalHumidityRate = .45f;
 
-		initRooms();
-		initPowerSupply();
-		initCouple();
+		this.initRooms();
+		this.initPowerSupply();
+		this.initCouple();
+		this.initPerks();
 	}
 
 	public House(int temperature, int humidityRate, int energy, boolean isOnPowerOutage, ArrayList<Room> rooms, ArrayList<PowerGenerator> powerSupply, ArrayList<Perk> perks, Couple couple, float optimalTemperature, float optimalHumidityRate) {
@@ -82,19 +82,28 @@ public class House {
 		}
 
 		for (Perk perk: perks) {
+			if (!perk.isUpgraded()) {
+				break;
+			}
 			switch (perk.getId()) {
 				case 0: // automatic windows
-					this.energy -= 10;
-					this.setAllWindowsOpen(temperature < this.optimalTemperature && temperature < weather.getTemperature()); // if the temperature is better outside
-				case 1: // automatic heaters
-					this.energy -= 10;
-					if (temperature < this.optimalTemperature && !this.rooms.get(0).isWindowOpen()) {
+					this.setAllWindowsOpen(temperature < this.optimalTemperature && temperature < weather.getTemperature() ||
+											temperature > this.optimalTemperature && temperature > weather.getTemperature()); // if the temperature is better outside
+				case 1: // automatic heaters and AC
+					if (this.rooms.get(0).isWindowOpen()) {
+						break;
+					}
+					if (temperature < this.optimalTemperature) {
 						this.setAllHeatersTemperature(this.optimalTemperature);
+						this.turnOffAllAC();
 					} else {
+						this.setAllACTemperature(this.optimalTemperature);
 						this.turnOffAllHeaters();
 					}
 					break;
 			}
+			this.energy -= perk.getDailyEnergyCost();
+			this.couple.setMoney(this.couple.getMoney() - perk.getDailyMoneyCost());
 		}
 
 		for (Room room: rooms) {
@@ -121,6 +130,19 @@ public class House {
 	private void turnOffAllHeaters() {
 		for (Room room: rooms) {
 			room.setHeaterTurnedOn(false);
+		}
+	}
+
+	private void setAllACTemperature(float temperature) {
+		for (Room room: rooms) {
+			room.setACTemperature(temperature);
+			room.setACTurnedOn(true);
+		}
+	}
+
+	private void turnOffAllAC() {
+		for (Room room: rooms) {
+			room.setACTurnedOn(false);
 		}
 	}
 
@@ -151,6 +173,12 @@ public class House {
 		Room kitchen = new Room();
 
 		this.rooms.add(kitchen);
+	}
+	private void initPerks() {
+		this.perks = new ArrayList<Perk>();
+
+		this.perks.add(new Perk(0, "Automatic windows", 1000, 30, 20, false));
+		this.perks.add(new Perk(0, "Automatic heaters/AC", 1500, 50, 30, false));
 	}
 
 	public String toString() {

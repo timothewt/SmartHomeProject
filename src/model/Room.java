@@ -12,6 +12,8 @@ public class Room {
 	private String name;
 	private float heaterTemperature;
 	private boolean isHeaterTurnedOn;
+	private float ACTemperature;
+	private boolean isACTurnedOn;
 	private float temperature;
 	private float humidityRate; // Rates are set to stay between 0 and 1
 	private float isolationRate;
@@ -23,6 +25,8 @@ public class Room {
 	public Room() {
 		this.heaterTemperature = 0f;
 		this.isHeaterTurnedOn = false;
+		this.ACTemperature = 0f;
+		this.isACTurnedOn = false;
 		this.temperature = 18f;
 		this.humidityRate = .1f;
 		this.isolationRate = .5f;
@@ -131,5 +135,21 @@ public class Room {
 
 	public void setName(String name) {
 		this.name = name;
+	}
+
+	public float getACTemperature() {
+		return ACTemperature;
+	}
+
+	public void setACTemperature(float ACTemperature) {
+		this.ACTemperature = ACTemperature;
+	}
+
+	public boolean isACTurnedOn() {
+		return isACTurnedOn;
+	}
+
+	public void setACTurnedOn(boolean ACTurnedOn) {
+		isACTurnedOn = ACTurnedOn;
 	}
 }
