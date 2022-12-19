@@ -64,6 +64,16 @@ public class Room {
 
 	}
 
+	public String toString() {
+		return "name='" + name + '\'' +
+				", heaterTemperature=" + heaterTemperature +
+				", isHeaterTurnedOn=" + isHeaterTurnedOn +
+				", temperature=" + temperature +
+				", humidityRate=" + humidityRate +
+				", isolationRate=" + isolationRate +
+				", isWindowOpen=" + isWindowOpen;
+	}
+
 	/**
 	 * Getters and setters
 	 */

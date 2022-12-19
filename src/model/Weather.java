@@ -47,6 +47,16 @@ public class Weather {
         this.difficultyRate = (float) (1 / (1 + Math.exp(-.2 * (dayNumber - 15))));
     }
 
+    public String toString() {
+        return "temperature=" + temperature +
+                ", humidityRate=" + humidityRate +
+                ", isRainy=" + isRainy +
+                ", isSnowy=" + isSnowy +
+                ", isSunny=" + isSunny +
+                ", isLightning=" + isLightning +
+                ", difficultyRate=" + difficultyRate;
+    }
+
     /**
      * Getters and setters
      */

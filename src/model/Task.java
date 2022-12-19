@@ -39,14 +39,19 @@ public class Task {
 		this.energyCost = energyCost;
 	}
 
-	/**
-	 * Stringifies the task in order to display it.
-	 * @return a string indicating all the information of the task
-	 */
 	public String toString() {
-        return "Task: " + this.name + "\nID: " + this.id + "\nStamina Cost: " + this.staminaCost + "\nStamina Gain: " + this.staminaGain + "\nMoney Cost: " + this.moneyCost + "\nMoney Gain: " + this.moneyGain + "\nEnergy Cost: " + this.energyCost;
-    }
+		return "id=" + id +
+				", name='" + name + '\'' +
+				", staminaCost=" + staminaCost +
+				", staminaGain=" + staminaGain +
+				", moneyCost=" + moneyCost +
+				", moneyGain=" + moneyGain +
+				", energyCost=" + energyCost;
+	}
 
+	/**
+	 * Getters and setters
+	 */
 	public int getId() {
 		return id;
 	}

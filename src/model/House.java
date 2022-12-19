@@ -90,12 +90,30 @@ public class House {
 			this.humidityRate += room.getHumidityRate() / this.rooms.size();
 		}
 
-		if (weather.isLightning() && Math.random() < .2) {
+		if (weather.isLightning() && Math.random() < .1) {
 			this.isOnPowerOutage = true;
 		}
 
+		// fonctions avec perks, fenetres auto par exemple
+
 	}
 
+	public void onNewDay() {
+		for (PowerGenerator powerGenerator: this.powerSupply) {
+			this.energy += powerGenerator.getDailyProduction();
+		}
+	}
+
+	public String toString() {
+		return "temperature=" + temperature +
+				", humidityRate=" + humidityRate +
+				", energy=" + energy +
+				", isOnPowerOutage=" + isOnPowerOutage +
+				", rooms=" + rooms +
+				", powerSupply=" + powerSupply +
+				", perks=" + perks +
+				", couple=" + couple;
+	}
 
 	/**
 	 * Getters and setters

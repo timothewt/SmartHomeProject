@@ -35,14 +35,14 @@ public class Perk {
 		this.isUpgraded = isUpgraded;
 	}
 
-	/**
-	 * Stringifies the perk in order to display it
-	 * @return a string indicating all the infos of the perk
-	 */
-	public String toString()
-    {
-        return "Perk: " + this.name + "\nID: " + this.id + "\nInstallation Cost: " + this.installationCost + "\nDaily Money Cost: " + this.dailyMoneyCost + "\nDaily Energy Cost " + this.dailyEnergyCost + "\nisUpgraded " + this.isUpgraded;
-    }
+	public String toString() {
+		return "id=" + id +
+				", name='" + name + '\'' +
+				", installationCost=" + installationCost +
+				", dailyMoneyCost=" + dailyMoneyCost +
+				", dailyEnergyCost=" + dailyEnergyCost +
+				", isUpgraded=" + isUpgraded;
+	}
 
 	/**
 	 * Getters and setters

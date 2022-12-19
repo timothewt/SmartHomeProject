@@ -46,6 +46,15 @@ public class Person {
 		this.tasks.add(task);
 	}
 
+	public String toString() {
+		return "name='" + name + '\'' +
+				", id=" + id +
+				", maxStamina=" + maxStamina +
+				", stamina=" + stamina +
+				", currentTask=" + currentTask +
+				", tasks=" + tasks;
+	}
+
 	/**
 	 * Getters and setters
 	 */
