@@ -44,4 +44,7 @@ public class Couple {
 		this.money = money;
 	}
 
+	public ArrayList<Person> getPersons() {
+		return persons;
+	}
 }

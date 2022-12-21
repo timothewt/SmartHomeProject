@@ -70,7 +70,8 @@ public class Room {
 	}
 
 	public String toString() {
-		return "name='" + name + '\'' +
+		return "Room:\n" +
+				"name='" + name + '\'' +
 				", heaterTemperature=" + heaterTemperature +
 				", isHeaterTurnedOn=" + isHeaterTurnedOn +
 				", temperature=" + temperature +

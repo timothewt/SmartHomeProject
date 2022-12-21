@@ -24,17 +24,6 @@ public class House {
 	/**
 	 * Constructors
 	 */
-	public House() {
-		this.temperature = 0;
-		this.humidityRate = 0;
-		this.energy = 0;
-		this.isOnPowerOutage = false;
-		this.optimalTemperature = 21f;
-		this.optimalHumidityRate = .45f;
-		this.rooms = new ArrayList<>();
-		this.perks = new ArrayList<>();
-		this.couple = new Couple();
-	}
 
 	public House(float temperature, float humidityRate, int energy, boolean isOnPowerOutage, ArrayList<Room> rooms, ArrayList<PowerGenerator> powerSupply, ArrayList<Perk> perks, Couple couple, float optimalTemperature, float optimalHumidityRate) {
 		this.temperature = temperature;
@@ -152,7 +141,8 @@ public class House {
 	}
 
 	public String toString() {
-		return "temperature=" + temperature +
+		return "House:\n" +
+				"temperature=" + temperature +
 				", humidityRate=" + humidityRate +
 				", energy=" + energy +
 				", isOnPowerOutage=" + isOnPowerOutage +

@@ -14,6 +14,7 @@ public class Task {
 	private final int moneyCost;
 	private final int moneyGain;
 	private final int energyCost;
+	private final int energyGain;
 	
 	
 	/*
@@ -27,9 +28,10 @@ public class Task {
 		this.moneyCost = 0;
 		this.moneyGain = 0;
 		this.energyCost = 0;
+		this.energyGain = 0;
 	}
 
-	public Task(int id, String name, int staminaCost, int staminaGain, int moneyCost, int moneyGain, int energyCost) {
+	public Task(int id, String name, int staminaCost, int staminaGain, int moneyCost, int moneyGain, int energyCost, int energyGain) {
 		this.id = id;
 		this.name = name;
 		this.staminaCost = staminaCost;
@@ -37,6 +39,7 @@ public class Task {
 		this.moneyCost = moneyCost;
 		this.moneyGain = moneyGain;
 		this.energyCost = energyCost;
+		this.energyGain = energyGain;
 	}
 
 	public String toString() {
