@@ -10,16 +10,16 @@ import java.lang.Math;
 
 public class House {
 
-	private int temperature;
-	private int humidityRate;
+	private float temperature;
+	private float humidityRate;
 	private int energy;
 	private boolean isOnPowerOutage;
 	private ArrayList<Room> rooms;
 	private ArrayList<PowerGenerator> powerSupply;
 	private ArrayList<Perk> perks;
 	private Couple couple;
-	private float optimalTemperature;
-	private float optimalHumidityRate;
+	private final float optimalTemperature;
+	private final float optimalHumidityRate;
 	
 	/**
 	 * Constructors
@@ -31,14 +31,12 @@ public class House {
 		this.isOnPowerOutage = false;
 		this.optimalTemperature = 21f;
 		this.optimalHumidityRate = .45f;
-
-		this.initRooms();
-		this.initPowerSupply();
-		this.initCouple();
-		this.initPerks();
+		this.rooms = new ArrayList<>();
+		this.perks = new ArrayList<>();
+		this.couple = new Couple();
 	}
 
-	public House(int temperature, int humidityRate, int energy, boolean isOnPowerOutage, ArrayList<Room> rooms, ArrayList<PowerGenerator> powerSupply, ArrayList<Perk> perks, Couple couple, float optimalTemperature, float optimalHumidityRate) {
+	public House(float temperature, float humidityRate, int energy, boolean isOnPowerOutage, ArrayList<Room> rooms, ArrayList<PowerGenerator> powerSupply, ArrayList<Perk> perks, Couple couple, float optimalTemperature, float optimalHumidityRate) {
 		this.temperature = temperature;
 		this.humidityRate = humidityRate;
 		this.energy = energy;
@@ -107,7 +105,7 @@ public class House {
 		}
 
 		for (Room room: rooms) {
-			if (room.isHeaterTurnedOn()) {
+			if (room.isHeaterTurnedOn() || room.isACTurnedOn()) {
 				this.energy -= 1;
 			}
 		}
@@ -153,34 +151,6 @@ public class House {
 		}
 	}
 
-	/**
-	 * Used to initialize the power supplies of the house
-	 */
-	private void initPowerSupply() {
-		this.powerSupply = new ArrayList<PowerGenerator>();
-		PowerGenerator linky = new PowerGenerator("Linky", 0, 2, 100);
-		this.powerSupply.add(linky);
-	}
-	private void initCouple() {
-		Person jean = new Person("Jean", 0, 10, new ArrayList<Task>());
-		Person marie = new Person("Marie", 1, 10, new ArrayList<Task>());
-
-		this.couple.addPerson(jean);
-		this.couple.addPerson(marie);
-	}
-	private void initRooms() {
-		this.rooms = new ArrayList<Room>();
-		Room kitchen = new Room();
-
-		this.rooms.add(kitchen);
-	}
-	private void initPerks() {
-		this.perks = new ArrayList<Perk>();
-
-		this.perks.add(new Perk(0, "Automatic windows", 1000, 30, 20, false));
-		this.perks.add(new Perk(0, "Automatic heaters/AC", 1500, 50, 30, false));
-	}
-
 	public String toString() {
 		return "temperature=" + temperature +
 				", humidityRate=" + humidityRate +
@@ -195,19 +165,19 @@ public class House {
 	/**
 	 * Getters and setters
 	 */
-	public int getTemperature() {
+	public float getTemperature() {
 		return temperature;
 	}
 
-	public void setTemperature(int temperature) {
+	public void setTemperature(float temperature) {
 		this.temperature = temperature;
 	}
 
-	public int getHumidityRate() {
+	public float getHumidityRate() {
 		return humidityRate;
 	}
 
-	public void setHumidityRate(int humidityRate) {
+	public void setHumidityRate(float humidityRate) {
 		this.humidityRate = humidityRate;
 	}
 

@@ -40,15 +40,16 @@ public class Weather {
     public void update(int dayNumber) {
         this.updateDifficultyRate(dayNumber);
 
-        int temperatureChangeSign = Math.random() < .5 ? -1 : 1;
-
-        this.temperature += temperatureChangeSign * Math.random() * this.difficultyRate * 15;
-
         boolean wasRainy = this.isRainy;
         this.setRainy(Math.random() < this.difficultyRate / 2);
         this.setSnowy(this.isRainy && this.temperature <= 0);
         this.setSunny(!this.isRainy);
         this.setLightning(false);
+
+        int temperatureChangeSign = Math.random() < .5 ? -1 : 1;
+
+        this.temperature += temperatureChangeSign * Math.random() * this.difficultyRate * 20;
+        this.temperature += this.isSunny && wasRainy ? 5 : this.isRainy && !wasRainy ? -5: 0;
 
         if (this.isRainy) {
             this.humidityRate = 1f;
@@ -56,7 +57,7 @@ public class Weather {
         } else if (wasRainy) {
             this.humidityRate = .5f;
         } else {
-            this.humidityRate += temperatureChangeSign * Math.random() * this.difficultyRate * .05;
+            this.humidityRate += temperatureChangeSign * Math.random() * this.difficultyRate * .1;
         }
     }
 

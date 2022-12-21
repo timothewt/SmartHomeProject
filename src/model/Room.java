@@ -22,7 +22,8 @@ public class Room {
 	/**
 	 * Constructors
 	 */
-	public Room() {
+	public Room(String name) {
+		this.name = name;
 		this.heaterTemperature = 0f;
 		this.isHeaterTurnedOn = false;
 		this.ACTemperature = 0f;
