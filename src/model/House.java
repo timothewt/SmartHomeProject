@@ -145,11 +145,10 @@ public class House {
 				"temperature=" + temperature +
 				", humidityRate=" + humidityRate +
 				", energy=" + energy +
+				", money=" + couple.getMoney() +
 				", isOnPowerOutage=" + isOnPowerOutage +
-				", rooms=" + rooms +
-				", powerSupply=" + powerSupply +
-				", perks=" + perks +
-				", couple=" + couple;
+				", optimalTemperature=" + optimalTemperature +
+				", optimalHumidityRate=" + optimalHumidityRate;
 	}
 
 	/**
@@ -209,5 +208,21 @@ public class House {
 
 	public void setCouple(Couple couple) {
 		this.couple = couple;
+	}
+
+	public ArrayList<Perk> getPerks() {
+		return perks;
+	}
+
+	public void setPerks(ArrayList<Perk> perks) {
+		this.perks = perks;
+	}
+
+	public float getOptimalTemperature() {
+		return optimalTemperature;
+	}
+
+	public float getOptimalHumidityRate() {
+		return optimalHumidityRate;
 	}
 }
