@@ -5,7 +5,8 @@ import java.util.Scanner;
 
 public class Game {
 
-    private Environment environment;
+    private House house;
+    private Weather weather;
     private int dayNumber;
     private ArrayList<Task> availableTasks;
 
@@ -15,9 +16,15 @@ public class Game {
     private char endOfDayGUI;
 
     public Game() {
-        this.environment = new Environment(new Weather(), initHouse());
+        this.house = initHouse();
+        this.weather = new Weather();
         this.dayNumber = 0;
         this.availableTasks = this.initTasks();
+    }
+
+    public void onNewDay(int dayNumber) {
+        this.house.onNewDay();
+        this.weather.update(dayNumber);
     }
 
     public void run() {
@@ -26,16 +33,16 @@ public class Game {
 
         while (true) {
 
-            environment.onNewDay(this.dayNumber);
+            this.onNewDay(this.dayNumber);
 
             System.out.println("----- JOUR " + this.dayNumber + " -----");
 
             // interface de début de journée
 
-            System.out.println(this.environment.getWeather());
-            System.out.println(this.environment.getHouse());
+            System.out.println(this.weather);
+            System.out.println(this.house);
 
-            for (Person person: this.environment.getHouse().getCouple().getPersons()) {
+            for (Person person: this.house.getCouple().getPersons()) {
 
                 System.out.println("Choisir actions de " + person.getName() +": (entrez 99 quand c'est terminé)");
 
@@ -54,10 +61,10 @@ public class Game {
 
             do {
 
-                System.out.println(this.environment.getHouse());
+                System.out.println(this.house);
 
                 tasks = new ArrayList<Task>();
-                for (Person person: this.environment.getHouse().getCouple().getPersons()) {
+                for (Person person: this.house.getCouple().getPersons()) {
                     if (person.getTasks().size() > 0) {
                         tasks.add(person.getTasks().remove(0));
                     }
@@ -71,13 +78,13 @@ public class Game {
                     }
                 }
 
-                this.environment.getHouse().update(this.environment.getWeather());
+                this.house.update(this.weather);
 
             } while (tasks.size() > 0);
 
-            System.out.println(this.environment.getHouse());
+            System.out.println(this.house);
 
-            if (this.environment.getHouse().isViable()) {
+            if (this.house.isViable()) {
                 System.out.println("La maison est toujours viable");
             } else {
                 System.out.println("La maison n'est plus viable, vous avez perdu");
@@ -86,9 +93,9 @@ public class Game {
 
             this.dayNumber++;
 
-            this.environment.getWeather().update(this.dayNumber);
+            this.weather.update(this.dayNumber);
 
-            ArrayList<Perk> perks = this.environment.getHouse().getPerks();
+            ArrayList<Perk> perks = this.house.getPerks();
 
             System.out.println("Améliorations disponibles:");
             for (Perk perk: perks) {
@@ -101,9 +108,9 @@ public class Game {
                 perkId = scanner.nextInt();
                 if (perks.get(perkId).isUpgraded()) {
                     System.out.println("Amélioration déjà effectuée");
-                } else if (perks.get(perkId).getInstallationCost() <= this.environment.getHouse().getCouple().getMoney()) {
-                    this.environment.getHouse().getCouple().setMoney(
-                            this.environment.getHouse().getCouple().getMoney() - perks.get(perkId).getInstallationCost()
+                } else if (perks.get(perkId).getInstallationCost() <= this.house.getCouple().getMoney()) {
+                    this.house.getCouple().setMoney(
+                            this.house.getCouple().getMoney() - perks.get(perkId).getInstallationCost()
                     );
                     perks.get(perkId).setUpgraded(true);
                     System.out.println("Amélioration effectuée");
@@ -112,9 +119,9 @@ public class Game {
                 }
             } while (perkId != 99);
 
-            System.out.println(this.environment.getHouse());
+            System.out.println(this.house);
 
-            if (this.environment.getHouse().getCouple().getMoney() <= 0) {
+            if (this.house.getCouple().getMoney() <= 0) {
                 System.out.println("Vous n'avez plus d'argent, vous avez perdu.");
                 break;
             }
