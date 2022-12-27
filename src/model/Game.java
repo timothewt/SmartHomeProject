@@ -39,12 +39,12 @@ public class Game {
 
             // interface de début de journée
 
-            System.out.println(this.weather);
-            System.out.println(this.house);
+            System.out.println(this.weather.toString());
+            System.out.println(this.house.toString());
 
             for (Person person: this.house.getCouple().getPersons()) {
 
-                System.out.println("Choisir actions de " + person.getName() +": (entrez 99 quand c'est terminé)");
+                System.out.println("Choisir actions de " + person.getName() + ": (entrez 99 quand c'est terminé)");
 
                 int taskNumber;
 
@@ -55,14 +55,14 @@ public class Game {
 
             }
 
-
             // interface durant la journée
 
             boolean taskRemaining = true;
 
             do {
 
-                System.out.println(this.house);
+                System.out.println(this.house.toString());
+                System.out.println(this.house.getCouple().toString());
 
                 for (Person person: this.house.getCouple().getPersons()) {
                     if (person.getTasks().size() == 0) {
@@ -100,8 +100,8 @@ public class Game {
                                 this.house.setAllWindowsOpen(false);
                                 System.out.println("Fenêtres fermées.");
                             }
-                            case 6 -> System.out.println("Travail effectué.");
-                            case 7 -> System.out.println("Ptite sieste faite.");
+                            case 6 -> System.out.println("Travail productif pour " + person.getName() + ".");
+                            case 7 -> System.out.println("Ptite sieste pour " + person.getName() + ".");
                             case 8 -> System.out.println("Séance de vélo riche en production d'énérgie.");
                             case 9 -> System.out.println("Un bon repas pour requinquer l'habitant");
                             case 10 -> this.house.setOnPowerOutage(false);
@@ -116,7 +116,7 @@ public class Game {
 
             } while (taskRemaining);
 
-            System.out.println(this.house);
+            System.out.println(this.house.toString());
 
             if (this.house.isViable()) {
                 System.out.println("La maison est toujours viable");
@@ -153,7 +153,7 @@ public class Game {
                 }
             } while (perkId != 99);
 
-            System.out.println(this.house);
+            System.out.println(this.house.toString());
 
             if (this.house.getCouple().getMoney() <= 0) {
                 System.out.println("Vous n'avez plus d'argent, vous avez perdu.");

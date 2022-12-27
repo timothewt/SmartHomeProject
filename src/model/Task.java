@@ -13,7 +13,6 @@ public class Task {
 	private final int money;
 	private final int energy;
 	
-	
 	/*
 	 * Constructor
 	 */
