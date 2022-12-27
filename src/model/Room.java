@@ -58,7 +58,8 @@ public class Room {
 
 		} else {
 
-			this.temperature = isHeaterTurnedOn ? (this.temperature + this.heaterTemperature) / 2 : this.temperature;
+			this.temperature = isHeaterTurnedOn && heaterTemperature > this.temperature ? (this.temperature + this.heaterTemperature) / 2 : this.temperature;
+			this.temperature = isACTurnedOn && ACTemperature < this.temperature ? (this.temperature + this.ACTemperature) / 2 : this.temperature;
 			// Loss of humidity and temperature due to non-optimal isolation
 			int humidityChangeSign = this.humidityRate > outsideHumidityRate ? -1 : 1;
 			int temperatureChangeSign = this.temperature > outsideTemperature ? -1 : 1;

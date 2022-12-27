@@ -9,12 +9,9 @@ public class Task {
 
 	private final int id;
 	private final String name;
-	private final int staminaCost;
-	private final int staminaGain;
-	private final int moneyCost;
-	private final int moneyGain;
-	private final int energyCost;
-	private final int energyGain;
+	private final int stamina;
+	private final int money;
+	private final int energy;
 	
 	
 	/*
@@ -23,33 +20,25 @@ public class Task {
 	public Task() {
 		this.id = 0;
 		this.name = "default";
-		this.staminaCost = 0;
-		this.staminaGain = 0;
-		this.moneyCost = 0;
-		this.moneyGain = 0;
-		this.energyCost = 0;
-		this.energyGain = 0;
+		this.stamina = 0;
+		this.money = 0;
+		this.energy = 0;
 	}
 
-	public Task(int id, String name, int staminaCost, int staminaGain, int moneyCost, int moneyGain, int energyCost, int energyGain) {
+	public Task(int id, String name, int stamina, int money, int energy) {
 		this.id = id;
 		this.name = name;
-		this.staminaCost = staminaCost;
-		this.staminaGain = staminaGain;
-		this.moneyCost = moneyCost;
-		this.moneyGain = moneyGain;
-		this.energyCost = energyCost;
-		this.energyGain = energyGain;
+		this.stamina = stamina;
+		this.money = money;
+		this.energy = energy;
 	}
 
 	public String toString() {
 		return "id=" + id +
 				", name='" + name + '\'' +
-				", staminaCost=" + staminaCost +
-				", staminaGain=" + staminaGain +
-				", moneyCost=" + moneyCost +
-				", moneyGain=" + moneyGain +
-				", energyCost=" + energyCost;
+				", stamina=" + stamina +
+				", money=" + money +
+				", energy=" + energy;
 	}
 
 	/**
@@ -63,23 +52,15 @@ public class Task {
 		return name;
 	}
 
-	public int getStaminaCost() {
-		return staminaCost;
+	public int getStamina() {
+		return stamina;
 	}
 
-	public int getStaminaGain() {
-		return staminaGain;
+	public int getMoney() {
+		return money;
 	}
 
-	public int getMoneyCost() {
-		return moneyCost;
-	}
-
-	public int getMoneyGain() {
-		return moneyGain;
-	}
-
-	public int getEnergyCost() {
-		return energyCost;
+	public int getEnergy() {
+		return energy;
 	}
 }

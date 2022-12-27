@@ -101,33 +101,33 @@ public class House {
 
 	}
 
-	private void setAllWindowsOpen(boolean status) {
+	public void setAllWindowsOpen(boolean status) {
 		for (Room room: rooms) {
 			room.setWindowOpen(status);
 		}
 	}
 
-	private void setAllHeatersTemperature(float temperature) {
+	public void setAllHeatersTemperature(float temperature) {
 		for (Room room: rooms) {
 			room.setHeaterTemperature(temperature);
 			room.setHeaterTurnedOn(true);
 		}
 	}
 
-	private void turnOffAllHeaters() {
+	public void turnOffAllHeaters() {
 		for (Room room: rooms) {
 			room.setHeaterTurnedOn(false);
 		}
 	}
 
-	private void setAllACTemperature(float temperature) {
+	public void setAllACTemperature(float temperature) {
 		for (Room room: rooms) {
 			room.setACTemperature(temperature);
 			room.setACTurnedOn(true);
 		}
 	}
 
-	private void turnOffAllAC() {
+	public void turnOffAllAC() {
 		for (Room room: rooms) {
 			room.setACTurnedOn(false);
 		}

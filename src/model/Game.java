@@ -57,30 +57,64 @@ public class Game {
 
 
             // interface durant la journée
-            ArrayList<Task> tasks;
+
+            boolean taskRemaining = true;
 
             do {
 
                 System.out.println(this.house);
 
-                tasks = new ArrayList<Task>();
                 for (Person person: this.house.getCouple().getPersons()) {
-                    if (person.getTasks().size() > 0) {
-                        tasks.add(person.getTasks().remove(0));
-                    }
-                }
-
-                for (Task task: tasks) {
-                    switch (task.getId()) {
-                        case 0:
-                            // Mettre tous les taches avec le joueur qui choisit en fonction de certaines taches
-                            break;
+                    if (person.getTasks().size() == 0) {
+                        taskRemaining = false;
+                    } else {
+                        Task currentTask = person.getTasks().remove(0);
+                        taskRemaining = true;
+                        float temperature;
+                        switch (currentTask.getId()) {
+                            case 0 -> { // Allumer le chauffage
+                                System.out.println("À quelle température allumer le chauffage ?");
+                                temperature = scanner.nextFloat();
+                                this.house.setAllHeatersTemperature(temperature);
+                                System.out.println("Chauffages allumés à " + temperature + "°C.");
+                            }
+                            case 1 -> { // Eteindre le chauffage
+                                this.house.turnOffAllHeaters();
+                                System.out.println("Chauffages éteins.");
+                            }
+                            case 2 -> { // Allumer clim
+                                System.out.println("À quelle température allumer la climatisation ?");
+                                temperature = scanner.nextFloat();
+                                this.house.setAllACTemperature(temperature);
+                                System.out.println("Climatiseurs allumés à " + temperature + "°C.");
+                            }
+                            case 3 -> { // Eteindre clim
+                                this.house.turnOffAllAC();
+                                System.out.println("Climatiseurs éteins.");
+                            }
+                            case 4 -> {
+                                this.house.setAllWindowsOpen(true);
+                                System.out.println("Fenêtres ouvertes.");
+                            }
+                            case 5 -> {
+                                this.house.setAllWindowsOpen(false);
+                                System.out.println("Fenêtres fermées.");
+                            }
+                            case 6 -> System.out.println("Travail effectué.");
+                            case 7 -> System.out.println("Ptite sieste faite.");
+                            case 8 -> System.out.println("Séance de vélo riche en production d'énérgie.");
+                            case 9 -> System.out.println("Un bon repas pour requinquer l'habitant");
+                            case 10 -> this.house.setOnPowerOutage(false);
+                        }
+                        person.setStamina(person.getStamina() + currentTask.getStamina());
+                        this.house.getCouple().setMoney(this.house.getCouple().getMoney() + currentTask.getMoney());
+                        this.house.setEnergy(this.house.getEnergy() + currentTask.getEnergy());
                     }
                 }
 
                 this.house.update(this.weather);
 
-            } while (tasks.size() > 0);
+            } while (taskRemaining);
 
             System.out.println(this.house);
 
@@ -158,17 +192,17 @@ public class Game {
     private ArrayList<Task> initTasks() {
         availableTasks = new ArrayList<Task>();
 
-        availableTasks.add(new Task(0, "Allumer le chauffage", 1, 0, 0, 0, 0, 0));
-        availableTasks.add(new Task(1, "Eteindre le chauffage", 1, 0, 0, 0, 0, 0));
-        availableTasks.add(new Task(2, "Allumer la climatisation", 1, 0, 0, 0, 0, 0));
-        availableTasks.add(new Task(3, "Eteindre la climatisation", 1, 0, 0, 0, 0, 0));
-        availableTasks.add(new Task(4, "Ouvrir les fenêtres", 1, 0, 0, 0, 0, 0));
-        availableTasks.add(new Task(5, "Fermer les fenêtres", 1, 0, 0, 0, 0, 0));
-        availableTasks.add(new Task(6, "Travailler", 5, 0, 0, 200, 0, 0));
-        availableTasks.add(new Task(7, "Dormir", 0, 2, 0, 0, 0, 0));
-        availableTasks.add(new Task(8, "Faire du vélo", 4, 0, 0, 0, 0, 50));
-        availableTasks.add(new Task(9, "Cuisiner", 2, 0, 0, 0, 30, 0));
-        availableTasks.add(new Task(10, "Réparer l'éléctricité", 2, 0, 200, 0, 0, 0));
+        availableTasks.add(new Task(0, "Allumer le chauffage", -1, 0, 0));
+        availableTasks.add(new Task(1, "Eteindre le chauffage", -1, 0, 0));
+        availableTasks.add(new Task(2, "Allumer la climatisation", -1, 0, 0));
+        availableTasks.add(new Task(3, "Eteindre la climatisation", -1, 0, 0));
+        availableTasks.add(new Task(4, "Ouvrir les fenêtres", -1, 0, 0));
+        availableTasks.add(new Task(5, "Fermer les fenêtres", -1, 0, 0));
+        availableTasks.add(new Task(6, "Travailler", -5, 0, 0));
+        availableTasks.add(new Task(7, "Dormir", 2, 0, 0));
+        availableTasks.add(new Task(8, "Faire du vélo", -4, 0, 50));
+        availableTasks.add(new Task(9, "Cuisiner", 2, 0, -30));
+        availableTasks.add(new Task(10, "Réparer l'éléctricité", -2, -200, 0));
 
         return availableTasks;
     }
