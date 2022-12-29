@@ -6,6 +6,7 @@ import java.util.Scanner;
 import view.GameScene;
 import view.SceneMethods;
 import view.ActionBar;
+import view.TaskBar;
 import main.Game;
 
 public class Playing extends GameScene implements SceneMethods {
@@ -21,6 +22,7 @@ public class Playing extends GameScene implements SceneMethods {
 	private char endOfDayGUI;
 
 	private ActionBar bottomBar;
+	private TaskBar taskBar;
 	private int mouseX, mouseY;
 
 	public Playing(Game game) {
@@ -30,6 +32,7 @@ public class Playing extends GameScene implements SceneMethods {
 		this.dayNumber = 0;
 		this.availableTasks = this.initTasks();
 		bottomBar = new ActionBar(0, 640, 640, 90, this);
+		taskBar = new TaskBar(0, 0, 640, 640, this);
 	}
 
 	public void onNewDay(int dayNumber) {
@@ -202,17 +205,17 @@ public class Playing extends GameScene implements SceneMethods {
 	private ArrayList<Task> initTasks() {
 		availableTasks = new ArrayList<Task>();
 
-		availableTasks.add(new Task(0, "Allumer le chauffage", -1, 0, 0));
-		availableTasks.add(new Task(1, "Eteindre le chauffage", -1, 0, 0));
-		availableTasks.add(new Task(2, "Allumer la climatisation", -1, 0, 0));
-		availableTasks.add(new Task(3, "Eteindre la climatisation", -1, 0, 0));
-		availableTasks.add(new Task(4, "Ouvrir les fenêtres", -1, 0, 0));
-		availableTasks.add(new Task(5, "Fermer les fenêtres", -1, 0, 0));
-		availableTasks.add(new Task(6, "Travailler", -5, 0, 0));
-		availableTasks.add(new Task(7, "Dormir", 2, 0, 0));
-		availableTasks.add(new Task(8, "Faire du vélo", -4, 0, 50));
-		availableTasks.add(new Task(9, "Cuisiner", 2, 0, -30));
-		availableTasks.add(new Task(10, "Réparer l'éléctricité", -2, -200, 0));
+		availableTasks.add(new Task(0, "Chauffage On", -1, 0, 0));
+		availableTasks.add(new Task(1, "Chauffage Off", -1, 0, 0));
+		availableTasks.add(new Task(2, "Clim On", -1, 0, 0));
+		availableTasks.add(new Task(3, "Clim off", -1, 0, 0));
+		availableTasks.add(new Task(4, "Windows open", -1, 0, 0));
+		availableTasks.add(new Task(5, "Windows closed", -1, 0, 0));
+		availableTasks.add(new Task(6, "Work", -5, 0, 0));
+		availableTasks.add(new Task(7, "Sleep", 2, 0, 0));
+		availableTasks.add(new Task(8, "Biking", -4, 0, 50));
+		availableTasks.add(new Task(9, "Cook", 2, 0, -30));
+		availableTasks.add(new Task(10, "Outage", -2, -200, 0));
 
 		return availableTasks;
 	}
@@ -220,6 +223,7 @@ public class Playing extends GameScene implements SceneMethods {
 	@Override
 	public void render(Graphics g) {
 		bottomBar.draw(g);
+		taskBar.draw(g);
 
 	}
 
@@ -228,8 +232,8 @@ public class Playing extends GameScene implements SceneMethods {
 	{
 		if(y >= 640)
 			bottomBar.mouseClicked(x, y);
-//		else
-//			enemyManager.addEnemy(x, y);
+		//else
+			//taskBar.mouseClicked(x, y);
 	}
 
 	@Override
@@ -237,12 +241,9 @@ public class Playing extends GameScene implements SceneMethods {
 	{
 		if(y >= 640)
 			bottomBar.mouseMoved(x, y);
-		else 
-		{
-			//Clean pos
-			mouseX = (x/32) *32;
-			mouseY = (y/32) *32;
-		}
+		
+		taskBar.mouseMoved(x, y);
+		
 	}
 
 	@Override
@@ -250,18 +251,33 @@ public class Playing extends GameScene implements SceneMethods {
 	{
 		if(y >= 640)
 			bottomBar.mousePressed(x, y);
+
+		taskBar.mousePressed(x, y);
 	}
 
 	@Override
 	public void mouseReleased(int x, int y) 
 	{
 		bottomBar.mouseReleased(x, y);
+		taskBar.mouseReleased(x, y);
 	}
 
 	@Override
 	public void mouseDragged(int x, int y) {
 		// TODO Auto-generated method stub
 
+	}
+	
+	public House getHouse() {
+		return this.house;
+	}
+	
+	public Weather getWeather() {
+		return this.weather;
+	}
+
+	public ArrayList<Task> getAvailableTasks() {
+		return availableTasks;
 	}
 
 }

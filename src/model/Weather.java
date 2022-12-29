@@ -66,14 +66,13 @@ public class Weather {
     }
 
     public String toString() {
-        return "Weather:\n" +
-                "temperature=" + temperature +
-                ", humidityRate=" + humidityRate +
+        return  "Temperature=" + temperature +
+                ", HumidityRate=" + humidityRate +
                 ", isRainy=" + isRainy +
                 ", isSnowy=" + isSnowy +
                 ", isSunny=" + isSunny +
                 ", isLightning=" + isLightning +
-                ", difficultyRate=" + difficultyRate;
+                ", diffRate=" + difficultyRate;
     }
 
     /**
