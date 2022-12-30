@@ -13,24 +13,30 @@ public class PowerGenerator {
 	private final int dailyProduction;
 
 	/**
-	 * Constructors
+	 * @brief Constructor
 	 */
-	public PowerGenerator()
-	{
+	public PowerGenerator() {
 		this.name = "Default Gen";
 		this.installationCost = 0;
 		this.dailyCost = 0;
 		this.dailyProduction = 0;
 	}
 
-	public PowerGenerator(String name, int installationCost, int dailyCost, int dailyProduction) 
-	{
+	/**
+	 * @brief Constructor
+	 * @param name
+	 * @param installationCost
+	 * @param dailyCost
+	 * @param dailyProduction
+	 */
+	public PowerGenerator(String name, int installationCost, int dailyCost, int dailyProduction) {
 		this.name = name;
 		this.installationCost = installationCost;
 		this.dailyCost = dailyCost;
 		this.dailyProduction = dailyProduction;
 	}
 
+	//Getters and Setters
 	public String getName() {
 		return name;
 	}

@@ -1,17 +1,25 @@
+/**
+ * @file Menu.java
+ * @date 27/12/2022
+ * @brief Menu GameScene
+ */
 package view;
 
-import static view.GameStates.PLAYING;
-import static view.GameStates.SETTINGS;
-import static view.GameStates.SetGameState;
+import static main.GameStates.PLAYING;
+import static main.GameStates.SetGameState;
 
 import java.awt.Graphics;
 
 import main.Game;
-import view.Button;
+import ui.Button;
 
 public class Menu extends GameScene implements SceneMethods {
-	private Button bPlaying, bEdit, bSettings, bQuit;
+	private Button bPlaying, bQuit;
 
+	/**
+	 * @brief Constructor
+	 * @param game
+	 */
 	public Menu(Game game) {
 		super(game);
 		initButtons();
@@ -28,6 +36,7 @@ public class Menu extends GameScene implements SceneMethods {
 		bQuit = new Button("Quit", x, y + yOffset, w, h);
 	}
 
+	// Control
 	@Override
 	public void render(Graphics g) {
 		drawButtons(g);

@@ -1,11 +1,14 @@
+/**
+ * @file Game.java
+ * @date 27/12/2022
+ * @brief Main class of the program
+ */
 package main;
 
 import model.Playing;
 import view.Menu;
-import view.PlayingStates;
-import view.Render;
-import view.GameScreen;
-import view.GameStates;
+import view.Play;
+
 import javax.swing.JFrame;
 
 import java.util.ArrayList;
@@ -20,8 +23,11 @@ public class Game extends JFrame implements Runnable {
 	// Classes
 	private Render render;
 	private Menu menu;
-	private Playing playing;
+	private Play play;
 
+	/**
+	 * @brief Constructor
+	 */
 	public Game() {
 
 		initClasses();
@@ -40,9 +46,12 @@ public class Game extends JFrame implements Runnable {
 		render = new Render(this);
 		gameScreen = new GameScreen(this);
 		menu = new Menu(this);
-		playing = new Playing(this);
+		play = new Play(this);
 	}
 
+	/**
+	 * @brief Start the thread
+	 */
 	private void start() {
 		gameThread = new Thread(this) {
 		};
@@ -52,10 +61,10 @@ public class Game extends JFrame implements Runnable {
 	private void updateGame() {
 		switch (GameStates.gameState) {
 		case MENU:
-			playing.getTaskBar().visibleOrNot(false);
+			play.getTaskBar().visibleOrNot(false);
 			break;
 		case PLAYING:
-			playing.getTaskBar().visibleOrNot(true);
+			play.getTaskBar().visibleOrNot(true);
 			switch (PlayingStates.playingState) {
 			case ONE:
 				break;
@@ -66,18 +75,25 @@ public class Game extends JFrame implements Runnable {
 			}
 			break;
 		default:
-			playing.getTaskBar().visibleOrNot(false);
+			play.getTaskBar().visibleOrNot(false);
 			break;
 
 		}
 	}
 
+	/**
+	 * @brief Launch the game
+	 * @param args
+	 */
 	public static void main(String[] args) {
 		Game game = new Game();
 		game.gameScreen.initInputs();
 		game.start();
 	}
 
+	/**
+	 * @brief The game loop
+	 */
 	@Override
 	public void run() {
 
@@ -126,8 +142,7 @@ public class Game extends JFrame implements Runnable {
 		return menu;
 	}
 
-	public Playing getPlaying() {
-		return playing;
+	public Play getPlay() {
+		return play;
 	}
-
 }

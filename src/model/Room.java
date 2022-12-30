@@ -1,7 +1,7 @@
 /**
  * @file Room.java
  * @date 18/12/2022
- * @brief Class that create rooms
+ * @brief Class that Manage the room object. A House is composed of rooms
  */
 package model;
 
@@ -20,7 +20,7 @@ public class Room {
 	private boolean isWindowOpen;
 
 	/**
-	 * Constructors
+	 * @brief Constructors
 	 */
 	public Room(String name) {
 		this.name = name;
@@ -34,6 +34,9 @@ public class Room {
 		this.isWindowOpen = false;
 	}
 
+	/**
+	 * @brief Constructors
+	 */
 	public Room(String name, float heaterTemperature, boolean isHeaterTurnedOn, float temperature, float humidityRate, float isolationRate, boolean isWindowOpen) {
 		this.name = name;
 		this.heaterTemperature = heaterTemperature;
@@ -45,7 +48,7 @@ public class Room {
 	}
 
 	/**
-	 * Used to update the stats of the room at each task
+	 * @brief Used to update the stats of the room at each task
 	 * @param outsideHumidityRate: humidity rate outside the house
 	 * @param outsideTemperature: temperature outside the house
 	 */
@@ -70,6 +73,9 @@ public class Room {
 
 	}
 
+	/**
+	 * @brief toString method
+	 */
 	public String toString() {
 		return "Room:\n" +
 				"name='" + name + '\'' +

@@ -12,8 +12,7 @@ public class Task {
 	private final int stamina;
 	private final int money;
 	private final int energy;
-	
-	
+
 	/*
 	 * Constructor
 	 */
@@ -34,11 +33,8 @@ public class Task {
 	}
 
 	public String toString() {
-		return "id=" + id +
-				", name='" + name + '\'' +
-				", stamina=" + stamina +
-				", money=" + money +
-				", energy=" + energy;
+		return "id=" + id + ", name='" + name + '\'' + ", stamina=" + stamina + ", money=" + money + ", energy="
+				+ energy;
 	}
 
 	/**

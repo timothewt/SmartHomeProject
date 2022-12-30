@@ -1,47 +1,42 @@
+/**
+ * @file Menu.java
+ * @date 18/12/2022
+ * @brief Manage all the Play Scene component
+ */
 package model;
 
-import java.awt.Graphics;
 import java.util.ArrayList;
 import java.util.Scanner;
-import view.GameScene;
-import view.SceneMethods;
-import view.ActionBar;
-import view.TaskBar;
-import main.Game;
 
-public class Playing extends GameScene implements SceneMethods {
+public class Playing {
 
 	private House house;
 	private Weather weather;
 	private int dayNumber;
 	private ArrayList<Task> availableTasks;
 
-	// à remplacer par les GUI
-	private char newDayGUI;
-	private char duringDayGUI;
-	private char endOfDayGUI;
+	/**
+	 * @brief Constructor
+	 */
+	public Playing() {
 
-	private ActionBar bottomBar;
-	private TaskBar taskBar;
-	private int mouseX, mouseY;
-	private Game game;
-
-	public Playing(Game game) {
-		super(game);
-		this.game = game;
 		this.house = initHouse();
 		this.weather = new Weather();
 		this.dayNumber = 0;
 		this.availableTasks = this.initTasks();
-		bottomBar = new ActionBar(0, 640, 640, 90, this);
-		taskBar = new TaskBar(0, 0, 640, 640, this);
+
 	}
 
-	public void onNewDay(int dayNumber) {
+	/**
+	 * @brief update stats on a new day
+	 * @param dayNumber
+	 */
+	private void onNewDay(int dayNumber) {
 		this.house.onNewDay();
 		this.weather.update(dayNumber);
 	}
 
+	@SuppressWarnings("resource")
 	public void run() {
 
 		Scanner scanner = new Scanner(System.in);
@@ -180,6 +175,10 @@ public class Playing extends GameScene implements SceneMethods {
 
 	}
 
+	/**
+	 * @brief Instantiating rooms and perks
+	 * @return
+	 */
 	private House initHouse() {
 		ArrayList<Room> rooms = new ArrayList<Room>();
 		rooms.add(new Room("Cuisine"));
@@ -204,6 +203,10 @@ public class Playing extends GameScene implements SceneMethods {
 		return new House(18f, .5f, 0, false, rooms, powerGenerators, perks, couple, 21f, .45f);
 	}
 
+	/**
+	 * @brief instantiating tasks
+	 * @return
+	 */
 	private ArrayList<Task> initTasks() {
 		availableTasks = new ArrayList<Task>();
 
@@ -222,77 +225,28 @@ public class Playing extends GameScene implements SceneMethods {
 		return availableTasks;
 	}
 
+	/**
+	 * @brief find a Task in all tasks using the task's id
+	 * @param id
+	 * @return the Task corresponding to the id
+	 */
 	public Task findTaskWithId(int id) {
 		Task temp = null;
-		if(id < 0 || id > availableTasks.size()) {
+		if (id < 0 || id > availableTasks.size()) {
 			System.out.println("Error system in Playing : id not recognize");
 		}
-			
-		for(Task t: availableTasks) {
+
+		for (Task t : availableTasks) {
 			if (t.getId() == id) {
 				temp = t;
 			}
 		}
 		return temp;
 	}
-	@Override
-	public void render(Graphics g) {
-		bottomBar.draw(g);
-		taskBar.draw(g);
 
-	}
-
-	@Override
-	public void mouseClicked(int x, int y) 
-	{
-		if(y >= 640)
-			bottomBar.mouseClicked(x, y);
-		
-		taskBar.mouseClicked(x, y);
-	}
-
-	@Override
-	public void mouseMoved(int x, int y) 
-	{
-		if(y >= 640)
-			bottomBar.mouseMoved(x, y);
-		
-		taskBar.mouseMoved(x, y);
-		
-	}
-
-	@Override
-	public void mousePressed(int x, int y) 
-	{
-		if(y >= 640)
-			bottomBar.mousePressed(x, y);
-
-		taskBar.mousePressed(x, y);
-	}
-
-	@Override
-	public void mouseReleased(int x, int y) 
-	{
-		bottomBar.mouseReleased(x, y);
-		taskBar.mouseReleased(x, y);
-	}
-
-	@Override
-	public void mouseDragged(int x, int y) {
-		// TODO Auto-generated method stub
-
-	}
-	
+	// Getters and Setters
 	public House getHouse() {
 		return this.house;
-	}
-	
-	public TaskBar getTaskBar() {
-		return taskBar;
-	}
-
-	public void setTaskBar(TaskBar taskBar) {
-		this.taskBar = taskBar;
 	}
 
 	public Weather getWeather() {
@@ -302,9 +256,4 @@ public class Playing extends GameScene implements SceneMethods {
 	public ArrayList<Task> getAvailableTasks() {
 		return availableTasks;
 	}
-	
-	public Game getGame() {
-		return this.game;
-	}
-
 }
