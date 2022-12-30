@@ -16,11 +16,6 @@ public class Playing extends GameScene implements SceneMethods {
 	private int dayNumber;
 	private ArrayList<Task> availableTasks;
 
-	// à remplacer par les GUI
-	private char newDayGUI;
-	private char duringDayGUI;
-	private char endOfDayGUI;
-
 	private ActionBar bottomBar;
 	private TaskBar taskBar;
 	private int mouseX, mouseY;
@@ -37,7 +32,7 @@ public class Playing extends GameScene implements SceneMethods {
 		taskBar = new TaskBar(0, 0, 640, 640, this);
 	}
 
-	public void onNewDay(int dayNumber) {
+	private void onNewDay(int dayNumber) {
 		this.house.onNewDay();
 		this.weather.update(dayNumber);
 	}
