@@ -48,11 +48,8 @@ public class Person {
 
 	public String toString() {
 		return "name='" + name + '\'' +
-				", id=" + id +
 				", maxStamina=" + maxStamina +
-				", stamina=" + stamina +
-				", currentTask=" + currentTask +
-				", tasks=" + tasks;
+				", stamina=" + stamina;
 	}
 
 	/**
