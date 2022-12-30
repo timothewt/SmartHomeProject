@@ -35,6 +35,18 @@ public class ActionBar extends Bar {
 
 		// Buttons
 		drawButtons(g);
+		
+		drawText(g);
+	}
+
+	private void drawButtons(Graphics g) {
+		bMenu.draw(g);
+		bSave.draw(g);
+			
+	}
+	
+	private void drawText(Graphics g) {
+		
 		Graphics2D money = (Graphics2D)g;
 		money.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 		money.drawString("Money : "+playing.getHouse().getCouple().getMoney(), 110, 660);
@@ -54,12 +66,6 @@ public class ActionBar extends Bar {
 		Graphics2D weather = (Graphics2D)g;
 		weather.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 		weather.drawString(playing.getWeather().toString(), 2, 720);
-	}
-
-	private void drawButtons(Graphics g) {
-		bMenu.draw(g);
-		bSave.draw(g);
-			
 	}
 
 	public void mouseClicked(int x, int y) {

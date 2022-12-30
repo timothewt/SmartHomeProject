@@ -31,7 +31,7 @@ public class Button {
 		this.y = y;
 		this.width = width;
 		this.height = height;
-		this.id = -1;
+		this.id = id;
 		
 		initBounds();
 	}
@@ -62,7 +62,8 @@ public class Button {
 		drawBorder(g);
 		
 		//Text
-		drawText(g);
+		if (text != null)
+			drawText(g);
 	}
 	
 	private void drawBorder(Graphics g){
@@ -125,6 +126,14 @@ public class Button {
 	public int getId(){
 		
 		return id;
+	}
+
+	public String getText() {
+		return text;
+	}
+
+	public void setText(String text) {
+		this.text = text;
 	}
 }
 

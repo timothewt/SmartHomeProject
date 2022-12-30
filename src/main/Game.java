@@ -52,8 +52,10 @@ public class Game extends JFrame implements Runnable {
 	private void updateGame() {
 		switch (GameStates.gameState) {
 		case MENU:
+			playing.getTaskBar().visibleOrNot(false);
 			break;
 		case PLAYING:
+			playing.getTaskBar().visibleOrNot(true);
 			switch (PlayingStates.playingState) {
 			case ONE:
 				break;
@@ -64,6 +66,7 @@ public class Game extends JFrame implements Runnable {
 			}
 			break;
 		default:
+			playing.getTaskBar().visibleOrNot(false);
 			break;
 
 		}

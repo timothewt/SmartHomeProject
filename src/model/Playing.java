@@ -24,9 +24,11 @@ public class Playing extends GameScene implements SceneMethods {
 	private ActionBar bottomBar;
 	private TaskBar taskBar;
 	private int mouseX, mouseY;
+	private Game game;
 
 	public Playing(Game game) {
 		super(game);
+		this.game = game;
 		this.house = initHouse();
 		this.weather = new Weather();
 		this.dayNumber = 0;
@@ -220,6 +222,19 @@ public class Playing extends GameScene implements SceneMethods {
 		return availableTasks;
 	}
 
+	public Task findTaskWithId(int id) {
+		Task temp = null;
+		if(id < 0 || id > availableTasks.size()) {
+			System.out.println("Error system in Playing : id not recognize");
+		}
+			
+		for(Task t: availableTasks) {
+			if (t.getId() == id) {
+				temp = t;
+			}
+		}
+		return temp;
+	}
 	@Override
 	public void render(Graphics g) {
 		bottomBar.draw(g);
@@ -232,8 +247,8 @@ public class Playing extends GameScene implements SceneMethods {
 	{
 		if(y >= 640)
 			bottomBar.mouseClicked(x, y);
-		//else
-			//taskBar.mouseClicked(x, y);
+		
+		taskBar.mouseClicked(x, y);
 	}
 
 	@Override
@@ -272,12 +287,24 @@ public class Playing extends GameScene implements SceneMethods {
 		return this.house;
 	}
 	
+	public TaskBar getTaskBar() {
+		return taskBar;
+	}
+
+	public void setTaskBar(TaskBar taskBar) {
+		this.taskBar = taskBar;
+	}
+
 	public Weather getWeather() {
 		return this.weather;
 	}
 
 	public ArrayList<Task> getAvailableTasks() {
 		return availableTasks;
+	}
+	
+	public Game getGame() {
+		return this.game;
 	}
 
 }
