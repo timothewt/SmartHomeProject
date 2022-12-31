@@ -5,91 +5,49 @@
  */
 package view;
 
-import static utils.GameStates.PLAYING;
-import static utils.GameStates.SetGameState;
+import java.util.ArrayList;
+import javax.swing.*;
 
-import java.awt.Graphics;
+import controller.menu.PlayBtnListener;
+import controller.menu.QuitBtnListener;
 
-import main.Main;
-import ui.Button;
 
-public class Menu extends GameScene implements SceneMethods {
-	private Button bPlaying, bQuit;
+public class Menu extends GameScene {
+
+	private ArrayList<JButton> buttons;
 
 	/**
-	 * @brief Constructor
-	 * @param main
+	 * Constructor
 	 */
-	public Menu(Main main) {
-		super(main);
+	public Menu(GUIManager GUIManager) {
+		super(GUIManager);
 		initButtons();
 	}
 
 	private void initButtons() {
-		int w = 150;
-		int h = w / 3;
-		int x = 640 / 2 - w / 2;
+		this.buttons = new ArrayList<>();
+
+		int width = 150;
+		int height = width / 3;
+		int x = 640 / 2 - width / 2;
 		int y = 150;
-		int yOffset = 100;
+		int verticalGap = 40;
 
-		bPlaying = new Button("Play", x, y, w, h);
-		bQuit = new Button("Quit", x, y + yOffset, w, h);
-	}
+		this.buttons.add(this.createJButton("Play", x, y, width, height, new PlayBtnListener(this.GUIManager)));
+		this.buttons.add(this.createJButton("Quit", x, y + height + verticalGap, width, height, new QuitBtnListener()));
 
-	// Control
-	@Override
-	public void render(Graphics g) {
-		drawButtons(g);
-	}
-
-	private void drawButtons(Graphics g) {
-		bPlaying.draw(g);
-		bQuit.draw(g);
-	}
-
-	@Override
-	public void mouseClicked(int x, int y) {
-		if (bPlaying.getBounds().contains(x, y)) {
-			SetGameState(PLAYING);
-		} else if (bQuit.getBounds().contains(x, y)) {
-			System.exit(0);
+		for (JButton button: this.buttons) {
+			this.GUIManager.add(button);
 		}
 	}
 
-	@Override
-	public void mouseMoved(int x, int y) {
-		bPlaying.setIsMouseOver(false);
-		bQuit.setIsMouseOver(false);
-
-		if (bPlaying.getBounds().contains(x, y)) {
-			bPlaying.setIsMouseOver(true);
-		} else if (bQuit.getBounds().contains(x, y)) {
-			bQuit.setIsMouseOver(true);
+	public void setVisible(boolean isVisible) {
+		for (JButton button: this.buttons) {
+			button.setVisible(isVisible);
 		}
 	}
 
-	@Override
-	public void mousePressed(int x, int y) {
-		if (bPlaying.getBounds().contains(x, y)) {
-			bPlaying.setIsMousePressed(true);
-		} else if (bQuit.getBounds().contains(x, y)) {
-			bQuit.setIsMousePressed(true);
-		}
-	}
-
-	@Override
-	public void mouseReleased(int x, int y) {
-		resetButtons();
-	}
-
-	private void resetButtons() {
-		bPlaying.resetBooleans();
-		bQuit.resetBooleans();
-	}
-
-	@Override
-	public void mouseDragged(int x, int y) {
-		// TODO Auto-generated method stub
-
+	public ArrayList<JButton> getButtons() {
+		return this.buttons;
 	}
 }

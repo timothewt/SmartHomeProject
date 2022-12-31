@@ -7,7 +7,7 @@ package utils;
 
 public enum GameStates {
 
-	PLAYING, MENU, SETTINGS;
+	INGAME, MENU, SETTINGS;
 
 	public static GameStates gameState = MENU;
 
@@ -16,7 +16,7 @@ public enum GameStates {
 	 * @param state : The new state
 	 */
 	public static void SetGameState(GameStates state) {
-
 		gameState = state;
 	}
+
 }

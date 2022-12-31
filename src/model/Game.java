@@ -10,8 +10,8 @@ import java.util.Scanner;
 
 public class Game {
 
-	private House house;
-	private Weather weather;
+	private final House house;
+	private final Weather weather;
 	private int dayNumber;
 	private ArrayList<Task> availableTasks;
 
@@ -198,7 +198,7 @@ public class Game {
 
 		Couple couple = new Couple();
 		couple.addPerson(new Person("Jean", 0, 10, new ArrayList<Task>()));
-		couple.addPerson(new Person("Marie", 0, 10, new ArrayList<Task>()));
+		couple.addPerson(new Person("Marie", 1, 10, new ArrayList<Task>()));
 
 		return new House(18f, .5f, 0, false, rooms, powerGenerators, perks, couple, 21f, .45f);
 	}

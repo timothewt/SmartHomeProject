@@ -7,17 +7,15 @@ package utils;
 
 public enum PlayingStates {
 
-	ONE, TWO, THREE;
-	// temp name to create the enum
+	PICKING_TASKS, DURING_DAY, BUYING_PERKS;
 
-	public static PlayingStates playingState = ONE;
+	public static PlayingStates playingState = PICKING_TASKS;
 
 	/**
 	 * @Brief modify the state of the game -> the UI where the player is
 	 * @param state : The new state
 	 */
-	public static void SetGameState(PlayingStates state) {
-
+	public static void SetPlayingState(PlayingStates state) {
 		playingState = state;
 	}
 }

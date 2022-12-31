@@ -5,23 +5,20 @@
  */
 package ui;
 
-import static utils.GameStates.MENU;
-import static utils.GameStates.SetGameState;
+import java.util.ArrayList;
+import javax.swing.*;
 
-import java.awt.Color;
-import java.awt.Graphics;
-import java.awt.Graphics2D;
-import java.awt.RenderingHints;
-
+import controller.ingame.MenuBtnListener;
+import controller.ingame.SaveBtnListener;
+import model.Person;
 import view.InGame;
 
 public class InfoBar extends UIComponent {
 
-	private InGame inGame;
-	private Button bMenu, bSave;
+	private final InGame inGame;
 
 	/**
-	 * @Brief constructor
+	 * constructor
 	 * @param x
 	 * @param y
 	 * @param width
@@ -30,89 +27,45 @@ public class InfoBar extends UIComponent {
 	 */
 	public InfoBar(int x, int y, int width, int height, InGame inGame) {
 		super(x, y, width, height);
-		initButtons();
 		this.inGame = inGame;
+		initButtons();
 	}
 
 	private void initButtons() {
-		bMenu = new Button("Menu", 2, 642, 100, 30);
-		bSave = new Button("Save", 2, 674, 100, 30);
+		this.buttons.add(this.inGame.createJButton("Menu", x + 2, y + 2, 100, 30, new MenuBtnListener(this.inGame.getGUIManager())));
+		this.buttons.add(this.inGame.createJButton("Save", x + 2, y + 34, 100, 30, new SaveBtnListener()));
+
+		for (JButton button: this.buttons) {
+			this.inGame.getGUIManager().add(button);
+		}
 	}
 
-	public void draw(Graphics g) {
-		// Background
-		g.setColor(new Color(220, 123, 15));
-		g.fillRect(x, y, width, height);
-
-		// Buttons
-		drawButtons(g);
-
-		drawText(g);
-	}
-
-	private void drawButtons(Graphics g) {
-		bMenu.draw(g);
-		bSave.draw(g);
-
+	@Override
+	public void setVisible(boolean isVisible) {
+		this.updateLabels();
+		super.setVisible(isVisible);
 	}
 
 	/**
-	 * @brief Draw information about the Couple and the Weather
-	 * @param g
+	 * Draws information about the Couple and the Weather
 	 */
-	private void drawText(Graphics g) {
+	private void updateLabels() {
+		for (JLabel label: this.labels) {
+			this.inGame.getGUIManager().remove(label);
+		}
 
-		Graphics2D money = (Graphics2D) g;
-		money.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-		money.drawString("Money : " + inGame.getGame().getHouse().getCouple().getMoney(), 110, 660);
+		this.labels = new ArrayList<>();
+		this.labels.add(this.inGame.createJLabel("Money : " + inGame.getGame().getHouse().getCouple().getMoney(), x + 110, y + 2, 150, 20));
+		this.labels.add(this.inGame.createJLabel("Energy : " + inGame.getGame().getHouse().getEnergy(), x + 110, y + 22, 150, 20));
+		for (Person person: inGame.getGame().getHouse().getCouple().getPersons()) {
+			this.labels.add(this.inGame.createJLabel(person.toString(), x + 200, y + (20 * person.getId()) + 2, 500, 20));
+			this.labels.add(this.inGame.createJLabel(inGame.getGame().getWeather().toString(), x + 2, y + 80, 660, 20));
+			this.labels.add(this.inGame.createJLabel(inGame.getGame().getHouse().toString(), x + 2, y + 100, 660, 20));
+		}
 
-		Graphics2D energy = (Graphics2D) g;
-		energy.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-		energy.drawString("Energy : " + inGame.getGame().getHouse().getEnergy(), 110, 680);
-
-		Graphics2D jean = (Graphics2D) g;
-		jean.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-		jean.drawString(inGame.getGame().getHouse().getCouple().getPersons().get(0).toString(), 110 + 90, 660);
-
-		Graphics2D marie = (Graphics2D) g;
-		marie.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-		marie.drawString(inGame.getGame().getHouse().getCouple().getPersons().get(1).toString(), 110 + 90, 680);
-
-		Graphics2D weather = (Graphics2D) g;
-		weather.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-		weather.drawString(inGame.getGame().getWeather().toString(), 2, 720);
-	}
-
-	// Control
-	public void mouseClicked(int x, int y) {
-		if (bMenu.getBounds().contains(x, y))
-			SetGameState(MENU);
-		else if (bSave.getBounds().contains(x, y))
-			System.out.println("Game saved ! Not done yet, only this message in terminal to test");
-	}
-
-	public void mouseMoved(int x, int y) {
-		bMenu.setIsMouseOver(false);
-		bSave.setIsMouseOver(false);
-
-		if (bMenu.getBounds().contains(x, y))
-			bMenu.setIsMouseOver(true);
-		else if (bSave.getBounds().contains(x, y))
-			bSave.setIsMouseOver(true);
-	}
-
-	public void mousePressed(int x, int y) {
-		bMenu.setIsMousePressed(false);
-		bSave.setIsMousePressed(false);
-
-		if (bMenu.getBounds().contains(x, y))
-			bMenu.setIsMousePressed(true);
-		else if (bSave.getBounds().contains(x, y))
-			bSave.setIsMousePressed(true);
-	}
-
-	public void mouseReleased(int x, int y) {
-		bMenu.resetBooleans();
-		bSave.resetBooleans();
+		for (JLabel label: this.labels) {
+			System.out.println(label);
+			this.inGame.getGUIManager().add(label);
+		}
 	}
 }

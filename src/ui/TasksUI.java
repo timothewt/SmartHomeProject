@@ -88,23 +88,20 @@ public class TasksUI extends UIComponent {
 		jean_cb.setBounds(10, 200, 50, 20);
 		marie_cb = new Checkbox("Marie", cbg, false);
 		marie_cb.setBounds(70, 200, 50, 20);
+		jean_cb.setVisible(false);
+		marie_cb.setVisible(false);
 
-		jean_cb.addItemListener(new ItemListener() {
-			public void itemStateChanged(ItemEvent e) {
-				isJeanSelected = true;
-				isMarieSelected = false;
-				System.out.println("Debug : Jean selected");
-				// initPersonTasks();
-				System.out.println("Debug : Jean selected");
-			}
+		jean_cb.addItemListener(e -> {
+			isJeanSelected = true;
+			isMarieSelected = false;
+			System.out.println("Debug : Jean selected");
+			// initPersonTasks();
 		});
-		marie_cb.addItemListener(new ItemListener() {
-			public void itemStateChanged(ItemEvent e) {
-				isJeanSelected = false;
-				isMarieSelected = true;
-				// initPersonTasks();
-				System.out.println("Debug : Marie selected");
-			}
+		marie_cb.addItemListener(e -> {
+			isJeanSelected = false;
+			isMarieSelected = true;
+			// initPersonTasks();
+			System.out.println("Debug : Marie selected");
 		});
 		inGame.getMain().add(jean_cb);
 		inGame.getMain().add(marie_cb);
@@ -114,7 +111,7 @@ public class TasksUI extends UIComponent {
 	 * @brief Show checkbox button if the player is on the good scene
 	 * @param isVisible
 	 */
-	public void visibleOrNot(boolean isVisible) {
+	public void setVisible(boolean isVisible) {
 		if (isVisible) {
 			jean_cb.setVisible(true);
 			marie_cb.setVisible(true);
