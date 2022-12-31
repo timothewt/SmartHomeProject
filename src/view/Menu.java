@@ -5,12 +5,12 @@
  */
 package view;
 
-import static main.GameStates.PLAYING;
-import static main.GameStates.SetGameState;
+import static utils.GameStates.PLAYING;
+import static utils.GameStates.SetGameState;
 
 import java.awt.Graphics;
 
-import main.Game;
+import main.Main;
 import ui.Button;
 
 public class Menu extends GameScene implements SceneMethods {
@@ -18,10 +18,10 @@ public class Menu extends GameScene implements SceneMethods {
 
 	/**
 	 * @brief Constructor
-	 * @param game
+	 * @param main
 	 */
-	public Menu(Game game) {
-		super(game);
+	public Menu(Main main) {
+		super(main);
 		initButtons();
 	}
 

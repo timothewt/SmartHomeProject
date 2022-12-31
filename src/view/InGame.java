@@ -7,30 +7,29 @@ package view;
 
 import java.awt.Graphics;
 
-import main.Game;
-import model.Playing;
-import ui.ActionBar;
+import main.Main;
+import model.Game;
+import ui.InfoBar;
 import ui.TaskBar;
 
-public class Play extends GameScene implements SceneMethods {
+public class InGame extends GameScene implements SceneMethods {
 
-	private Playing playing;
-	private ActionBar bottomBar;
-	private TaskBar taskBar;
 	private Game game;
+	private InfoBar bottomBar;
+	private TaskBar taskBar;
+	private Main main;
 
-	public Play(Game game) {
-		super(game);
-		this.game = game;
-		this.playing = new Playing();
-		bottomBar = new ActionBar(0, 640, 640, 90, this);
+	public InGame(Main main) {
+		super(main);
+		this.main = main;
+		this.game = new Game();
+		bottomBar = new InfoBar(0, 640, 640, 90, this);
 		taskBar = new TaskBar(0, 0, 640, 640, this);
 	}
 
 	public void render(Graphics g) {
 		bottomBar.draw(g);
 		taskBar.draw(g);
-
 	}
 
 	// Control
@@ -72,12 +71,12 @@ public class Play extends GameScene implements SceneMethods {
 	}
 
 	// Getters and setters
-	public Playing getPlaying() {
-		return this.playing;
+	public Game getPlaying() {
+		return this.game;
 	}
 
-	public Game getGame() {
-		return this.game;
+	public Main getGame() {
+		return this.main;
 	}
 
 	public TaskBar getTaskBar() {

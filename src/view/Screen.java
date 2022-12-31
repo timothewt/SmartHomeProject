@@ -3,40 +3,37 @@
  * @date 27/12/2022
  * @brief Set parameter for the Game window
  */
-package main;
+package view;
 
 import java.awt.Dimension;
 import java.awt.Graphics;
 
 import javax.swing.JPanel;
 
-import Control.KeyboardListener;
-import Control.MyMouseListener;
+import controller.MyMouseListener;
+import main.Main;
 
-public class GameScreen extends JPanel {
-	private Game game;
+public class Screen extends JPanel {
+	private Main main;
 
 	private Dimension size;
 	private MyMouseListener myMouseListener;
-	private KeyboardListener keyboardListener;
 
 	/**
 	 * @brief Constructor
-	 * @param game
+	 * @param main
 	 */
-	public GameScreen(Game game) {
-		this.game = game;
+	public Screen(Main main) {
+		this.main = main;
 
 		setPanelSize();
 	}
 
 	public void initInputs() {
-		myMouseListener = new MyMouseListener(game);
-		keyboardListener = new KeyboardListener();
+		myMouseListener = new MyMouseListener(main);
 
 		addMouseListener(myMouseListener);
 		addMouseMotionListener(myMouseListener);
-		addKeyListener(keyboardListener);
 
 		requestFocus();
 	}
@@ -57,7 +54,6 @@ public class GameScreen extends JPanel {
 	 */
 	public void paintComponent(Graphics g) {
 		super.paintComponent(g);
-		game.getRender().render(g);
-		;
+		main.getRender().render(g);
 	}
 }

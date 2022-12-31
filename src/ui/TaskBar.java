@@ -16,11 +16,11 @@ import java.awt.event.ItemListener;
 import java.util.ArrayList;
 
 import model.Task;
-import view.Play;
+import view.InGame;
 
 public class TaskBar extends Bar {
 
-	private Play play;
+	private InGame inGame;
 	private ArrayList<Button> taskButtons = new ArrayList<>();
 	private ArrayList<Button> jeanButtons = new ArrayList<>();
 	private ArrayList<Button> marieButtons = new ArrayList<>();
@@ -37,12 +37,12 @@ public class TaskBar extends Bar {
 	 * @param y
 	 * @param width
 	 * @param height
-	 * @param play
+	 * @param inGame
 	 */
-	public TaskBar(int x, int y, int width, int height, Play play) {
+	public TaskBar(int x, int y, int width, int height, InGame inGame) {
 
 		super(x, y, width, height);
-		this.play = play;
+		this.inGame = inGame;
 		initButtons();
 		initCheckbox();
 		initPersonTasks(0, jeanButtons);
@@ -64,7 +64,7 @@ public class TaskBar extends Bar {
 
 		int i = 0;
 		int line = 0;
-		for (Task task : this.play.getPlaying().getAvailableTasks()) {
+		for (Task task : this.inGame.getPlaying().getAvailableTasks()) {
 			if (xOffset * i > 640 - w) {
 				i = 0;
 				line++;
@@ -106,8 +106,8 @@ public class TaskBar extends Bar {
 				System.out.println("Debug : Marie selected");
 			}
 		});
-		play.getGame().add(jean_cb);
-		play.getGame().add(marie_cb);
+		inGame.getGame().add(jean_cb);
+		inGame.getGame().add(marie_cb);
 	}
 
 	/**
@@ -143,11 +143,11 @@ public class TaskBar extends Bar {
 		if (isJeanSelected) {
 			drawButtons(g, jeanButtons);
 			// if no longer slot for tasks available : print a message
-			if (play.getPlaying().getHouse().getCouple().getPersons().get(0).getTasks().size() == 9)
+			if (inGame.getPlaying().getHouse().getCouple().getPersons().get(0).getTasks().size() == 9)
 				maxTask.drawString("Maximum amount of task reached !", 10, 430);
 		} else if (isMarieSelected) {
 			drawButtons(g, marieButtons);
-			if (play.getPlaying().getHouse().getCouple().getPersons().get(1).getTasks().size() == 9)
+			if (inGame.getPlaying().getHouse().getCouple().getPersons().get(1).getTasks().size() == 9)
 				maxTask.drawString("Maximum amount of task reached !", 10, 430);
 		}
 	}
@@ -216,7 +216,7 @@ public class TaskBar extends Bar {
 		int y = 0;
 
 		// get Stamina of Jean
-		int i = play.getPlaying().getHouse().getCouple().getPersons().get(id).getMaxStamina(); // Max stamina because
+		int i = inGame.getPlaying().getHouse().getCouple().getPersons().get(id).getMaxStamina(); // Max stamina because
 																								// stamina
 		// decrease
 		// System.out.println("Debug TaskBar:"+i);
@@ -256,19 +256,19 @@ public class TaskBar extends Bar {
 	 */
 	private void addTask(int id) {
 
-		Task taskToAdd = play.getPlaying().findTaskWithId(id);
+		Task taskToAdd = inGame.getPlaying().findTaskWithId(id);
 		for (int i = 0; i < Math.abs(taskToAdd.getStamina()); i++)
 			if (isJeanSelected) {
-				if (play.getPlaying().getHouse().getCouple().getPersons().get(0).getTasks().size() == 9)
+				if (inGame.getPlaying().getHouse().getCouple().getPersons().get(0).getTasks().size() == 9)
 					return;
-				play.getPlaying().getHouse().getCouple().getPersons().get(0).addTask(taskToAdd);
+				inGame.getPlaying().getHouse().getCouple().getPersons().get(0).addTask(taskToAdd);
 				setButtonName(getFirstNonUsedSlot(jeanButtons), taskToAdd.getName(), jeanButtons);
 			}
 
 			else if (isMarieSelected) {
-				if (play.getPlaying().getHouse().getCouple().getPersons().get(1).getTasks().size() == 9)
+				if (inGame.getPlaying().getHouse().getCouple().getPersons().get(1).getTasks().size() == 9)
 					return;
-				play.getPlaying().getHouse().getCouple().getPersons().get(1).addTask(taskToAdd);
+				inGame.getPlaying().getHouse().getCouple().getPersons().get(1).addTask(taskToAdd);
 				setButtonName(getFirstNonUsedSlot(marieButtons), taskToAdd.getName(), marieButtons);
 			}
 
@@ -297,15 +297,15 @@ public class TaskBar extends Bar {
 		buttons.get(id).setText(text);
 	}
 
-	/*
+	/**
 	 * @brief Reset tasks of the selected player
 	 */
 	private void resetTask() {
 		if (isJeanSelected) {
-			play.getPlaying().getHouse().getCouple().getPersons().get(0).setTasks(new ArrayList<Task>());
+			inGame.getPlaying().getHouse().getCouple().getPersons().get(0).setTasks(new ArrayList<Task>());
 			resetPersonTasks(0, jeanButtons);
 		} else if (isMarieSelected) {
-			play.getPlaying().getHouse().getCouple().getPersons().get(1).setTasks(new ArrayList<Task>());
+			inGame.getPlaying().getHouse().getCouple().getPersons().get(1).setTasks(new ArrayList<Task>());
 			resetPersonTasks(1, marieButtons);
 		}
 	}

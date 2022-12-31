@@ -5,29 +5,31 @@
  */
 package main;
 
+import utils.GameStates;
+
 import java.awt.Graphics;
 
 public class Render {
 
-	private Game game;
+	private Main main;
 
 	/**
 	 * @brief Constructor
-	 * @param game
+	 * @param main
 	 */
-	public Render(Game game) {
+	public Render(Main main) {
 
-		this.game = game;
+		this.main = main;
 	}
 
 	public void render(Graphics g) {
 
 		switch (GameStates.gameState) {
 		case MENU:
-			game.getMenu().render(g);
+			main.getMenu().render(g);
 			break;
 		case PLAYING:
-			game.getPlay().render(g);
+			main.getPlay().render(g);
 			break;
 		default:
 			break;

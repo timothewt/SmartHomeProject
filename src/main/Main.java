@@ -5,16 +5,16 @@
  */
 package main;
 
-import model.Playing;
+import utils.GameStates;
+import utils.PlayingStates;
 import view.Menu;
-import view.Play;
+import view.InGame;
+import view.Screen;
 
 import javax.swing.JFrame;
 
-import java.util.ArrayList;
-
-public class Game extends JFrame implements Runnable {
-	private GameScreen gameScreen;
+public class Main extends JFrame implements Runnable {
+	private Screen screen;
 	private Thread gameThread;
 
 	private final double FPS_SET = 90.0;
@@ -23,19 +23,19 @@ public class Game extends JFrame implements Runnable {
 	// Classes
 	private Render render;
 	private Menu menu;
-	private Play play;
+	private InGame inGame;
 
 	/**
 	 * @brief Constructor
 	 */
-	public Game() {
+	public Main() {
 
 		initClasses();
 
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		setLocationRelativeTo(null);
 		setResizable(false);
-		add(gameScreen);
+		add(screen);
 		pack();
 		setVisible(true);
 
@@ -44,9 +44,9 @@ public class Game extends JFrame implements Runnable {
 	private void initClasses() {
 
 		render = new Render(this);
-		gameScreen = new GameScreen(this);
+		screen = new Screen(this);
 		menu = new Menu(this);
-		play = new Play(this);
+		inGame = new InGame(this);
 	}
 
 	/**
@@ -61,10 +61,10 @@ public class Game extends JFrame implements Runnable {
 	private void updateGame() {
 		switch (GameStates.gameState) {
 		case MENU:
-			play.getTaskBar().visibleOrNot(false);
+			inGame.getTaskBar().visibleOrNot(false);
 			break;
 		case PLAYING:
-			play.getTaskBar().visibleOrNot(true);
+			inGame.getTaskBar().visibleOrNot(true);
 			switch (PlayingStates.playingState) {
 			case ONE:
 				break;
@@ -75,7 +75,7 @@ public class Game extends JFrame implements Runnable {
 			}
 			break;
 		default:
-			play.getTaskBar().visibleOrNot(false);
+			inGame.getTaskBar().visibleOrNot(false);
 			break;
 
 		}
@@ -86,9 +86,9 @@ public class Game extends JFrame implements Runnable {
 	 * @param args
 	 */
 	public static void main(String[] args) {
-		Game game = new Game();
-		game.gameScreen.initInputs();
-		game.start();
+		Main main = new Main();
+		main.screen.initInputs();
+		main.start();
 	}
 
 	/**
@@ -142,7 +142,7 @@ public class Game extends JFrame implements Runnable {
 		return menu;
 	}
 
-	public Play getPlay() {
-		return play;
+	public InGame getPlay() {
+		return inGame;
 	}
 }

@@ -13,7 +13,6 @@ public class House {
 	private float temperature;
 	private float humidityRate;
 	private int energy;
-	private int energyUsed;
 	private boolean isOnPowerOutage;
 	private ArrayList<Room> rooms;
 	private ArrayList<PowerGenerator> powerSupply;
@@ -37,7 +36,6 @@ public class House {
 		this.couple = couple;
 		this.optimalTemperature = optimalTemperature;
 		this.optimalHumidityRate = optimalHumidityRate;
-		this.energyUsed = 0;
 	}
 	
 	/**
@@ -173,19 +171,7 @@ public class House {
 	}
 
 	public int getEnergy() {
-		return totalEnergy() - energyUsed;
-	}
-	
-	public int totalEnergy() {
-		int total = 0;
-		for(PowerGenerator o : powerSupply) {
-			total = total + o.getDailyProduction(); 
-		}
-		return total;
-	}
-	
-	public void setEnergyUsed(int energyUsed) {
-		this.energyUsed = energyUsed;
+		return energy;
 	}
 
 	public void setEnergy(int energy) {

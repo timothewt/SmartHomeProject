@@ -3,7 +3,7 @@
  * @date 27/12/2022
  * @brief Use to show the good GUI while playing
  */
-package main;
+package utils;
 
 public enum PlayingStates {
 

@@ -3,25 +3,25 @@
  * @date 27/12/2022
  * @brief Mouse listener
  */
-package Control;
+package controller;
 
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
 
-import main.Game;
-import main.GameStates;
+import main.Main;
+import utils.GameStates;
 
 public class MyMouseListener implements MouseListener, MouseMotionListener {
 
-	private Game game;
+	private Main main;
 
 	/**
 	 * @brief Constructor
-	 * @param game
+	 * @param main
 	 */
-	public MyMouseListener(Game game) {
-		this.game = game;
+	public MyMouseListener(Main main) {
+		this.main = main;
 	}
 
 	//Control
@@ -29,10 +29,10 @@ public class MyMouseListener implements MouseListener, MouseMotionListener {
 	public void mouseDragged(MouseEvent e) {
 		switch (GameStates.gameState) {
 		case MENU:
-			game.getMenu().mouseDragged(e.getX(), e.getY());
+			main.getMenu().mouseDragged(e.getX(), e.getY());
 			break;
 		case PLAYING:
-			game.getPlay().mouseDragged(e.getX(), e.getY());
+			main.getPlay().mouseDragged(e.getX(), e.getY());
 			break;
 		default:
 			break;
@@ -43,10 +43,10 @@ public class MyMouseListener implements MouseListener, MouseMotionListener {
 	public void mouseMoved(MouseEvent e) {
 		switch (GameStates.gameState) {
 		case MENU:
-			game.getMenu().mouseMoved(e.getX(), e.getY());
+			main.getMenu().mouseMoved(e.getX(), e.getY());
 			break;
 		case PLAYING:
-			game.getPlay().mouseMoved(e.getX(), e.getY());
+			main.getPlay().mouseMoved(e.getX(), e.getY());
 			break;
 		default:
 			break;
@@ -58,10 +58,10 @@ public class MyMouseListener implements MouseListener, MouseMotionListener {
 		if (e.getButton() == MouseEvent.BUTTON1) {
 			switch (GameStates.gameState) {
 			case MENU:
-				game.getMenu().mouseClicked(e.getX(), e.getY());
+				main.getMenu().mouseClicked(e.getX(), e.getY());
 				break;
 			case PLAYING:
-				game.getPlay().mouseClicked(e.getX(), e.getY());
+				main.getPlay().mouseClicked(e.getX(), e.getY());
 				break;
 			default:
 				break;
@@ -73,10 +73,10 @@ public class MyMouseListener implements MouseListener, MouseMotionListener {
 	public void mousePressed(MouseEvent e) {
 		switch (GameStates.gameState) {
 		case MENU:
-			game.getMenu().mousePressed(e.getX(), e.getY());
+			main.getMenu().mousePressed(e.getX(), e.getY());
 			break;
 		case PLAYING:
-			game.getPlay().mousePressed(e.getX(), e.getY());
+			main.getPlay().mousePressed(e.getX(), e.getY());
 			break;
 		default:
 			break;
@@ -87,10 +87,10 @@ public class MyMouseListener implements MouseListener, MouseMotionListener {
 	public void mouseReleased(MouseEvent e) {
 		switch (GameStates.gameState) {
 		case MENU:
-			game.getMenu().mouseReleased(e.getX(), e.getY());
+			main.getMenu().mouseReleased(e.getX(), e.getY());
 			break;
 		case PLAYING:
-			game.getPlay().mouseReleased(e.getX(), e.getY());
+			main.getPlay().mouseReleased(e.getX(), e.getY());
 			break;
 		default:
 			break;

@@ -1,21 +1,22 @@
 /**
- * @file ActionBar.java
+ * @file GameScene.java
  * @date 27/12/2022
  * @brief Create the Game Scene
  */
 package view;
 
-import main.Game;
+import main.Main;
 
 public class GameScene {
-	protected Game game;
 
-	public GameScene(Game game) {
-		this.game = game;
+	protected Main main;
 
+	public GameScene(Main main) {
+		this.main = main;
 	}
 
-	public Game getGame() {
-		return game;
+	public Main getMain() {
+		return main;
 	}
+
 }
