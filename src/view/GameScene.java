@@ -5,18 +5,16 @@
  */
 package view;
 
-import main.Main;
-
 public class GameScene {
 
-	protected Main main;
+	protected GUIManager GUIManager;
 
-	public GameScene(Main main) {
-		this.main = main;
+	public GameScene(GUIManager GUIManager) {
+		this.GUIManager = GUIManager;
 	}
 
-	public Main getMain() {
-		return main;
+	public GUIManager getMain() {
+		return GUIManager;
 	}
 
 }

@@ -11,26 +11,26 @@ import java.awt.Graphics;
 import javax.swing.JPanel;
 
 import controller.MyMouseListener;
-import main.Main;
 
 public class Screen extends JPanel {
-	private Main main;
+
+	private final GUIManager GUIManager;
 
 	private Dimension size;
 	private MyMouseListener myMouseListener;
 
 	/**
 	 * @brief Constructor
-	 * @param main
+	 * @param GUIManager
 	 */
-	public Screen(Main main) {
-		this.main = main;
+	public Screen(GUIManager GUIManager) {
+		this.GUIManager = GUIManager;
 
 		setPanelSize();
 	}
 
 	public void initInputs() {
-		myMouseListener = new MyMouseListener(main);
+		myMouseListener = new MyMouseListener(GUIManager);
 
 		addMouseListener(myMouseListener);
 		addMouseMotionListener(myMouseListener);
@@ -54,6 +54,6 @@ public class Screen extends JPanel {
 	 */
 	public void paintComponent(Graphics g) {
 		super.paintComponent(g);
-		main.getRender().render(g);
+		GUIManager.getRender().render(g);
 	}
 }

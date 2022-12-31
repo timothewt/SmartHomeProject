@@ -11,8 +11,6 @@ import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.RenderingHints;
-import java.awt.event.ItemEvent;
-import java.awt.event.ItemListener;
 import java.util.ArrayList;
 
 import model.Task;
@@ -89,22 +87,13 @@ public class TasksUI extends UIComponent {
 		marie_cb = new Checkbox("Marie", cbg, false);
 		marie_cb.setBounds(70, 200, 50, 20);
 
-		jean_cb.addItemListener(new ItemListener() {
-			public void itemStateChanged(ItemEvent e) {
-				isJeanSelected = true;
-				isMarieSelected = false;
-				System.out.println("Debug : Jean selected");
-				// initPersonTasks();
-				System.out.println("Debug : Jean selected");
-			}
+		jean_cb.addItemListener(e -> {
+			isJeanSelected = true;
+			isMarieSelected = false;
 		});
-		marie_cb.addItemListener(new ItemListener() {
-			public void itemStateChanged(ItemEvent e) {
-				isJeanSelected = false;
-				isMarieSelected = true;
-				// initPersonTasks();
-				System.out.println("Debug : Marie selected");
-			}
+		marie_cb.addItemListener(e -> {
+			isJeanSelected = false;
+			isMarieSelected = true;
 		});
 		inGame.getMain().add(jean_cb);
 		inGame.getMain().add(marie_cb);
@@ -114,7 +103,7 @@ public class TasksUI extends UIComponent {
 	 * @brief Show checkbox button if the player is on the good scene
 	 * @param isVisible
 	 */
-	public void visibleOrNot(boolean isVisible) {
+	public void setVisible(boolean isVisible) {
 		if (isVisible) {
 			jean_cb.setVisible(true);
 			marie_cb.setVisible(true);

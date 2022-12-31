@@ -18,7 +18,7 @@ import view.InGame;
 public class InfoBar extends UIComponent {
 
 	private InGame inGame;
-	private Button bMenu, bSave;
+	private Button btnMenu, btnSave;
 
 	/**
 	 * @Brief constructor
@@ -35,8 +35,8 @@ public class InfoBar extends UIComponent {
 	}
 
 	private void initButtons() {
-		bMenu = new Button("Menu", 2, 642, 100, 30);
-		bSave = new Button("Save", 2, 674, 100, 30);
+		btnMenu = new Button("Menu", 2, 642, 100, 30);
+		btnSave = new Button("Save", 2, 674, 100, 30);
 	}
 
 	public void draw(Graphics g) {
@@ -51,8 +51,8 @@ public class InfoBar extends UIComponent {
 	}
 
 	private void drawButtons(Graphics g) {
-		bMenu.draw(g);
-		bSave.draw(g);
+		btnMenu.draw(g);
+		btnSave.draw(g);
 
 	}
 
@@ -85,34 +85,34 @@ public class InfoBar extends UIComponent {
 
 	// Control
 	public void mouseClicked(int x, int y) {
-		if (bMenu.getBounds().contains(x, y))
+		if (btnMenu.getBounds().contains(x, y))
 			SetGameState(MENU);
-		else if (bSave.getBounds().contains(x, y))
+		else if (btnSave.getBounds().contains(x, y))
 			System.out.println("Game saved ! Not done yet, only this message in terminal to test");
 	}
 
 	public void mouseMoved(int x, int y) {
-		bMenu.setIsMouseOver(false);
-		bSave.setIsMouseOver(false);
+		btnMenu.setIsMouseOver(false);
+		btnSave.setIsMouseOver(false);
 
-		if (bMenu.getBounds().contains(x, y))
-			bMenu.setIsMouseOver(true);
-		else if (bSave.getBounds().contains(x, y))
-			bSave.setIsMouseOver(true);
+		if (btnMenu.getBounds().contains(x, y))
+			btnMenu.setIsMouseOver(true);
+		else if (btnSave.getBounds().contains(x, y))
+			btnSave.setIsMouseOver(true);
 	}
 
 	public void mousePressed(int x, int y) {
-		bMenu.setIsMousePressed(false);
-		bSave.setIsMousePressed(false);
+		btnMenu.setIsMousePressed(false);
+		btnSave.setIsMousePressed(false);
 
-		if (bMenu.getBounds().contains(x, y))
-			bMenu.setIsMousePressed(true);
-		else if (bSave.getBounds().contains(x, y))
-			bSave.setIsMousePressed(true);
+		if (btnMenu.getBounds().contains(x, y))
+			btnMenu.setIsMousePressed(true);
+		else if (btnSave.getBounds().contains(x, y))
+			btnSave.setIsMousePressed(true);
 	}
 
 	public void mouseReleased(int x, int y) {
-		bMenu.resetBooleans();
-		bSave.resetBooleans();
+		btnMenu.resetBooleans();
+		btnSave.resetBooleans();
 	}
 }

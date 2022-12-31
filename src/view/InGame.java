@@ -7,21 +7,20 @@ package view;
 
 import java.awt.Graphics;
 
-import main.Main;
 import model.Game;
 import ui.InfoBar;
 import ui.TasksUI;
 
 public class InGame extends GameScene implements SceneMethods {
 
-	private Game game;
-	private InfoBar bottomBar;
-	private TasksUI taskBar;
-	private Main main;
+	private final Game game;
+	private final InfoBar bottomBar;
+	private final TasksUI taskBar;
+	private final GUIManager GUIManager;
 
-	public InGame(Main main) {
-		super(main);
-		this.main = main;
+	public InGame(GUIManager GUIManager) {
+		super(GUIManager);
+		this.GUIManager = GUIManager;
 		this.game = new Game();
 		bottomBar = new InfoBar(0, 640, 640, 90, this);
 		taskBar = new TasksUI(0, 0, 640, 640, this);
@@ -65,18 +64,15 @@ public class InGame extends GameScene implements SceneMethods {
 	}
 
 	@Override
-	public void mouseDragged(int x, int y) {
-		// TODO Auto-generated method stub
-
-	}
+	public void mouseDragged(int x, int y) {}
 
 	// Getters and setters
 	public Game getGame() {
 		return this.game;
 	}
 
-	public Main getMain() {
-		return this.main;
+	public GUIManager getMain() {
+		return this.GUIManager;
 	}
 
 	public TasksUI getTaskBar() {

@@ -3,7 +3,7 @@
  * @date 14/12/2022
  * @brief Display different type of view
  */
-package main;
+package view;
 
 import utils.GameStates;
 
@@ -11,25 +11,25 @@ import java.awt.Graphics;
 
 public class Render {
 
-	private Main main;
+	private GUIManager GUIManager;
 
 	/**
 	 * @brief Constructor
-	 * @param main
+	 * @param GUIManager
 	 */
-	public Render(Main main) {
+	public Render(GUIManager GUIManager) {
 
-		this.main = main;
+		this.GUIManager = GUIManager;
 	}
 
 	public void render(Graphics g) {
 
 		switch (GameStates.gameState) {
 		case MENU:
-			main.getMenu().render(g);
+			GUIManager.getMenu().render(g);
 			break;
 		case PLAYING:
-			main.getPlay().render(g);
+			GUIManager.getPlay().render(g);
 			break;
 		default:
 			break;

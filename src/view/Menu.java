@@ -10,18 +10,17 @@ import static utils.GameStates.SetGameState;
 
 import java.awt.Graphics;
 
-import main.Main;
 import ui.Button;
 
 public class Menu extends GameScene implements SceneMethods {
-	private Button bPlaying, bQuit;
+	private Button btnPlaying, btnQuit;
 
 	/**
 	 * @brief Constructor
-	 * @param main
+	 * @param GUIManager
 	 */
-	public Menu(Main main) {
-		super(main);
+	public Menu(GUIManager GUIManager) {
+		super(GUIManager);
 		initButtons();
 	}
 
@@ -32,8 +31,8 @@ public class Menu extends GameScene implements SceneMethods {
 		int y = 150;
 		int yOffset = 100;
 
-		bPlaying = new Button("Play", x, y, w, h);
-		bQuit = new Button("Quit", x, y + yOffset, w, h);
+		btnPlaying = new Button("Play", x, y, w, h);
+		btnQuit = new Button("Quit", x, y + yOffset, w, h);
 	}
 
 	// Control
@@ -43,37 +42,37 @@ public class Menu extends GameScene implements SceneMethods {
 	}
 
 	private void drawButtons(Graphics g) {
-		bPlaying.draw(g);
-		bQuit.draw(g);
+		btnPlaying.draw(g);
+		btnQuit.draw(g);
 	}
 
 	@Override
 	public void mouseClicked(int x, int y) {
-		if (bPlaying.getBounds().contains(x, y)) {
+		if (btnPlaying.getBounds().contains(x, y)) {
 			SetGameState(PLAYING);
-		} else if (bQuit.getBounds().contains(x, y)) {
+		} else if (btnQuit.getBounds().contains(x, y)) {
 			System.exit(0);
 		}
 	}
 
 	@Override
 	public void mouseMoved(int x, int y) {
-		bPlaying.setIsMouseOver(false);
-		bQuit.setIsMouseOver(false);
+		btnPlaying.setIsMouseOver(false);
+		btnQuit.setIsMouseOver(false);
 
-		if (bPlaying.getBounds().contains(x, y)) {
-			bPlaying.setIsMouseOver(true);
-		} else if (bQuit.getBounds().contains(x, y)) {
-			bQuit.setIsMouseOver(true);
+		if (btnPlaying.getBounds().contains(x, y)) {
+			btnPlaying.setIsMouseOver(true);
+		} else if (btnQuit.getBounds().contains(x, y)) {
+			btnQuit.setIsMouseOver(true);
 		}
 	}
 
 	@Override
 	public void mousePressed(int x, int y) {
-		if (bPlaying.getBounds().contains(x, y)) {
-			bPlaying.setIsMousePressed(true);
-		} else if (bQuit.getBounds().contains(x, y)) {
-			bQuit.setIsMousePressed(true);
+		if (btnPlaying.getBounds().contains(x, y)) {
+			btnPlaying.setIsMousePressed(true);
+		} else if (btnQuit.getBounds().contains(x, y)) {
+			btnQuit.setIsMousePressed(true);
 		}
 	}
 
@@ -83,13 +82,10 @@ public class Menu extends GameScene implements SceneMethods {
 	}
 
 	private void resetButtons() {
-		bPlaying.resetBooleans();
-		bQuit.resetBooleans();
+		btnPlaying.resetBooleans();
+		btnQuit.resetBooleans();
 	}
 
 	@Override
-	public void mouseDragged(int x, int y) {
-		// TODO Auto-generated method stub
-
-	}
+	public void mouseDragged(int x, int y) {}
 }
