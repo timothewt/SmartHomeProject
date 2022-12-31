@@ -10,13 +10,13 @@ import java.awt.Graphics;
 import main.Main;
 import model.Game;
 import ui.InfoBar;
-import ui.TaskBar;
+import ui.TasksUI;
 
 public class InGame extends GameScene implements SceneMethods {
 
 	private Game game;
 	private InfoBar bottomBar;
-	private TaskBar taskBar;
+	private TasksUI taskBar;
 	private Main main;
 
 	public InGame(Main main) {
@@ -24,7 +24,7 @@ public class InGame extends GameScene implements SceneMethods {
 		this.main = main;
 		this.game = new Game();
 		bottomBar = new InfoBar(0, 640, 640, 90, this);
-		taskBar = new TaskBar(0, 0, 640, 640, this);
+		taskBar = new TasksUI(0, 0, 640, 640, this);
 	}
 
 	public void render(Graphics g) {
@@ -71,15 +71,15 @@ public class InGame extends GameScene implements SceneMethods {
 	}
 
 	// Getters and setters
-	public Game getPlaying() {
+	public Game getGame() {
 		return this.game;
 	}
 
-	public Main getGame() {
+	public Main getMain() {
 		return this.main;
 	}
 
-	public TaskBar getTaskBar() {
+	public TasksUI getTaskBar() {
 		return taskBar;
 	}
 

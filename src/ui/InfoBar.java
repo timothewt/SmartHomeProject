@@ -15,7 +15,7 @@ import java.awt.RenderingHints;
 
 import view.InGame;
 
-public class InfoBar extends Bar {
+public class InfoBar extends UIComponent {
 
 	private InGame inGame;
 	private Button bMenu, bSave;
@@ -64,23 +64,23 @@ public class InfoBar extends Bar {
 
 		Graphics2D money = (Graphics2D) g;
 		money.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-		money.drawString("Money : " + inGame.getPlaying().getHouse().getCouple().getMoney(), 110, 660);
+		money.drawString("Money : " + inGame.getGame().getHouse().getCouple().getMoney(), 110, 660);
 
 		Graphics2D energy = (Graphics2D) g;
 		energy.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-		energy.drawString("Energy : " + inGame.getPlaying().getHouse().getEnergy(), 110, 680);
+		energy.drawString("Energy : " + inGame.getGame().getHouse().getEnergy(), 110, 680);
 
 		Graphics2D jean = (Graphics2D) g;
 		jean.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-		jean.drawString(inGame.getPlaying().getHouse().getCouple().getPersons().get(0).toString(), 110 + 90, 660);
+		jean.drawString(inGame.getGame().getHouse().getCouple().getPersons().get(0).toString(), 110 + 90, 660);
 
 		Graphics2D marie = (Graphics2D) g;
 		marie.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-		marie.drawString(inGame.getPlaying().getHouse().getCouple().getPersons().get(1).toString(), 110 + 90, 680);
+		marie.drawString(inGame.getGame().getHouse().getCouple().getPersons().get(1).toString(), 110 + 90, 680);
 
 		Graphics2D weather = (Graphics2D) g;
 		weather.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-		weather.drawString(inGame.getPlaying().getWeather().toString(), 2, 720);
+		weather.drawString(inGame.getGame().getWeather().toString(), 2, 720);
 	}
 
 	// Control

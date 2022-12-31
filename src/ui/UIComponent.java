@@ -5,7 +5,7 @@
  */
 package ui;
 
-public class Bar {
+public class UIComponent {
 	protected int x, y, width, height;
 
 	/**
@@ -15,7 +15,7 @@ public class Bar {
 	 * @param width
 	 * @param height
 	 */
-	public Bar(int x, int y, int width, int height) {
+	public UIComponent(int x, int y, int width, int height) {
 		this.x = x;
 		this.y = y;
 		this.width = width;
