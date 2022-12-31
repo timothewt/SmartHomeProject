@@ -5,13 +5,10 @@
  */
 package main;
 
-import model.Playing;
-import view.Menu;
-import view.Play;
-
 import javax.swing.JFrame;
 
-import java.util.ArrayList;
+import view.Menu;
+import view.Play;
 
 public class Game extends JFrame implements Runnable {
 	private GameScreen gameScreen;
