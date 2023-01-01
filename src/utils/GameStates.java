@@ -3,7 +3,7 @@
  * @date 27/12/2022
  * @brief Enum that represent the current scene
  */
-package main;
+package utils;
 
 public enum GameStates {
 

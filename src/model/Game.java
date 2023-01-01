@@ -8,7 +8,7 @@ package model;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-public class Playing {
+public class Game {
 
 	private House house;
 	private Weather weather;
@@ -18,7 +18,7 @@ public class Playing {
 	/**
 	 * @brief Constructor
 	 */
-	public Playing() {
+	public Game() {
 
 		this.house = initHouse();
 		this.weather = new Weather();
@@ -28,13 +28,14 @@ public class Playing {
 	}
 
 	/**
-	 * @brief update stats on a new day
+	 * @brief update the house and the weather on a new day
 	 * @param dayNumber
 	 */
 	private void onNewDay(int dayNumber) {
 		this.house.onNewDay();
 		this.weather.update(dayNumber);
 	}
+
 
 	@SuppressWarnings("resource")
 	public void run() {
@@ -210,17 +211,17 @@ public class Playing {
 	private ArrayList<Task> initTasks() {
 		availableTasks = new ArrayList<Task>();
 
-		availableTasks.add(new Task(0, "Chauffage On", -1, 0, 0));
-		availableTasks.add(new Task(1, "Chauffage Off", -1, 0, 0));
-		availableTasks.add(new Task(2, "Clim On", -1, 0, 0));
-		availableTasks.add(new Task(3, "Clim off", -1, 0, 0));
-		availableTasks.add(new Task(4, "Windows open", -1, 0, 0));
-		availableTasks.add(new Task(5, "Windows closed", -1, 0, 0));
+		availableTasks.add(new Task(0, "Heater On", -1, 0, 0));
+		availableTasks.add(new Task(1, "Heater Off", -1, 0, 0));
+		availableTasks.add(new Task(2, "AC On", -1, 0, 0));
+		availableTasks.add(new Task(3, "AC Off", -1, 0, 0));
+		availableTasks.add(new Task(4, "Open windows", -1, 0, 0));
+		availableTasks.add(new Task(5, "Close windows", -1, 0, 0));
 		availableTasks.add(new Task(6, "Work", -5, 0, 0));
 		availableTasks.add(new Task(7, "Sleep", 2, 0, 0));
 		availableTasks.add(new Task(8, "Biking", -4, 0, 50));
 		availableTasks.add(new Task(9, "Cook", 2, 0, -30));
-		availableTasks.add(new Task(10, "Outage", -2, -200, 0));
+		availableTasks.add(new Task(10, "Repair Outage", -2, -200, 0));
 
 		return availableTasks;
 	}
@@ -231,17 +232,17 @@ public class Playing {
 	 * @return the Task corresponding to the id
 	 */
 	public Task findTaskWithId(int id) {
-		Task temp = null;
-		if (id < 0 || id > availableTasks.size()) {
+		Task returnedTask = null;
+		if (id > 0 && id < availableTasks.size()) {
+			for (Task task : availableTasks) {
+				if (task.getId() == id) {
+					returnedTask = task;
+				}
+			}
+		} else {
 			System.out.println("Error system in Playing : id not recognize");
 		}
-
-		for (Task t : availableTasks) {
-			if (t.getId() == id) {
-				temp = t;
-			}
-		}
-		return temp;
+		return returnedTask;
 	}
 
 	// Getters and Setters
@@ -255,5 +256,9 @@ public class Playing {
 
 	public ArrayList<Task> getAvailableTasks() {
 		return availableTasks;
+	}
+	
+	public int getDayNumber() {
+		return this.dayNumber;
 	}
 }

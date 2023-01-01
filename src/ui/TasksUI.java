@@ -1,40 +1,49 @@
-package view;
-
-import static view.GameStates.MENU;
-import static view.GameStates.SetGameState;
+/**
+ * @file TaskBar.java
+ * @date 27/12/2022
+ * @brief Create a ui that manage the choice of tasks
+ */
+package ui;
 
 import java.awt.Checkbox;
 import java.awt.CheckboxGroup;
 import java.awt.Color;
-import java.awt.Frame;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.RenderingHints;
-import java.awt.event.ItemEvent;
-import java.awt.event.ItemListener;
 import java.util.ArrayList;
 
-import model.Playing;
 import model.Task;
+import view.InGame;
+import static utils.PlayingStates.DAY;
+import static utils.PlayingStates.setPlayingState;
 
-public class TaskBar extends Bar {
+public class TasksUI extends UIComponent {
 
-	private Playing playing;
+	private InGame inGame;
 	private ArrayList<Button> taskButtons = new ArrayList<>();
 	private ArrayList<Button> jeanButtons = new ArrayList<>();
 	private ArrayList<Button> marieButtons = new ArrayList<>();
 	private boolean isJeanSelected;
 	private boolean isMarieSelected;
 
-	private Button bResetTask;
+	private Button btnPlayDay;
+	private Button btnResetTask;
 	private CheckboxGroup cbg;
 	private Checkbox jean_cb, marie_cb;
-	private Frame f;
 
-	public TaskBar(int x, int y, int width, int height, Playing playing) {
+	/**
+	 * @brief default constructor
+	 * @param x
+	 * @param y
+	 * @param width
+	 * @param height
+	 * @param inGame
+	 */
+	public TasksUI(int x, int y, int width, int height, InGame inGame) {
 
 		super(x, y, width, height);
-		this.playing = playing;
+		this.inGame = inGame;
 		initButtons();
 		initCheckbox();
 		initPersonTasks(0, jeanButtons);
@@ -42,7 +51,7 @@ public class TaskBar extends Bar {
 
 	}
 
-	/*
+	/**
 	 * @brief init Buttons of a taskBar
 	 */
 	private void initButtons() {
@@ -56,7 +65,7 @@ public class TaskBar extends Bar {
 
 		int i = 0;
 		int line = 0;
-		for (Task task : this.playing.getAvailableTasks()) {
+		for (Task task : this.inGame.getGame().getAvailableTasks()) {
 			if (xOffset * i > 640 - w) {
 				i = 0;
 				line++;
@@ -67,11 +76,12 @@ public class TaskBar extends Bar {
 			i++;
 		}
 
-		bResetTask = new Button("Reset", 140, 190, 100, 30);
+		btnResetTask = new Button("Reset", 140, 190, 100, 30);
+		btnPlayDay = new Button("Start Day", 500, 550, 100, 30);
 
 	}
 
-	/*
+	/**
 	 * @brief init Checkbox of a taskBar
 	 */
 	private void initCheckbox() {
@@ -81,31 +91,23 @@ public class TaskBar extends Bar {
 		marie_cb = new Checkbox("Marie", cbg, false);
 		marie_cb.setBounds(70, 200, 50, 20);
 
-		jean_cb.addItemListener(new ItemListener() {
-			public void itemStateChanged(ItemEvent e) {
-				isJeanSelected = true;
-				isMarieSelected = false;
-				System.out.println("Debug : Jean selected");
-				// initPersonTasks();
-				System.out.println("Debug : Jean selected");
-			}
+		jean_cb.addItemListener(e -> {
+			isJeanSelected = true;
+			isMarieSelected = false;
 		});
-		marie_cb.addItemListener(new ItemListener() {
-			public void itemStateChanged(ItemEvent e) {
-				isJeanSelected = false;
-				isMarieSelected = true;
-				// initPersonTasks();
-				System.out.println("Debug : Marie selected");
-			}
+		marie_cb.addItemListener(e -> {
+			isJeanSelected = false;
+			isMarieSelected = true;
 		});
-		playing.getGame().add(jean_cb);
-		playing.getGame().add(marie_cb);
+		inGame.getMain().add(jean_cb);
+		inGame.getMain().add(marie_cb);
 	}
 
-	/*
-	 * Show Checkbox on frame, or not
+	/**
+	 * @brief Show checkbox button if the player is on the good scene
+	 * @param isVisible
 	 */
-	public void visibleOrNot(boolean isVisible) {
+	public void setVisible(boolean isVisible) {
 		if (isVisible) {
 			jean_cb.setVisible(true);
 			marie_cb.setVisible(true);
@@ -125,21 +127,25 @@ public class TaskBar extends Bar {
 		g.fillRect(x, y, width, height);
 
 		// Buttons
-		drawButton(g, bResetTask);
+		drawButton(g, btnResetTask);
+		drawButton(g, btnPlayDay);
 		drawButtons(g, taskButtons);
 
 		Graphics2D maxTask = (Graphics2D) g;
 		maxTask.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-
+		
+		int xMaxTaskMsg = 10;
+		int yMaxTaskMsg = 430;
+		
 		if (isJeanSelected) {
 			drawButtons(g, jeanButtons);
 			// if no longer slot for tasks available : print a message
-			if (playing.getHouse().getCouple().getPersons().get(0).getTasks().size() == 9)
-				maxTask.drawString("Maximum amount of task reached !", 10, 430);
+			if (inGame.getGame().getHouse().getCouple().getPersons().get(0).getTasks().size() == inGame.getGame().getHouse().getCouple().getPersons().get(0).getMaxStamina())
+				maxTask.drawString("Maximum amount of task reached !", xMaxTaskMsg, yMaxTaskMsg);
 		} else if (isMarieSelected) {
 			drawButtons(g, marieButtons);
-			if (playing.getHouse().getCouple().getPersons().get(1).getTasks().size() == 9)
-				maxTask.drawString("Maximum amount of task reached !", 10, 430);
+			if (inGame.getGame().getHouse().getCouple().getPersons().get(1).getTasks().size() == inGame.getGame().getHouse().getCouple().getPersons().get(1).getMaxStamina())
+				maxTask.drawString("Maximum amount of task reached !", xMaxTaskMsg, yMaxTaskMsg);
 		}
 	}
 
@@ -207,10 +213,10 @@ public class TaskBar extends Bar {
 		int y = 0;
 
 		// get Stamina of Jean
-		int i = playing.getHouse().getCouple().getPersons().get(id).getMaxStamina(); // Max stamina because stamina
-																						// decrease
+		int i = inGame.getGame().getHouse().getCouple().getPersons().get(id).getMaxStamina(); // Max stamina because
+																								// stamina decrease
 		// System.out.println("Debug TaskBar:"+i);
-		for (; i > 0; --i) {
+		for (; i >= 0; --i) {
 			// System.out.println("Debug TaskBar: "i);
 
 			if (xOffset * y < 640 - w) {
@@ -226,17 +232,19 @@ public class TaskBar extends Bar {
 	}
 
 	/**
-	 * @brief Set all Task of a Person to null 
+	 * @brief Set all Task of a Person to null
 	 * @param id
 	 * @param buttons
 	 */
 	private void resetPersonTasks(int id, ArrayList<Button> buttons) {
 
-		for (int i =0; i < buttons.size(); ++i) {
+		for (int i = 0; i < buttons.size(); ++i) {
 			// System.out.println("Debug TaskBar: "i);
 			buttons.get(i).setText(null);
-		};
+		}
+		;
 	}
+
 	/**
 	 * @brief Add the selected task to the Person tasks ArrayList and set the Button
 	 *        GUI name
@@ -244,24 +252,28 @@ public class TaskBar extends Bar {
 	 */
 	private void addTask(int id) {
 
-		Task taskToAdd = playing.findTaskWithId(id);
+		Task taskToAdd = inGame.getGame().findTaskWithId(id);
 		for (int i = 0; i < Math.abs(taskToAdd.getStamina()); i++)
 			if (isJeanSelected) {
-				if (playing.getHouse().getCouple().getPersons().get(0).getTasks().size() == 9)
+				if (inGame.getGame().getHouse().getCouple().getPersons().get(0).getTasks().size() == inGame.getGame().getHouse().getCouple().getPersons().get(0).getMaxStamina())
 					return;
-				playing.getHouse().getCouple().getPersons().get(0).addTask(taskToAdd);
+				inGame.getGame().getHouse().getCouple().getPersons().get(0).addTask(taskToAdd);
 				setButtonName(getFirstNonUsedSlot(jeanButtons), taskToAdd.getName(), jeanButtons);
 			}
 
 			else if (isMarieSelected) {
-				if (playing.getHouse().getCouple().getPersons().get(1).getTasks().size() == 9)
+				if (inGame.getGame().getHouse().getCouple().getPersons().get(1).getTasks().size() == inGame.getGame().getHouse().getCouple().getPersons().get(1).getMaxStamina())
 					return;
-				playing.getHouse().getCouple().getPersons().get(1).addTask(taskToAdd);
+				inGame.getGame().getHouse().getCouple().getPersons().get(1).addTask(taskToAdd);
 				setButtonName(getFirstNonUsedSlot(marieButtons), taskToAdd.getName(), marieButtons);
 			}
 
 	}
 
+	/**
+	 * @param list
+	 * @return the first button with a null text
+	 */
 	private int getFirstNonUsedSlot(ArrayList<Button> list) {
 		for (int i = 0; i < list.size(); i++) {
 			if (list.get(i).getText() == null) {
@@ -271,36 +283,54 @@ public class TaskBar extends Bar {
 		return -1;
 	}
 
+	/**
+	 * @brief Set a button Text
+	 * @param id      : the id of the button in the ArrayList of Button
+	 * @param text    : the text to set
+	 * @param buttons : the ArrayList of button
+	 */
 	private void setButtonName(int id, String text, ArrayList<Button> buttons) {
 		buttons.get(id).setText(text);
 	}
 
+	/**
+	 * @brief Reset tasks of the selected player
+	 */
 	private void resetTask() {
 		if (isJeanSelected) {
-			playing.getHouse().getCouple().getPersons().get(0).setTasks(new ArrayList<Task>());
+			inGame.getGame().getHouse().getCouple().getPersons().get(0).setTasks(new ArrayList<Task>());
 			resetPersonTasks(0, jeanButtons);
-		}
-		else if (isMarieSelected) {
-			playing.getHouse().getCouple().getPersons().get(1).setTasks(new ArrayList<Task>());
+		} else if (isMarieSelected) {
+			inGame.getGame().getHouse().getCouple().getPersons().get(1).setTasks(new ArrayList<Task>());
 			resetPersonTasks(1, marieButtons);
 		}
 	}
-	
-	
+
 	// Control
 	public void mouseClicked(int x, int y) {
-		if (bResetTask.getBounds().contains(x, y)) {
+		if (btnResetTask.getBounds().contains(x, y)) {
 			resetTask();
-			System.out.println("Debug TaskBar : Reset task !");
-		}		
-	}
-	
-	public void mouseMoved(int x, int y) {
-		bResetTask.setIsMouseOver(false);
-		
-		if (bResetTask.getBounds().contains(x, y)) {
-			bResetTask.setIsMouseOver(true);
+			System.out.println("Debug TaskUI : Reset task !");
 		}
+		if (btnPlayDay.getBounds().contains(x, y)) {
+			setPlayingState(DAY);
+			System.out.println("Debug TAskUI : Go to Day State !");
+		}
+	}
+
+	public void mouseMoved(int x, int y) {
+		btnResetTask.setIsMouseOver(false);
+		btnPlayDay.setIsMouseOver(false);
+
+		if (btnResetTask.getBounds().contains(x, y)) {
+			btnResetTask.setIsMouseOver(true);
+			return;
+		}
+		else if (btnPlayDay.getBounds().contains(x, y)) {
+			btnPlayDay.setIsMouseOver(true);
+			return;
+		}
+		
 		for (Button b : taskButtons) {
 			b.setIsMouseOver(false);
 		}
@@ -313,8 +343,16 @@ public class TaskBar extends Bar {
 	}
 
 	public void mousePressed(int x, int y) {
-		if (bResetTask.getBounds().contains(x, y))
-			bResetTask.setIsMousePressed(true);
+		if (btnResetTask.getBounds().contains(x, y)) {
+			btnResetTask.setIsMousePressed(true);
+			return;
+		}
+		
+		if (btnPlayDay.getBounds().contains(x, y)) {
+			btnPlayDay.setIsMousePressed(true);
+			return;
+		}
+		
 		for (Button b : taskButtons) {
 			if (b.getBounds().contains(x, y)) {
 				b.setIsMousePressed(true);
@@ -326,7 +364,8 @@ public class TaskBar extends Bar {
 	}
 
 	public void mouseReleased(int x, int y) {
-		bResetTask.resetBooleans();
+		btnResetTask.resetBooleans();
+		btnPlayDay.resetBooleans();
 		for (Button b : taskButtons)
 			b.setIsMousePressed(false);
 	}

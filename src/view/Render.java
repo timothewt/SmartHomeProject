@@ -1,30 +1,37 @@
+/**
+ * @file Task.java
+ * @date 14/12/2022
+ * @brief Display different type of view
+ */
 package view;
 
-import java.awt.Graphics;
-import main.Game;
-import static view.GameStates.PLAYING;
-import static view.GameStates.SETTINGS;
-import static view.GameStates.SetGameState;
+import utils.GameStates;
 
+import java.awt.Graphics;
 
 public class Render {
-	
-	private Game game;
-	
-	public Render(Game game){
-		
-		this.game = game;
+
+	private GUIManager GUIManager;
+
+	/**
+	 * @brief Constructor
+	 * @param GUIManager
+	 */
+	public Render(GUIManager GUIManager) {
+
+		this.GUIManager = GUIManager;
 	}
-	
-	public void render(Graphics g){
-		
-		switch(GameStates.gameState)
-		{
+
+	public void render(Graphics g) {
+
+		switch (GameStates.gameState) {
 		case MENU:
-			game.getMenu().render(g);
+			GUIManager.getMenu().render(g);
 			break;
 		case PLAYING:
-			game.getPlaying().render(g);
+			GUIManager.getPlay().render(g);
+			break;
+		default:
 			break;
 		}
 	}

@@ -3,15 +3,16 @@
  * @date 27/12/2022
  * @brief Main class of the program
  */
-package main;
+package view;
 
 import javax.swing.JFrame;
 
-import view.Menu;
-import view.Play;
+import utils.GameStates;
+import utils.PlayingStates;
 
-public class Game extends JFrame implements Runnable {
-	private GameScreen gameScreen;
+@SuppressWarnings("serial")
+public class GUIManager extends JFrame implements Runnable {
+	private Screen screen;
 	private Thread gameThread;
 
 	private final double FPS_SET = 90.0;
@@ -20,19 +21,19 @@ public class Game extends JFrame implements Runnable {
 	// Classes
 	private Render render;
 	private Menu menu;
-	private Play play;
+	private InGame inGame;
 
 	/**
 	 * @brief Constructor
 	 */
-	public Game() {
+	public GUIManager() {
 
 		initClasses();
 
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		setLocationRelativeTo(null);
 		setResizable(false);
-		add(gameScreen);
+		add(screen);
 		pack();
 		setVisible(true);
 
@@ -41,15 +42,15 @@ public class Game extends JFrame implements Runnable {
 	private void initClasses() {
 
 		render = new Render(this);
-		gameScreen = new GameScreen(this);
+		screen = new Screen(this);
 		menu = new Menu(this);
-		play = new Play(this);
+		inGame = new InGame(this);
 	}
 
 	/**
 	 * @brief Start the thread
 	 */
-	private void start() {
+	public void start() {
 		gameThread = new Thread(this) {
 		};
 		gameThread.start();
@@ -58,34 +59,26 @@ public class Game extends JFrame implements Runnable {
 	private void updateGame() {
 		switch (GameStates.gameState) {
 		case MENU:
-			play.getTaskBar().visibleOrNot(false);
+			inGame.getTaskBar().setVisible(false);
 			break;
 		case PLAYING:
-			play.getTaskBar().visibleOrNot(true);
 			switch (PlayingStates.playingState) {
-			case ONE:
+			case TASK:
+				inGame.getTaskBar().setVisible(true);
 				break;
-			case TWO:
+			case DAY:
+				inGame.getTaskBar().setVisible(false);
 				break;
-			case THREE:
+			case PERK:
+				inGame.getTaskBar().setVisible(false);
 				break;
 			}
 			break;
 		default:
-			play.getTaskBar().visibleOrNot(false);
+			inGame.getTaskBar().setVisible(false);
 			break;
 
 		}
-	}
-
-	/**
-	 * @brief Launch the game
-	 * @param args
-	 */
-	public static void main(String[] args) {
-		Game game = new Game();
-		game.gameScreen.initInputs();
-		game.start();
 	}
 
 	/**
@@ -139,7 +132,11 @@ public class Game extends JFrame implements Runnable {
 		return menu;
 	}
 
-	public Play getPlay() {
-		return play;
+	public InGame getPlay() {
+		return inGame;
+	}
+
+	public Screen getScreen() {
+		return this.screen;
 	}
 }

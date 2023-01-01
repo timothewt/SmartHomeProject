@@ -3,20 +3,20 @@
  * @date 27/12/2022
  * @brief Use to show the good GUI while playing
  */
-package main;
+package utils;
 
 public enum PlayingStates {
 
-	ONE, TWO, THREE;
+	TASK, DAY, PERK;
 	// temp name to create the enum
 
-	public static PlayingStates playingState = ONE;
+	public static PlayingStates playingState = TASK;
 
 	/**
 	 * @Brief modify the state of the game -> the UI where the player is
 	 * @param state : The new state
 	 */
-	public static void SetGameState(PlayingStates state) {
+	public static void setPlayingState(PlayingStates state) {
 
 		playingState = state;
 	}
