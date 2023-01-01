@@ -47,7 +47,6 @@ public class Screen extends JPanel {
 		setMinimumSize(size);
 		setPreferredSize(size);
 		setMaximumSize(size);
-
 	}
 
 	/**

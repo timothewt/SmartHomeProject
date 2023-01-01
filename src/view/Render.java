@@ -25,14 +25,10 @@ public class Render {
 	public void render(Graphics g) {
 
 		switch (GameStates.gameState) {
-		case MENU:
-			GUIManager.getMenu().render(g);
-			break;
-		case PLAYING:
-			GUIManager.getPlay().render(g);
-			break;
-		default:
-			break;
+			case MENU -> GUIManager.getMenu().render(g);
+			case PLAYING -> GUIManager.getPlay().render(g);
+			default -> {
+			}
 		}
 	}
 }

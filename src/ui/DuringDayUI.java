@@ -5,10 +5,9 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.RenderingHints;
 
-import ui.Button;
 import view.InGame;
 
-public class DaysUI extends UIComponent {
+public class DuringDayUI extends UIComponent {
 
 	private InGame inGame;
 	
@@ -20,7 +19,7 @@ public class DaysUI extends UIComponent {
 	 * @param height
 	 * @param inGame
 	 */
-	public DaysUI(int x, int y, int width, int height, InGame inGame) {
+	public DuringDayUI(int x, int y, int width, int height, InGame inGame) {
 		super(x, y, width, height);
 		this.inGame = inGame;
 	}
@@ -34,11 +33,13 @@ public class DaysUI extends UIComponent {
 	}
 	
 	public void drawText(Graphics g) {
-		
 		Graphics2D dayMessage = (Graphics2D)g;
 		dayMessage.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 		dayMessage.drawString("Day #"+ inGame.getGame().getDayNumber() +" is going on !", 300, 20);
-		//System.out.println("Debug DaysUI : I can read DaysUI drawText method");
+	}
+
+	public void setVisible(boolean isVisible) {
+
 	}
 
 	public void mouseClicked(int x, int y) {

@@ -6,6 +6,7 @@
 package model;
 
 import java.util.ArrayList;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 
 public class Person {
@@ -43,6 +44,17 @@ public class Person {
 	 * @param task : Task to add
 	 */
 	public void addTask(Task task)	{
+		if (task.getStamina() >= 0) {
+			AtomicBoolean taskAlreadyPicked = new AtomicBoolean(false);
+			this.tasks.forEach(pickedTask -> {
+				if(pickedTask.getId() == task.getId()) {
+					taskAlreadyPicked.set(true);
+				}
+			});
+			if (taskAlreadyPicked.get()) {
+				return;
+			}
+		}
 		this.tasks.add(task);
 	}
 
@@ -60,24 +72,12 @@ public class Person {
 		return name;
 	}
 
-	public void setName(String name) {
-		this.name = name;
-	}
-
 	public int getId() {
 		return id;
 	}
 
-	public void setId(int id) {
-		this.id = id;
-	}
-
 	public int getMaxStamina() {
 		return maxStamina;
-	}
-
-	public void setMaxStamina(int maxStamina) {
-		this.maxStamina = maxStamina;
 	}
 
 	public int getStamina() {
@@ -88,12 +88,12 @@ public class Person {
 		this.stamina = stamina;
 	}
 
-	public Task getCurrentTask() {
-		return currentTask;
-	}
-
-	public void setCurrentTask(Task currentTask) {
-		this.currentTask = currentTask;
+	public int getResultingStaminaForCurrentTasks() {
+		int result = 0;
+		for (Task task: this.tasks) {
+			result += task.getStamina(); // - : necessary stamina are negative values
+		}
+		return result;
 	}
 
 	public ArrayList<Task> getTasks() {

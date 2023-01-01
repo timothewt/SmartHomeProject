@@ -20,6 +20,5 @@ public class UIComponent {
 		this.y = y;
 		this.width = width;
 		this.height = height;
-
 	}
 }

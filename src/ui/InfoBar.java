@@ -5,20 +5,21 @@
  */
 package ui;
 
-import static utils.GameStates.MENU;
-import static utils.GameStates.SetGameState;
-
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.RenderingHints;
+import java.util.ArrayList;
 
+import model.Person;
 import view.InGame;
+
+import static utils.GameStates.*;
 
 public class InfoBar extends UIComponent {
 
-	private InGame inGame;
-	private Button btnMenu, btnSave;
+	private final InGame inGame;
+	private ArrayList<Button> buttons;
 
 	/**
 	 * @Brief constructor
@@ -35,8 +36,9 @@ public class InfoBar extends UIComponent {
 	}
 
 	private void initButtons() {
-		btnMenu = new Button("Menu", 2, 642, 100, 30);
-		btnSave = new Button("Save", 2, 674, 100, 30);
+		this.buttons = new ArrayList<>();
+		this.buttons.add(new Button("Menu", 2, 642, 100, 30, 0));
+		this.buttons.add(new Button("Save", 2, 674, 100, 30, 1));
 	}
 
 	public void draw(Graphics g) {
@@ -51,9 +53,7 @@ public class InfoBar extends UIComponent {
 	}
 
 	private void drawButtons(Graphics g) {
-		btnMenu.draw(g);
-		btnSave.draw(g);
-
+		this.buttons.forEach(button -> button.draw(g));
 	}
 
 	/**
@@ -62,57 +62,44 @@ public class InfoBar extends UIComponent {
 	 */
 	private void drawText(Graphics g) {
 
-		Graphics2D money = (Graphics2D) g;
-		money.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-		money.drawString("Money : " + inGame.getGame().getHouse().getCouple().getMoney(), 110, 660);
+		Graphics2D graphics2D = (Graphics2D) g;
 
-		Graphics2D energy = (Graphics2D) g;
-		energy.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-		energy.drawString("Energy : " + inGame.getGame().getHouse().getEnergy(), 110, 680);
+		graphics2D.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+		graphics2D.drawString("Money : " + inGame.getGame().getHouse().getCouple().getMoney(), 110, 660);
 
-		Graphics2D jean = (Graphics2D) g;
-		jean.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-		jean.drawString(inGame.getGame().getHouse().getCouple().getPersons().get(0).toString(), 110 + 90, 660);
+		graphics2D.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+		graphics2D.drawString("Energy : " + inGame.getGame().getHouse().getEnergy(), 110, 680);
 
-		Graphics2D marie = (Graphics2D) g;
-		marie.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-		marie.drawString(inGame.getGame().getHouse().getCouple().getPersons().get(1).toString(), 110 + 90, 680);
+		for (Person person: inGame.getGame().getHouse().getCouple().getPersons()) {
+			graphics2D.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+			graphics2D.drawString(person.toString(), 200, 660 + 20 * person.getId());
+		}
 
-		Graphics2D weather = (Graphics2D) g;
-		weather.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-		weather.drawString(inGame.getGame().getWeather().toString(), 2, 720);
+		graphics2D.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+		graphics2D.drawString(inGame.getGame().getWeather().toString(), 2, 720);
 	}
 
 	// Control
 	public void mouseClicked(int x, int y) {
-		if (btnMenu.getBounds().contains(x, y))
-			SetGameState(MENU);
-		else if (btnSave.getBounds().contains(x, y))
-			System.out.println("Game saved ! Not done yet, only this message in terminal to test");
+		this.buttons.forEach(button -> {
+			if (button.getBounds().contains(x, y)) {
+				switch (button.getId()) {
+					case 0 -> SetGameState(MENU);
+					case 1 -> System.out.println("Game saved ! Not done yet, only this message in terminal to test");
+				}
+			}
+		});
 	}
 
 	public void mouseMoved(int x, int y) {
-		btnMenu.setIsMouseOver(false);
-		btnSave.setIsMouseOver(false);
-
-		if (btnMenu.getBounds().contains(x, y))
-			btnMenu.setIsMouseOver(true);
-		else if (btnSave.getBounds().contains(x, y))
-			btnSave.setIsMouseOver(true);
+		this.buttons.forEach(button -> button.setIsMouseOver(button.getBounds().contains(x, y)));
 	}
 
 	public void mousePressed(int x, int y) {
-		btnMenu.setIsMousePressed(false);
-		btnSave.setIsMousePressed(false);
-
-		if (btnMenu.getBounds().contains(x, y))
-			btnMenu.setIsMousePressed(true);
-		else if (btnSave.getBounds().contains(x, y))
-			btnSave.setIsMousePressed(true);
+		this.buttons.forEach(button -> button.setIsMousePressed(button.getBounds().contains(x, y)));
 	}
 
 	public void mouseReleased(int x, int y) {
-		btnMenu.resetBooleans();
-		btnSave.resetBooleans();
+		this.buttons.forEach(Button::resetBooleans);
 	}
 }

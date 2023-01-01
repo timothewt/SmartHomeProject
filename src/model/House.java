@@ -14,10 +14,10 @@ public class House {
 	private float humidityRate;
 	private int energy;
 	private boolean isOnPowerOutage;
-	private ArrayList<Room> rooms;
+	private final ArrayList<Room> rooms;
 	private ArrayList<PowerGenerator> powerSupply;
 	private ArrayList<Perk> perks;
-	private Couple couple;
+	private final Couple couple;
 	private final float optimalTemperature;
 	private final float optimalHumidityRate;
 	
@@ -102,42 +102,36 @@ public class House {
 	}
 
 	public void setAllWindowsOpen(boolean status) {
-		for (Room room: rooms) {
-			room.setWindowOpen(status);
-		}
+		this.rooms.forEach(room -> room.setWindowOpen(status));
 	}
 
 	public void setAllHeatersTemperature(float temperature) {
-		for (Room room: rooms) {
+		this.rooms.forEach(room -> {
 			room.setHeaterTemperature(temperature);
 			room.setHeaterTurnedOn(true);
-		}
+		});
 	}
 
 	public void turnOffAllHeaters() {
-		for (Room room: rooms) {
-			room.setHeaterTurnedOn(false);
-		}
+		this.rooms.forEach(room -> room.setHeaterTurnedOn(false));
 	}
 
 	public void setAllACTemperature(float temperature) {
-		for (Room room: rooms) {
+		this.rooms.forEach(room -> {
 			room.setACTemperature(temperature);
 			room.setACTurnedOn(true);
-		}
+		});
 	}
 
 	public void turnOffAllAC() {
-		for (Room room: rooms) {
-			room.setACTurnedOn(false);
-		}
+		this.rooms.forEach(room -> room.setACTurnedOn(false));
 	}
 
 	public void onNewDay() {
-		for (PowerGenerator powerGenerator: this.powerSupply) {
+		this.powerSupply.forEach(powerGenerator -> {
 			this.energy += powerGenerator.getDailyProduction();
 			this.couple.setMoney(this.couple.getMoney() - powerGenerator.getDailyCost());
-		}
+		});
 	}
 
 	public String toString() {
@@ -154,22 +148,6 @@ public class House {
 	/**
 	 * Getters and setters
 	 */
-	public float getTemperature() {
-		return temperature;
-	}
-
-	public void setTemperature(float temperature) {
-		this.temperature = temperature;
-	}
-
-	public float getHumidityRate() {
-		return humidityRate;
-	}
-
-	public void setHumidityRate(float humidityRate) {
-		this.humidityRate = humidityRate;
-	}
-
 	public int getEnergy() {
 		return energy;
 	}
@@ -178,51 +156,15 @@ public class House {
 		this.energy = energy;
 	}
 
-	public boolean isOnPowerOutage() {
-		return isOnPowerOutage;
-	}
-
 	public void setOnPowerOutage(boolean onPowerOutage) {
 		isOnPowerOutage = onPowerOutage;
-	}
-
-	public ArrayList<Room> getRooms() {
-		return rooms;
-	}
-
-	public void setRooms(ArrayList<Room> rooms) {
-		this.rooms = rooms;
-	}
-
-	public ArrayList<PowerGenerator> getPowerSupply() {
-		return powerSupply;
-	}
-
-	public void setPowerSupply(ArrayList<PowerGenerator> powerSupply) {
-		this.powerSupply = powerSupply;
 	}
 
 	public Couple getCouple() {
 		return couple;
 	}
 
-	public void setCouple(Couple couple) {
-		this.couple = couple;
-	}
-
 	public ArrayList<Perk> getPerks() {
 		return perks;
-	}
-
-	public void setPerks(ArrayList<Perk> perks) {
-		this.perks = perks;
-	}
-
-	public float getOptimalTemperature() {
-		return optimalTemperature;
-	}
-
-	public float getOptimalHumidityRate() {
-		return optimalHumidityRate;
 	}
 }

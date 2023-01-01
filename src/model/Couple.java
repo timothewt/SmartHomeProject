@@ -47,4 +47,13 @@ public class Couple {
 	public ArrayList<Person> getPersons() {
 		return persons;
 	}
+	public Person getPersonsFromId(int id) {
+		Person result = null;
+		for (Person person : this.persons) {
+			if (id == person.getId()) {
+				result = person;
+			}
+		};
+		return result;
+	}
 }

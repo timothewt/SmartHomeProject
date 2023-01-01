@@ -27,8 +27,10 @@ public class GUIManager extends JFrame implements Runnable {
 	 * @brief Constructor
 	 */
 	public GUIManager() {
-
-		initClasses();
+		render = new Render(this);
+		screen = new Screen(this);
+		menu = new Menu(this);
+		inGame = new InGame(this);
 
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		setLocationRelativeTo(null);
@@ -36,15 +38,6 @@ public class GUIManager extends JFrame implements Runnable {
 		add(screen);
 		pack();
 		setVisible(true);
-
-	}
-
-	private void initClasses() {
-
-		render = new Render(this);
-		screen = new Screen(this);
-		menu = new Menu(this);
-		inGame = new InGame(this);
 	}
 
 	/**
@@ -58,26 +51,27 @@ public class GUIManager extends JFrame implements Runnable {
 
 	private void updateGame() {
 		switch (GameStates.gameState) {
-		case MENU:
-			inGame.getTaskBar().setVisible(false);
-			break;
-		case PLAYING:
-			switch (PlayingStates.playingState) {
-			case TASK:
-				inGame.getTaskBar().setVisible(true);
-				break;
-			case DAY:
-				inGame.getTaskBar().setVisible(false);
-				break;
-			case PERK:
-				inGame.getTaskBar().setVisible(false);
-				break;
+			case MENU -> {
+				inGame.getTasksUI().setVisible(false);
+				inGame.getDuringDayUI().setVisible(false);
 			}
-			break;
-		default:
-			inGame.getTaskBar().setVisible(false);
-			break;
-
+			case PLAYING -> {
+				switch (PlayingStates.playingState) {
+					case TASK -> {
+						inGame.getTasksUI().setVisible(true);
+						inGame.getDuringDayUI().setVisible(false);
+					}
+					case DAY -> {
+						inGame.getTasksUI().setVisible(false);
+						inGame.getDuringDayUI().setVisible(true);
+					}
+					case PERK -> {
+						inGame.getTasksUI().setVisible(false);
+						inGame.getDuringDayUI().setVisible(false);
+					}
+				}
+			}
+			case SETTINGS -> {}
 		}
 	}
 

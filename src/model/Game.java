@@ -199,7 +199,7 @@ public class Game {
 
 		Couple couple = new Couple();
 		couple.addPerson(new Person("Jean", 0, 10, new ArrayList<Task>()));
-		couple.addPerson(new Person("Marie", 0, 10, new ArrayList<Task>()));
+		couple.addPerson(new Person("Marie", 1, 10, new ArrayList<Task>()));
 
 		return new House(18f, .5f, 0, false, rooms, powerGenerators, perks, couple, 21f, .45f);
 	}
@@ -231,18 +231,17 @@ public class Game {
 	 * @param id
 	 * @return the Task corresponding to the id
 	 */
-	public Task findTaskWithId(int id) {
-		Task returnedTask = null;
-		if (id > 0 && id < availableTasks.size()) {
+	public Task findTaskFromId(int id) {
+		if (id >= 0 && id < availableTasks.size()) {
 			for (Task task : availableTasks) {
 				if (task.getId() == id) {
-					returnedTask = task;
+					return task;
 				}
 			}
 		} else {
-			System.out.println("Error system in Playing : id not recognize");
+			System.out.println("Error system in Playing : id not recognized");
 		}
-		return returnedTask;
+		return null;
 	}
 
 	// Getters and Setters

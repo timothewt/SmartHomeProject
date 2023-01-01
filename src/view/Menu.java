@@ -9,11 +9,13 @@ import static utils.GameStates.PLAYING;
 import static utils.GameStates.SetGameState;
 
 import java.awt.Graphics;
+import java.util.ArrayList;
+import java.util.Set;
 
 import ui.Button;
 
 public class Menu extends GameScene implements SceneMethods {
-	private Button btnPlaying, btnQuit;
+	private ArrayList<Button> buttons;
 
 	/**
 	 * @brief Constructor
@@ -31,8 +33,9 @@ public class Menu extends GameScene implements SceneMethods {
 		int y = 150;
 		int yOffset = 100;
 
-		btnPlaying = new Button("Play", x, y, w, h);
-		btnQuit = new Button("Quit", x, y + yOffset, w, h);
+		this.buttons = new ArrayList<>();
+		this.buttons.add(new Button("Play", x, y, w, h, 0));
+		this.buttons.add(new Button("Quit", x, y + yOffset, w, h, 1));
 	}
 
 	// Control
@@ -42,48 +45,34 @@ public class Menu extends GameScene implements SceneMethods {
 	}
 
 	private void drawButtons(Graphics g) {
-		btnPlaying.draw(g);
-		btnQuit.draw(g);
+		this.buttons.forEach(button -> button.draw(g));
 	}
 
 	@Override
 	public void mouseClicked(int x, int y) {
-		if (btnPlaying.getBounds().contains(x, y)) {
-			SetGameState(PLAYING);
-		} else if (btnQuit.getBounds().contains(x, y)) {
-			System.exit(0);
-		}
+		this.buttons.forEach(button -> {
+			if (button.getBounds().contains(x, y)) {
+				switch (button.getId()) {
+					case 0 -> SetGameState(PLAYING);
+					case 1 -> System.exit(0);
+				}
+			}
+		});
 	}
 
 	@Override
 	public void mouseMoved(int x, int y) {
-		btnPlaying.setIsMouseOver(false);
-		btnQuit.setIsMouseOver(false);
-
-		if (btnPlaying.getBounds().contains(x, y)) {
-			btnPlaying.setIsMouseOver(true);
-		} else if (btnQuit.getBounds().contains(x, y)) {
-			btnQuit.setIsMouseOver(true);
-		}
+		this.buttons.forEach(button -> button.setIsMouseOver(button.getBounds().contains(x, y)));
 	}
 
 	@Override
 	public void mousePressed(int x, int y) {
-		if (btnPlaying.getBounds().contains(x, y)) {
-			btnPlaying.setIsMousePressed(true);
-		} else if (btnQuit.getBounds().contains(x, y)) {
-			btnQuit.setIsMousePressed(true);
-		}
+		this.buttons.forEach(button -> button.setIsMousePressed(button.getBounds().contains(x, y)));
 	}
 
 	@Override
 	public void mouseReleased(int x, int y) {
-		resetButtons();
-	}
-
-	private void resetButtons() {
-		btnPlaying.resetBooleans();
-		btnQuit.resetBooleans();
+		this.buttons.forEach(Button::resetBooleans);
 	}
 
 	@Override
