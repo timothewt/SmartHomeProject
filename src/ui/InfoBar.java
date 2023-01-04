@@ -64,18 +64,13 @@ public class InfoBar extends UIComponent {
 
 		Graphics2D graphics2D = (Graphics2D) g;
 
-		graphics2D.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 		graphics2D.drawString("Money : " + inGame.getGame().getHouse().getCouple().getMoney(), 110, 660);
-
-		graphics2D.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 		graphics2D.drawString("Energy : " + inGame.getGame().getHouse().getEnergy(), 110, 680);
 
 		for (Person person: inGame.getGame().getHouse().getCouple().getPersons()) {
-			graphics2D.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 			graphics2D.drawString(person.toString(), 200, 660 + 20 * person.getId());
 		}
 
-		graphics2D.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 		graphics2D.drawString(inGame.getGame().getWeather().toString(), 2, 720);
 	}
 
