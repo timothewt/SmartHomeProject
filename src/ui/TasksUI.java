@@ -117,15 +117,20 @@ public class TasksUI extends UIComponent {
 		this.utilityButtons.forEach(button -> button.draw(g));
 		taskButtons.forEach(button -> button.draw(g));
 
-		Graphics2D maxTask = (Graphics2D) g;
-		maxTask.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+		Graphics2D graphics2D = (Graphics2D) g;
+		graphics2D.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 
 		Person selectedPerson = this.inGame.getGame().getHouse().getCouple().getPersonsFromId(this.selectedPersonId);
+		int remainingStamina = selectedPerson.getMaxStamina() - selectedPerson.getResultingStaminaForCurrentTasks() * -1;
+		graphics2D.drawString("Remaining stamina:", 10, this.taskListY);
+		for (int i = 0; i < remainingStamina; i++) {
+			(new Button("",130 + (i * 20), this.taskListY - 10, 15, 10, 99 + i)).draw(g);
+		}
 		ArrayList<Task> tasksToDisplay = selectedPerson.getTasks();
 
 		if (tasksToDisplay != null) {
 			for (int i = 0; i < tasksToDisplay.size(); i++) {
-				(new Button(tasksToDisplay.get(i).getName(), 263, this.taskListY + 40 * i, 115, 30)).draw(g);
+				(new Button(tasksToDisplay.get(i).getName(), 263, this.taskListY + 10 + 40 * i, 115, 30)).draw(g);
 				int taskStamina = tasksToDisplay.get(i).getStamina();
 				int xStart;
 				String sign;
@@ -137,11 +142,8 @@ public class TasksUI extends UIComponent {
 					sign = "-";
 				}
 				for (int j = 0; j < abs(taskStamina); j++) {
-					(new Button(sign, xStart + 40 * j, this.taskListY + 40 * i, 30, 30)).draw(g);
+					(new Button(sign, xStart + 40 * j, this.taskListY + 10 + 40 * i, 30, 30)).draw(g);
 				}
-			}
-			if (selectedPerson.getMaxStamina() == -1 * selectedPerson.getResultingStaminaForCurrentTasks()) {
-				maxTask.drawString("Maximum stamina reached !", 450, 600);
 			}
 		}
 	}
@@ -149,15 +151,10 @@ public class TasksUI extends UIComponent {
 
 	/**
 	 * Add the selected task to the Person tasks
-	 * @param id
 	 */
 	private void addTaskToSelectedPerson(int id) {
 		Task selectedTask = inGame.getGame().findTaskFromId(id);
 		Person selectedPerson = inGame.getGame().getHouse().getCouple().getPersonsFromId(this.selectedPersonId);
-		System.out.println("Max stamina: " + selectedPerson.getMaxStamina());
-		System.out.println("Task stamina: " + selectedTask.getStamina());
-		System.out.println("Current stamina result: " + selectedPerson.getResultingStaminaForCurrentTasks());
-		System.out.println("Comparison: " + (selectedTask.getStamina() + selectedPerson.getResultingStaminaForCurrentTasks()) * -1);
 		if ((selectedTask.getStamina() + selectedPerson.getResultingStaminaForCurrentTasks()) * -1 <= selectedPerson.getMaxStamina()) { // * -1 because stamina decreases for task that needs it
 			selectedPerson.addTask(selectedTask);
 		}
@@ -196,9 +193,7 @@ public class TasksUI extends UIComponent {
 	public void mousePressed(int x, int y) {
 		this.utilityButtons.forEach(button -> button.setIsMousePressed(button.getBounds().contains(x, y)));
 
-		this.taskButtons.forEach(button -> {
-			button.setIsMousePressed(button.getBounds().contains(x, y));
-		});
+		this.taskButtons.forEach(button -> button.setIsMousePressed(button.getBounds().contains(x, y)));
 	}
 
 	public void mouseReleased(int x, int y) {
