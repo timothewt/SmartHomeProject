@@ -15,14 +15,16 @@ import java.util.ArrayList;
 import model.Person;
 import view.InGame;
 
+import static java.lang.Math.max;
 import static java.lang.Math.min;
 
 public class DuringDayUI extends UIComponent {
 
-	private InGame inGame;
+	private final InGame inGame;
 	private Button nextTaskButton;
-	private ArrayList<Person> persons;
+	private final ArrayList<Person> persons;
 	private int currentTaskIndex;
+	private boolean areAllTasksDone;
 
 	/**
 	 * @brief Default constructor
@@ -37,6 +39,7 @@ public class DuringDayUI extends UIComponent {
 		this.inGame = inGame;
 		this.persons = inGame.getGame().getHouse().getCouple().getPersons();
 		this.currentTaskIndex = 0;
+		this.areAllTasksDone = false;
 		initButtons();
 	}
 
@@ -68,12 +71,12 @@ public class DuringDayUI extends UIComponent {
 
 		Graphics2D graphics2D = (Graphics2D) g;
 		graphics2D.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-		graphics2D.drawString("Day #" + inGame.getGame().getDayNumber() + " is going on !", 280, 20);
+		graphics2D.drawString("Day #" + inGame.getGame().getDayNumber() + " is going on !", this.y + this.width / 2 - 40, 20);
 		int personTextWidth = (this.width - x) / this.persons.size();
 
 		this.persons.forEach(person -> {
 			int personTextX = x + (this.persons.indexOf(person) * personTextWidth);
-			graphics2D.drawLine(personTextX + personTextWidth, yStart - 10, personTextX + personTextWidth, this.y + this.height - 50);
+			graphics2D.drawLine(personTextX + personTextWidth, yStart - 10, personTextX + personTextWidth, this.y + this.height - 100);
 			graphics2D.drawString(person.getName() + ":", personTextX + 5, yStart);
 			for (int i = 0; i < min(this.currentTaskIndex, person.getTasks().size()); i++) {
 				graphics2D.drawString(person.getTasks().get(i).getMessage(), personTextX + 15, yStart + 20 * (i + 1));
@@ -88,7 +91,21 @@ public class DuringDayUI extends UIComponent {
 
 	public void mouseClicked(int x, int y) {
 		if (this.nextTaskButton.getBounds().contains(x, y)) {
-			this.currentTaskIndex++;
+			if (areAllTasksDone) {
+				// go to next day
+			} else {
+				int tasksNumber = 0;
+				for (Person person : this.persons) {
+					tasksNumber = max(person.getTasks().size(), tasksNumber);
+				}
+				this.currentTaskIndex++;
+				this.areAllTasksDone = tasksNumber == this.currentTaskIndex;
+				if (this.areAllTasksDone) {
+					this.nextTaskButton.setText("End current day");
+					this.nextTaskButton.setWidth(150);
+					this.nextTaskButton.setX((this.x + width) - 170);
+				}
+			}
 		}
 	}
 
