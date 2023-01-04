@@ -51,7 +51,7 @@ public class GUIManager extends JFrame implements Runnable {
 
 	private void updateGame() {
 		switch (GameStates.gameState) {
-			case MENU -> {
+			case MENU -> {  
 				inGame.getTasksUI().setVisible(false);
 				inGame.getDuringDayUI().setVisible(false);
 			}

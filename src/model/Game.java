@@ -203,7 +203,7 @@ public class Game {
 
 		return new House(18f, .5f, 0, false, rooms, powerGenerators, perks, couple, 21f, .45f);
 	}
-
+	
 	/**
 	 * @brief instantiating tasks
 	 * @return
@@ -212,16 +212,27 @@ public class Game {
 		availableTasks = new ArrayList<Task>();
 
 		availableTasks.add(new Task(0, "Heater On", -1, 0, 0));
+		availableTasks.get(0).setMessage("Turning heater On !");
 		availableTasks.add(new Task(1, "Heater Off", -1, 0, 0));
+		availableTasks.get(1).setMessage("Turning heater Off !");
 		availableTasks.add(new Task(2, "AC On", -1, 0, 0));
+		availableTasks.get(2).setMessage("Turning AC On !");
 		availableTasks.add(new Task(3, "AC Off", -1, 0, 0));
+		availableTasks.get(3).setMessage("Turning AC Off !");
 		availableTasks.add(new Task(4, "Open windows", -1, 0, 0));
+		availableTasks.get(4).setMessage("Opening windows !");
 		availableTasks.add(new Task(5, "Close windows", -1, 0, 0));
+		availableTasks.get(5).setMessage("Closing closing windows !");
 		availableTasks.add(new Task(6, "Work", -5, 0, 0));
+		availableTasks.get(6).setMessage("Currently working !");
 		availableTasks.add(new Task(7, "Sleep", 2, 0, 0));
+		availableTasks.get(7).setMessage("Sleeping !");
 		availableTasks.add(new Task(8, "Biking", -4, 0, 50));
+		availableTasks.get(8).setMessage("Biking !");
 		availableTasks.add(new Task(9, "Cook", 2, 0, -30));
+		availableTasks.get(9).setMessage("Cooking and eating !");
 		availableTasks.add(new Task(10, "Repair Outage", -2, -200, 0));
+		availableTasks.get(10).setMessage("Repairing power Outage !");
 
 		return availableTasks;
 	}

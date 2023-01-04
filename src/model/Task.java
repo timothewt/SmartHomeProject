@@ -9,6 +9,7 @@ public class Task {
 
 	private final int id;
 	private final String name;
+	private String message;
 	private final int stamina;
 	private final int money;
 	private final int energy;
@@ -22,6 +23,7 @@ public class Task {
 		this.stamina = 0;
 		this.money = 0;
 		this.energy = 0;
+		this.message = "Task is going on";
 	}
 
 	public Task(int id, String name, int stamina, int money, int energy) {
@@ -30,6 +32,7 @@ public class Task {
 		this.stamina = stamina;
 		this.money = money;
 		this.energy = energy;
+		this.message = "Task is going on";
 	}
 
 	public String toString() {
@@ -58,5 +61,13 @@ public class Task {
 
 	public int getEnergy() {
 		return energy;
+	}
+	
+	public void setMessage(String message) {
+		this.message = message;
+	}
+	
+	public String getMessage() {
+		return this.message;
 	}
 }
