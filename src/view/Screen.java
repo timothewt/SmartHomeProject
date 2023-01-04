@@ -10,7 +10,7 @@ import java.awt.Graphics;
 
 import javax.swing.JPanel;
 
-import controller.MyMouseListener;
+import ui.MyMouseListener;
 
 @SuppressWarnings("serial")
 public class Screen extends JPanel {
