@@ -7,6 +7,8 @@ package model;
 
 import java.lang.Math;
 
+import static java.lang.Math.round;
+
 public class Weather {
 
 	private float temperature;
@@ -83,8 +85,8 @@ public class Weather {
 	 * @brief toString method
 	 */
 	public String toString() {
-		return "Temperature=" + temperature + ", HumidityRate=" + humidityRate + ", isRainy=" + isRainy + ", isSnowy="
-				+ isSnowy + ", isSunny=" + isSunny + ", isLightning=" + isLightning + ", diffRate=" + difficultyRate;
+		String sky = isSnowy ? "Snowy" : isLightning ? "Lightnings" : isRainy ? "Rainy" : "Sunny";
+		return "Weather - T : " + (float)round(temperature * 10) / 10 + "°C, humidity : " + round(humidityRate * 100) + "%, Sky: " + sky;
 	}
 
 	/**

@@ -27,7 +27,7 @@ public class Person {
 		this.maxStamina = 10;
 		this.stamina = 0;
 		this.currentTask = null;
-		this.tasks = new ArrayList<Task>();
+		this.tasks = new ArrayList<>();
 	}
 
 	public Person(String name, int id, int maxStamina, ArrayList<Task> tasks) {
@@ -59,9 +59,7 @@ public class Person {
 	}
 
 	public String toString() {
-		return "name='" + name + '\'' +
-				", maxStamina=" + maxStamina +
-				", stamina=" + stamina;
+		return name + " - Stamina : " + stamina + ", max stamina : " + maxStamina;
 	}
 
 	/**

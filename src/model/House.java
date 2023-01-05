@@ -8,6 +8,8 @@ package model;
 import java.util.ArrayList;
 import java.lang.Math;
 
+import static java.lang.Math.round;
+
 public class House {
 
 	private float temperature;
@@ -135,14 +137,7 @@ public class House {
 	}
 
 	public String toString() {
-		return "House:\n" +
-				"temperature=" + temperature +
-				", humidityRate=" + humidityRate +
-				", energy=" + energy +
-				", money=" + couple.getMoney() +
-				", isOnPowerOutage=" + isOnPowerOutage +
-				", optimalTemperature=" + optimalTemperature +
-				", optimalHumidityRate=" + optimalHumidityRate;
+		return "House - T : " + (float)round(temperature * 10) / 10 + "°C, humidity : " + round(humidityRate * 100) + "%, optimal T : " + optimalTemperature + "°C, optimal humidity : " + round(optimalHumidityRate * 100) + "%";
 	}
 
 	/**
