@@ -7,7 +7,7 @@ package utils;
 
 public enum GameStates {
 
-	PLAYING, MENU, SETTINGS; // currently in the game playing, in the menu, in the settings
+	PLAYING, MENU, GAMEOVER; // currently in the game playing, in the menu, in the settings
 
 	public static GameStates gameState = MENU; // current state of the application
 

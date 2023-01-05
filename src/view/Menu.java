@@ -14,13 +14,16 @@ import static utils.GameStates.SetGameState;
 public class Menu extends GameScene implements SceneMethods {
 
 	private ArrayList<Button> buttons; // buttons of the menu
+	private GUIManager GUIManager;
 
 	/**
 	 * Class constructor
+	 * 
 	 * @param GUIManager: manages all the views of the application
 	 */
 	public Menu(GUIManager GUIManager) {
 		super(GUIManager);
+		this.GUIManager = GUIManager;
 		initButtons();
 	}
 
@@ -41,6 +44,7 @@ public class Menu extends GameScene implements SceneMethods {
 
 	/**
 	 * Renders the buttons on the screen
+	 * 
 	 * @param g: graphics component of the app
 	 */
 	@Override
@@ -49,7 +53,9 @@ public class Menu extends GameScene implements SceneMethods {
 	}
 
 	/**
-	 * Called when the user clicks anywhere on the screen. Used to know if he clicked on the buttons of the menu
+	 * Called when the user clicks anywhere on the screen. Used to know if he
+	 * clicked on the buttons of the menu
+	 * 
 	 * @param x: x position of the mouse
 	 * @param y: y position of the mouse
 	 */
@@ -58,8 +64,11 @@ public class Menu extends GameScene implements SceneMethods {
 		this.buttons.forEach(button -> {
 			if (button.getBounds().contains(x, y)) {
 				switch (button.getId()) {
-					case 0 -> SetGameState(PLAYING);
-					case 1 -> System.exit(0);
+				case 0 -> {
+					SetGameState(PLAYING);
+					this.GUIManager.setPlay(new GameGUI(this.GUIManager));
+				}
+				case 1 -> System.exit(0);
 				}
 			}
 		});
@@ -81,5 +90,6 @@ public class Menu extends GameScene implements SceneMethods {
 	}
 
 	@Override
-	public void mouseDragged(int x, int y) {}
+	public void mouseDragged(int x, int y) {
+	}
 }

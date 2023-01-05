@@ -5,13 +5,21 @@
  */
 package ui;
 
-import java.awt.*;
+import static java.lang.Math.abs;
+import static utils.PlayingStates.DAY;
+import static utils.PlayingStates.setPlayingState;
+
+import java.awt.Checkbox;
+import java.awt.CheckboxGroup;
+import java.awt.Color;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
+import java.awt.RenderingHints;
 import java.util.ArrayList;
+
 import model.Person;
 import model.Task;
 import view.GameGUI;
-import static java.lang.Math.abs;
-import static utils.PlayingStates.*;
 
 public class TasksUI extends UIComponent {
 
@@ -158,6 +166,10 @@ public class TasksUI extends UIComponent {
 		gameGUI.getGame().getHouse().getCouple().getPersonsFromId(this.selectedPersonId).setTasks(new ArrayList<>());
 	}
 
+	
+	public void onNewDay() {
+		initControls();
+	}
 	/**
 	 * Called when the user clicks anywhere on the screen. Used to know if the user clicked on the reset tasks or start day buttons
 	 * @param x: x position of the mouse

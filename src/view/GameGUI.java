@@ -49,6 +49,12 @@ public class GameGUI extends GameScene implements SceneMethods {
 		}
 	}
 
+	public void onNewDay() {
+		this.game.onNewDay();
+		this.tasksUI.onNewDay();
+		this.duringDayUI.onNewDay();
+		this.perksUI.onNewDay();
+	}
 	/**
 	 * Called when the user clicks anywhere on the screen
 	 * @param x: x position of the mouse

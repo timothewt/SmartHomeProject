@@ -5,19 +5,25 @@
  */
 package ui;
 
-import java.awt.*;
-import java.util.ArrayList;
-import model.Person;
-import view.GameGUI;
 import static java.lang.Math.max;
 import static java.lang.Math.min;
-import static utils.PlayingStates.*;
+import static utils.PlayingStates.PERK;
+import static utils.PlayingStates.setPlayingState;
+
+import java.awt.Color;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
+import java.awt.RenderingHints;
+import java.util.ArrayList;
+
+import model.Person;
+import view.GameGUI;
 
 public class DuringDayUI extends UIComponent {
 
 	private final GameGUI gameGUI; // gameGUI containing the game model
 	private Button nextTaskButton; // button used to execute the next task
-	private final ArrayList<Person> persons; // persons of the house
+	private ArrayList<Person> persons; // persons of the house
 	private int currentTaskIndex; // index of the current task
 	private boolean areAllTasksDone; // tells if all the tasks are completed
 
@@ -82,6 +88,17 @@ public class DuringDayUI extends UIComponent {
 		});
 	}
 
+	
+	public void onNewDay() {
+		this.persons = gameGUI.getGame().getHouse().getCouple().getPersons();
+		this.currentTaskIndex = -1;
+		this.areAllTasksDone = false;
+		swapTaskButton();
+	}
+	
+	public void swapTaskButton() {
+		
+	}
 	/**
 	 * Make the scene controls visible or not
 	 * @param isVisible: tells if the UI is visible
@@ -90,7 +107,7 @@ public class DuringDayUI extends UIComponent {
 
 	/**
 	 * Called when the user clicks anywhere on the screen. Used to know if the user clicked on the Next task button
-	 * @param x: x position of the mouse
+	 * @param x: x position of the mous
 	 * @param y: y position of the mouse
 	 */
 	public void mouseClicked(int x, int y) {
@@ -108,7 +125,7 @@ public class DuringDayUI extends UIComponent {
 				if (this.areAllTasksDone) {
 					this.nextTaskButton.setText("End current day");
 					this.nextTaskButton.setWidth(150);
-					this.nextTaskButton.setX((this.x + width / 2) - 75);
+					//this.nextTaskButton.setX((this.x + width / 2) - 75);
 				}
 			}
 		}
