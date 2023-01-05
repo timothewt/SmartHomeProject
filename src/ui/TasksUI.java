@@ -1,53 +1,43 @@
 /**
  * @file TaskBar.java
  * @date 27/12/2022
- * Create a UI that manage the choice of tasks
+ * UI used by the user to pick the daily tasks of the persons
  */
 package ui;
 
-import java.awt.Checkbox;
-import java.awt.CheckboxGroup;
-import java.awt.Color;
-import java.awt.Graphics;
-import java.awt.Graphics2D;
-import java.awt.RenderingHints;
+import java.awt.*;
 import java.util.ArrayList;
-
 import model.Person;
 import model.Task;
-import view.InGame;
-
+import view.GameGUI;
 import static java.lang.Math.abs;
-import static java.lang.Math.signum;
-import static utils.PlayingStates.DAY;
-import static utils.PlayingStates.setPlayingState;
+import static utils.PlayingStates.*;
 
 public class TasksUI extends UIComponent {
 
-	private final InGame inGame;
-	private ArrayList<Button> taskButtons;
-	private int selectedPersonId;
-
-	private ArrayList<Button> utilityButtons;
-	private ArrayList<Checkbox> personsCheckboxes;
-	private int taskListY;
+	private final GameGUI gameGUI; // gameGUI containing the game model
+	private int selectedPersonId; // id of the selected person by the user
+	private ArrayList<Button> taskButtons; // button used to add a task to a person
+	private ArrayList<Button> utilityButtons; // buttons managing the game like reset tasks or start the day
+	private ArrayList<Checkbox> personsCheckboxes; // checkboxes used by the user to pick a person in order to add tasks to him
+	private int taskListY; // vertical position of the tasks list of the current person selected
 
 	/**
-	 * default constructor
-	 * @param x
-	 * @param y
-	 * @param width
-	 * @param height
-	 * @param inGame
+	 * Class constructor specifying the size and position of the window, and the gameGUI
+	 * @param x: horizontal position of the UI
+	 * @param y: vertical position of the UI
+	 * @param width: width of the UI
+	 * @param height: height of the UI
+	 * @param gameGUI: class that contains the game model
 	 */
-	public TasksUI(int x, int y, int width, int height, InGame inGame) {
+	public TasksUI(int x, int y, int width, int height, GameGUI gameGUI) {
 		super(x, y, width, height);
-		this.inGame = inGame;
+		this.gameGUI = gameGUI;
 		initControls();
 	}
 
 	/**
-	 * init Buttons of a taskBar
+	 * Initializes the controls of tje UI, the tasks, tasks reset and start day buttons, and the checkboxes to select a person
 	 */
 	private void initControls() {
 		int buttonWidth = 125;
@@ -62,7 +52,7 @@ public class TasksUI extends UIComponent {
 		int i = 0;
 		int currenTaskId = 0;
 		int line = 0;
-		for (Task task : this.inGame.getGame().getAvailableTasks()) {
+		for (Task task : this.gameGUI.getGame().getAvailableTasks()) {
 			if (xOffsetButtonsOrigin * i > (this.y + this.width) - buttonWidth) {
 				i = 0;
 				line++;
@@ -80,7 +70,7 @@ public class TasksUI extends UIComponent {
 		CheckboxGroup cbg = new CheckboxGroup();
 		this.personsCheckboxes = new ArrayList<>();
 
-		ArrayList<Person> persons = this.inGame.getGame().getHouse().getCouple().getPersons();
+		ArrayList<Person> persons = this.gameGUI.getGame().getHouse().getCouple().getPersons();
 
 		persons.forEach(person -> {
 			int personId = person.getId();
@@ -88,7 +78,7 @@ public class TasksUI extends UIComponent {
 			personCheckbox.setBounds(x + 10 + 80 * persons.indexOf(person), yStart + yOffsetButtonsOrigin * (tasksLinesNumber + 1), 50, 20);
 			personCheckbox.addItemListener(e -> this.selectedPersonId = personId);
 			this.personsCheckboxes.add(personCheckbox);
-			inGame.getMain().add(personCheckbox);
+			gameGUI.getMain().add(personCheckbox);
 		});
 		this.selectedPersonId = 0;
 		this.personsCheckboxes.get(0).setState(true);
@@ -97,16 +87,16 @@ public class TasksUI extends UIComponent {
 	}
 
 	/**
-	 * Show checkbox button if the player is on the good scene
-	 * @param isVisible
+	 * Make the scene controls visible or not
+	 * @param isVisible: tells if the UI is visible
 	 */
 	public void setVisible(boolean isVisible) {
 		this.personsCheckboxes.forEach(checkbox -> checkbox.setVisible(isVisible));
 	}
 
 	/**
-	 * draw components
-	 * @param g Graphics
+	 * Draws components the UI on the current scene
+	 * @param g: graphics component of the app
 	 */
 	public void draw(Graphics g) {
 		// Background
@@ -120,7 +110,7 @@ public class TasksUI extends UIComponent {
 		Graphics2D graphics2D = (Graphics2D) g;
 		graphics2D.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 
-		Person selectedPerson = this.inGame.getGame().getHouse().getCouple().getPersonsFromId(this.selectedPersonId);
+		Person selectedPerson = this.gameGUI.getGame().getHouse().getCouple().getPersonsFromId(this.selectedPersonId);
 		int remainingStamina = selectedPerson.getMaxStamina() - selectedPerson.getResultingStaminaForCurrentTasks() * -1;
 		graphics2D.drawString("Remaining stamina:", this.x + 10, this.taskListY);
 		for (int i = 0; i < remainingStamina; i++) {
@@ -151,10 +141,11 @@ public class TasksUI extends UIComponent {
 
 	/**
 	 * Add the selected task to the Person tasks
+	 * @param id: id of the task to add
 	 */
 	private void addTaskToSelectedPerson(int id) {
-		Task selectedTask = inGame.getGame().findTaskFromId(id);
-		Person selectedPerson = inGame.getGame().getHouse().getCouple().getPersonsFromId(this.selectedPersonId);
+		Task selectedTask = gameGUI.getGame().findTaskFromId(id);
+		Person selectedPerson = gameGUI.getGame().getHouse().getCouple().getPersonsFromId(this.selectedPersonId);
 		if ((selectedTask.getStamina() + selectedPerson.getResultingStaminaForCurrentTasks()) * -1 <= selectedPerson.getMaxStamina()) { // * -1 because stamina decreases for task that needs it
 			selectedPerson.addTask(selectedTask);
 		}
@@ -164,10 +155,14 @@ public class TasksUI extends UIComponent {
 	 * Reset tasks of the selected player
 	 */
 	private void resetTasks() {
-		inGame.getGame().getHouse().getCouple().getPersonsFromId(this.selectedPersonId).setTasks(new ArrayList<>());
+		gameGUI.getGame().getHouse().getCouple().getPersonsFromId(this.selectedPersonId).setTasks(new ArrayList<>());
 	}
 
-	// Control
+	/**
+	 * Called when the user clicks anywhere on the screen. Used to know if the user clicked on the reset tasks or start day buttons
+	 * @param x: x position of the mouse
+	 * @param y: y position of the mouse
+	 */
 	public void mouseClicked(int x, int y) {
 		this.utilityButtons.forEach(button -> {
 			if (button.getBounds().contains(x, y)) {

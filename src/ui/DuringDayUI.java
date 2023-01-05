@@ -1,57 +1,52 @@
 /**
  * @file DuringDayUI.java
  * @date 31/12/2022
- * Create a UI that manage the day : Persons are doing their tasks
+ * UI used to display and execute all the tasks of a day
  */
 package ui;
 
-import java.awt.Color;
-import java.awt.Graphics;
-import java.awt.Graphics2D;
-import java.awt.RenderingHints;
+import java.awt.*;
 import java.util.ArrayList;
-
 import model.Person;
-import view.InGame;
-
+import view.GameGUI;
 import static java.lang.Math.max;
 import static java.lang.Math.min;
 
 public class DuringDayUI extends UIComponent {
 
-	private final InGame inGame;
-	private Button nextTaskButton;
-	private final ArrayList<Person> persons;
-	private int currentTaskIndex;
-	private boolean areAllTasksDone;
+	private final GameGUI gameGUI; // gameGUI containing the game model
+	private Button nextTaskButton; // button used to execute the next task
+	private final ArrayList<Person> persons; // persons of the house
+	private int currentTaskIndex; // index of the current task
+	private boolean areAllTasksDone; // tells if all the tasks are completed
 
 	/**
-	 * @brief Default constructor
-	 * @param x
-	 * @param y
-	 * @param width
-	 * @param height
-	 * @param inGame
+	 * Class constructor specifying the size and position of the window, and the gameGUI
+	 * @param x: horizontal position of the UI
+	 * @param y: vertical position of the UI
+	 * @param width: width of the UI
+	 * @param height: height of the UI
+	 * @param gameGUI: class that contains the game model
 	 */
-	public DuringDayUI(int x, int y, int width, int height, InGame inGame) {
+	public DuringDayUI(int x, int y, int width, int height, GameGUI gameGUI) {
 		super(x, y, width, height);
-		this.inGame = inGame;
-		this.persons = inGame.getGame().getHouse().getCouple().getPersons();
+		this.gameGUI = gameGUI;
+		this.persons = gameGUI.getGame().getHouse().getCouple().getPersons();
 		this.currentTaskIndex = -1;
 		this.areAllTasksDone = false;
 		initButtons();
 	}
 
 	/**
-	 * @brief init buttons
+	 * Initializes the buttons of the UI
 	 */
 	private void initButtons() {
 		this.nextTaskButton = new Button("Next Task", (x + width / 2) - 60, (y + height) - 50, 120, 30);
 	}
 
 	/**
-	 * @brief Draw components
-	 * @param g
+	 * Draws components the UI on the current scene
+	 * @param g: graphics component of the app
 	 */
 	public void draw(Graphics g) {
 		g.setColor(new Color(220, 123, 15));
@@ -61,8 +56,8 @@ public class DuringDayUI extends UIComponent {
 	}
 
 	/**
-	 * @brief Draw texts components
-	 * @param g
+	 * Draws the text indicating the task already done on the screen
+	 * @param g: graphics component of the app
 	 */
 	public void drawText(Graphics g) {
 		int x = this.x + 20;
@@ -70,7 +65,7 @@ public class DuringDayUI extends UIComponent {
 
 		Graphics2D graphics2D = (Graphics2D) g;
 		graphics2D.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-		graphics2D.drawString("Day #" + inGame.getGame().getDayNumber() + " is going on !", this.y + this.width / 2 - 40, 20);
+		graphics2D.drawString("Day #" + gameGUI.getGame().getDayNumber() + " is going on !", this.y + this.width / 2 - 40, 20);
 		int screenSplitWidth = (this.width - x) / this.persons.size();
 
 		this.persons.forEach(person -> {
@@ -86,11 +81,17 @@ public class DuringDayUI extends UIComponent {
 		});
 	}
 
-	// Controller
-	public void setVisible(boolean isVisible) {
+	/**
+	 * Make the scene controls visible or not
+	 * @param isVisible: tells if the UI is visible
+	 */
+	public void setVisible(boolean isVisible) {}
 
-	}
-
+	/**
+	 * Called when the user clicks anywhere on the screen. Used to know if the user clicked on the Next task button
+	 * @param x: x position of the mouse
+	 * @param y: y position of the mouse
+	 */
 	public void mouseClicked(int x, int y) {
 		if (this.nextTaskButton.getBounds().contains(x, y)) {
 			if (areAllTasksDone) {
@@ -101,7 +102,7 @@ public class DuringDayUI extends UIComponent {
 					tasksNumber = max(person.getTasks().size(), tasksNumber);
 				}
 				this.currentTaskIndex++;
-				this.inGame.getGame().doNthTaskOfAllPersons(this.currentTaskIndex);
+				this.gameGUI.getGame().doNthTaskOfAllPersons(this.currentTaskIndex);
 				this.areAllTasksDone = tasksNumber == this.currentTaskIndex + 1;
 				if (this.areAllTasksDone) {
 					this.nextTaskButton.setText("End current day");
@@ -114,7 +115,6 @@ public class DuringDayUI extends UIComponent {
 
 	public void mouseMoved(int x, int y) {
 		this.nextTaskButton.setIsMouseOver(nextTaskButton.getBounds().contains(x, y));
-
 	}
 
 	public void mousePressed(int x, int y) {

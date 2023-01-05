@@ -1,7 +1,7 @@
 /**
  * @file SceneMethods.java
  * @date 27/12/2022
- * @brief Create an interface for interacting with different types of scenes or views
+ * Interface used define common methods to all scenes of the game
  */
 package view;
 
@@ -9,15 +9,15 @@ import java.awt.Graphics;
 
 public interface SceneMethods {
 
-	public void render(Graphics g);
+	void render(Graphics g);
 
-	public void mouseClicked(int x, int y);
+	void mouseClicked(int x, int y);
 
-	public void mouseMoved(int x, int y);
+	void mouseMoved(int x, int y);
 
-	public void mousePressed(int x, int y);
+	void mousePressed(int x, int y);
 
-	public void mouseReleased(int x, int y);
+	void mouseReleased(int x, int y);
 
-	public void mouseDragged(int x, int y);
+	void mouseDragged(int x, int y);
 }

@@ -1,31 +1,32 @@
 /**
  * @file Menu.java
  * @date 27/12/2022
- * @brief Menu GameScene
+ * Scene of the menu of the application
  */
 package view;
 
+import java.awt.Graphics;
+import java.util.ArrayList;
+import ui.Button;
 import static utils.GameStates.PLAYING;
 import static utils.GameStates.SetGameState;
 
-import java.awt.Graphics;
-import java.util.ArrayList;
-import java.util.Set;
-
-import ui.Button;
-
 public class Menu extends GameScene implements SceneMethods {
-	private ArrayList<Button> buttons;
+
+	private ArrayList<Button> buttons; // buttons of the menu
 
 	/**
-	 * @brief Constructor
-	 * @param GUIManager
+	 * Class constructor
+	 * @param GUIManager: manages all the views of the application
 	 */
 	public Menu(GUIManager GUIManager) {
 		super(GUIManager);
 		initButtons();
 	}
 
+	/**
+	 * Initializes the buttons of the menu
+	 */
 	private void initButtons() {
 		int buttonWidth = 150;
 		int buttonHeight = buttonWidth / 3;
@@ -38,16 +39,20 @@ public class Menu extends GameScene implements SceneMethods {
 		this.buttons.add(new Button("Quit", x, y + yOffset, buttonWidth, buttonHeight, 1));
 	}
 
-	// Control
+	/**
+	 * Renders the buttons on the screen
+	 * @param g: graphics component of the app
+	 */
 	@Override
 	public void render(Graphics g) {
-		drawButtons(g);
-	}
-
-	private void drawButtons(Graphics g) {
 		this.buttons.forEach(button -> button.draw(g));
 	}
 
+	/**
+	 * Called when the user clicks anywhere on the screen. Used to know if he clicked on the buttons of the menu
+	 * @param x: x position of the mouse
+	 * @param y: y position of the mouse
+	 */
 	@Override
 	public void mouseClicked(int x, int y) {
 		this.buttons.forEach(button -> {

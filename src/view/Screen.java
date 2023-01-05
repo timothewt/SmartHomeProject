@@ -1,46 +1,38 @@
 /**
  * @file GameScreen.java
  * @date 27/12/2022
- * @brief Set parameter for the Game window
+ * Main screen of the game, defining its dimension
  */
 package view;
 
-import java.awt.Dimension;
-import java.awt.Graphics;
-
+import java.awt.*;
 import javax.swing.JPanel;
-
 import ui.MyMouseListener;
 
-@SuppressWarnings("serial")
 public class Screen extends JPanel {
 
-	private final GUIManager GUIManager;
-
-	private Dimension size;
-	private MyMouseListener myMouseListener;
+	private final GUIManager GUIManager; // manages all the views of the application
+	private Dimension size; // dimension of the window
 
 	/**
-	 * @brief Constructor
-	 * @param GUIManager
+	 * Class constructor
+	 * @param GUIManager: manages all the views of the application
 	 */
 	public Screen(GUIManager GUIManager) {
 		this.GUIManager = GUIManager;
-
 		setPanelSize();
+		initInputs();
 	}
 
 	public void initInputs() {
-		myMouseListener = new MyMouseListener(GUIManager);
-
+		MyMouseListener myMouseListener = new MyMouseListener(GUIManager);
 		addMouseListener(myMouseListener);
 		addMouseMotionListener(myMouseListener);
-
 		requestFocus();
 	}
 
 	/**
-	 * @brief Set the size of the window
+	 * Sets the size of the app window
 	 */
 	private void setPanelSize() {
 		size = new Dimension(700, 720);
@@ -50,13 +42,17 @@ public class Screen extends JPanel {
 	}
 
 	/**
-	 * @brief Graphic render
+	 * Renders the whole game
+	 * @param g: graphics component of the app
 	 */
 	public void paintComponent(Graphics g) {
 		super.paintComponent(g);
 		GUIManager.getRender().render(g);
 	}
 
+	/**
+	 * Getter
+	 */
 	public Dimension getSize() {
 		return this.size;
 	}

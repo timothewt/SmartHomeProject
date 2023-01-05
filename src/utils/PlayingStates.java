@@ -1,23 +1,21 @@
 /**
  * @file PlayingStates.java
  * @date 27/12/2022
- * @brief Use to show the good GUI while playing
+ * Used to know in which part of the game the user is currently in (tasks picking, during the day or buying perks)
  */
 package utils;
 
 public enum PlayingStates {
 
-	TASK, DAY, PERK;
-	// temp name to create the enum
+	TASK, DAY, PERK; // picking the persons tasks, during the day executing the tasks, buying new perks
 
-	public static PlayingStates playingState = TASK;
+	public static PlayingStates playingState = TASK; // current state of the game
 
 	/**
-	 * @Brief modify the state of the game -> the UI where the player is
-	 * @param state : The new state
+	 * Static method called anywhere in the application used to change the current in game UI
+	 * @param state: The new state
 	 */
 	public static void setPlayingState(PlayingStates state) {
-
 		playingState = state;
 	}
 }

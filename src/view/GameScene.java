@@ -1,7 +1,7 @@
 /**
  * @file GameScene.java
  * @date 27/12/2022
- * @brief Create the Game Scene
+ * Base of each scene of the game
  */
 package view;
 

@@ -1,0 +1,102 @@
+/**
+ * @file InfoBarUI.java
+ * @date 27/12/2022
+ * UI that displays all the information of the house and weather to the player.
+ */
+package ui;
+
+import java.awt.*;
+import java.util.ArrayList;
+import model.Person;
+import view.GameGUI;
+import static utils.GameStates.*;
+
+public class InfoBarUI extends UIComponent {
+
+	private final GameGUI gameGUI; // gameGUI containing the game model
+	private ArrayList<Button> buttons; // buttons of the UI
+
+	/**
+	 * Class constructor specifying the size and position of the window, and the gameGUI
+	 * @param x: horizontal position of the UI
+	 * @param y: vertical position of the UI
+	 * @param width: width of the UI
+	 * @param height: height of the UI
+	 * @param gameGUI: class that contains the game model
+	 */
+	public InfoBarUI(int x, int y, int width, int height, GameGUI gameGUI) {
+		super(x, y, width, height);
+		initButtons();
+		this.gameGUI = gameGUI;
+	}
+
+	/**
+	 * Initializes the buttons of the info bar
+	 */
+	private void initButtons() {
+		this.buttons = new ArrayList<>();
+		this.buttons.add(new Button("Menu", x + 5, y + 5, 100, 30, 0));
+		this.buttons.add(new Button("Save", x + 5, y + 45, 100, 30, 1));
+	}
+
+	/**
+	 * Draws the bar on the current scene
+	 * @param g: graphics component of the app
+	 */
+	public void draw(Graphics g) {
+		g.setColor(new Color(220, 123, 15));
+		g.fillRect(this.x, this.y, this.width, this.height);
+		g.drawLine(this.x, this.y - 1, this.width, this.height);
+		this.buttons.forEach(button -> button.draw(g));
+		drawText(g);
+	}
+
+	/**
+	 * Draws all the information about the house and the weather on the scene
+	 * @param g: graphics component of the app
+	 */
+	private void drawText(Graphics g) {
+
+		Graphics2D graphics2D = (Graphics2D) g;
+
+		graphics2D.drawLine(x, y, x + width, y);
+
+		graphics2D.drawString("Money : " + gameGUI.getGame().getHouse().getCouple().getMoney(), this.x + 115, this.y + 25);
+		graphics2D.drawString("Energy : " + gameGUI.getGame().getHouse().getEnergy(), this.x + 115, this.y + 50);
+
+		for (Person person: gameGUI.getGame().getHouse().getCouple().getPersons()) {
+			graphics2D.drawString(person.toString(), this.x + 220, this.y + 25 + 25 * person.getId());
+		}
+
+		graphics2D.drawString(gameGUI.getGame().getWeather().toString(), this.x + 10, this.y + 95);
+		graphics2D.drawString(gameGUI.getGame().getHouse().toString(), this.x + 10, this.y + 112);
+	}
+
+	/**
+	 * Called when the user clicks anywhere on the screen. Used to know if he clicked on the menu or save buttons.
+	 * @param x: x position of the mouse
+	 * @param y: y position of the mouse
+	 */
+	public void mouseClicked(int x, int y) {
+		this.buttons.forEach(button -> {
+			if (button.getBounds().contains(x, y)) {
+				switch (button.getId()) {
+					case 0 -> SetGameState(MENU);
+					case 1 -> System.out.println("Game saved ! Not done yet, only this message in terminal to test");
+				}
+			}
+		});
+	}
+
+	public void mouseMoved(int x, int y) {
+		this.buttons.forEach(button -> button.setIsMouseOver(button.getBounds().contains(x, y)));
+	}
+
+	public void mousePressed(int x, int y) {
+		this.buttons.forEach(button -> button.setIsMousePressed(button.getBounds().contains(x, y)));
+	}
+
+	public void mouseReleased(int x, int y) {
+		this.buttons.forEach(Button::resetBooleans);
+	}
+}

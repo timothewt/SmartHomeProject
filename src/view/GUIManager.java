@@ -1,36 +1,29 @@
 /**
  * @file Game.java
  * @date 27/12/2022
- * @brief Main class of the program
+ * Main view of the program, updates the view at a constant rate, displays a different scene depending on the GameState
  */
 package view;
 
 import javax.swing.JFrame;
-
 import utils.GameStates;
 import utils.PlayingStates;
 
-@SuppressWarnings("serial")
 public class GUIManager extends JFrame implements Runnable {
-	private Screen screen;
-	private Thread gameThread;
 
-	private final double FPS_SET = 90.0;
-	private final double UPS_SET = 48.0;
-
-	// Classes
-	private Render render;
-	private Menu menu;
-	private InGame inGame;
+	private final Screen screen; // screen of the application
+	private final Render render; // used to render a different view depending on the GameState
+	private final Menu menu; // instance of the menu view
+	private final GameGUI gameGUI; // instance of the in game view
 
 	/**
-	 * @brief Constructor
+	 * Class constructor
 	 */
 	public GUIManager() {
 		render = new Render(this);
 		screen = new Screen(this);
 		menu = new Menu(this);
-		inGame = new InGame(this);
+		gameGUI = new GameGUI(this);
 
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		setLocationRelativeTo(null);
@@ -41,33 +34,36 @@ public class GUIManager extends JFrame implements Runnable {
 	}
 
 	/**
-	 * @brief Start the thread
+	 * Start the thread of the game
 	 */
 	public void start() {
-		gameThread = new Thread(this) {
+		Thread gameThread = new Thread(this) {
 		};
 		gameThread.start();
 	}
 
+	/**
+	 * Updates the views of the application
+	 */
 	private void updateGame() {
 		switch (GameStates.gameState) {
 			case MENU -> {  
-				inGame.getTasksUI().setVisible(false);
-				inGame.getDuringDayUI().setVisible(false);
+				gameGUI.getTasksUI().setVisible(false);
+				gameGUI.getDuringDayUI().setVisible(false);
 			}
 			case PLAYING -> {
 				switch (PlayingStates.playingState) {
 					case TASK -> {
-						inGame.getTasksUI().setVisible(true);
-						inGame.getDuringDayUI().setVisible(false);
+						gameGUI.getTasksUI().setVisible(true);
+						gameGUI.getDuringDayUI().setVisible(false);
 					}
 					case DAY -> {
-						inGame.getTasksUI().setVisible(false);
-						inGame.getDuringDayUI().setVisible(true);
+						gameGUI.getTasksUI().setVisible(false);
+						gameGUI.getDuringDayUI().setVisible(true);
 					}
 					case PERK -> {
-						inGame.getTasksUI().setVisible(false);
-						inGame.getDuringDayUI().setVisible(false);
+						gameGUI.getTasksUI().setVisible(false);
+						gameGUI.getDuringDayUI().setVisible(false);
 					}
 				}
 			}
@@ -76,19 +72,18 @@ public class GUIManager extends JFrame implements Runnable {
 	}
 
 	/**
-	 * @brief The game loop
+	 * Main game loop, updates the view and the game model
 	 */
 	@Override
 	public void run() {
 
 		long lastFrame = System.nanoTime();
-		long lastTimeCheck = System.currentTimeMillis();
 		long lastUpdate = System.nanoTime();
 
+		double FPS_SET = 90.0;
+		double UPS_SET = 48.0;
 		double timePerFrame = 1000000000.0 / FPS_SET;
 		double timePerUpdate = 1000000000.0 / UPS_SET;
-		int frames = 0;
-		int updates = 0;
 
 		long now;
 
@@ -97,26 +92,19 @@ public class GUIManager extends JFrame implements Runnable {
 			// Updates
 			if (now - lastUpdate >= timePerUpdate) {
 				lastUpdate = now;
-				updates++;
 				updateGame();
 			}
-
 			// Render
 			if (now - lastFrame >= timePerFrame) {
 				lastFrame = now;
 				repaint();
-				frames++;
-			}
-
-			if (System.currentTimeMillis() - lastTimeCheck >= 1000) {
-				frames = 0;
-				updates = 0;
-				lastTimeCheck = System.currentTimeMillis();
 			}
 		}
 	}
 
-	// Getters and setters
+	/**
+	 * Getters and setters
+	 */
 	public Render getRender() {
 		return render;
 	}
@@ -125,8 +113,8 @@ public class GUIManager extends JFrame implements Runnable {
 		return menu;
 	}
 
-	public InGame getPlay() {
-		return inGame;
+	public GameGUI getPlay() {
+		return gameGUI;
 	}
 
 	public Screen getScreen() {
