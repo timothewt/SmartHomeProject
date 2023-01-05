@@ -10,6 +10,7 @@ import java.awt.Graphics;
 import model.Game;
 import ui.DuringDayUI;
 import ui.InfoBar;
+import ui.PerksUI;
 import ui.TasksUI;
 import utils.PlayingStates;
 
@@ -19,6 +20,7 @@ public class InGame extends GameScene implements SceneMethods {
 	private final InfoBar infoBar;
 	private final TasksUI tasksUI;
 	private final DuringDayUI duringDayUI;
+	private final PerksUI perksUI;
 	private final GUIManager GUIManager;
 	private final int gameElementsHeight;
 
@@ -31,6 +33,7 @@ public class InGame extends GameScene implements SceneMethods {
 		infoBar = new InfoBar(0, gameElementsHeight, width, 120, this);
 		tasksUI = new TasksUI(0, 0, width, gameElementsHeight, this);
 		duringDayUI = new DuringDayUI(0, 0, width, gameElementsHeight, this);
+		perksUI = new PerksUI(0, 0, width, gameElementsHeight, this);
 	}
 
 	public void render(Graphics g) {
@@ -43,6 +46,7 @@ public class InGame extends GameScene implements SceneMethods {
 				duringDayUI.draw(g);
 				break;
 			case PERK:
+				perksUI.draw(g);
 				break;
 		}
 	}
@@ -52,32 +56,71 @@ public class InGame extends GameScene implements SceneMethods {
 	public void mouseClicked(int x, int y) {
 		if (y >= this.gameElementsHeight)
 			infoBar.mouseClicked(x, y);
-		tasksUI.mouseClicked(x, y);
-		duringDayUI.mouseClicked(x, y);
+		
+		switch (PlayingStates.playingState) {
+			case TASK -> {
+				tasksUI.mouseClicked(x, y);
+			}
+			case DAY -> {
+				duringDayUI.mouseClicked(x, y);
+			}
+			case PERK -> {
+				perksUI.mouseClicked(x, y);
+			}
+		}
 	}
 
 	@Override
 	public void mouseMoved(int x, int y) {
 		if (y >= this.gameElementsHeight)
 			infoBar.mouseMoved(x, y);
-		tasksUI.mouseMoved(x, y);
-		duringDayUI.mouseMoved(x, y);
-
+		
+		switch (PlayingStates.playingState) {
+			case TASK -> {
+				tasksUI.mouseMoved(x, y);
+			}
+			case DAY -> {
+				duringDayUI.mouseMoved(x, y);
+			}
+			case PERK -> {
+				perksUI.mouseMoved(x, y);
+			}
+		}
 	}
 
 	@Override
 	public void mousePressed(int x, int y) {
 		if (y >= this.gameElementsHeight)
 			infoBar.mousePressed(x, y);
-		tasksUI.mousePressed(x, y);
-		duringDayUI.mousePressed(x, y);
+		
+		switch (PlayingStates.playingState) {
+			case TASK -> {
+				tasksUI.mousePressed(x, y);
+			}
+			case DAY -> {
+				duringDayUI.mousePressed(x, y);
+			}
+			case PERK -> {
+				perksUI.mousePressed(x, y);
+			}
+		}	
 	}
 
 	@Override
 	public void mouseReleased(int x, int y) {
 		infoBar.mouseReleased(x, y);
-		tasksUI.mouseReleased(x, y);
-		duringDayUI.mouseReleased(x, y);
+		
+		switch (PlayingStates.playingState) {
+			case TASK -> {
+				tasksUI.mouseReleased(x, y);
+			}
+			case DAY -> {
+				duringDayUI.mouseReleased(x, y);
+			}
+			case PERK -> {
+				perksUI.mouseReleased(x, y);
+			}
+		}		
 	}
 
 	@Override

@@ -5,6 +5,10 @@
  */
 package ui;
 
+import static java.lang.Math.abs;
+import static utils.PlayingStates.DAY;
+import static utils.PlayingStates.setPlayingState;
+
 import java.awt.Checkbox;
 import java.awt.CheckboxGroup;
 import java.awt.Color;
@@ -16,11 +20,6 @@ import java.util.ArrayList;
 import model.Person;
 import model.Task;
 import view.InGame;
-
-import static java.lang.Math.abs;
-import static java.lang.Math.signum;
-import static utils.PlayingStates.DAY;
-import static utils.PlayingStates.setPlayingState;
 
 public class TasksUI extends UIComponent {
 

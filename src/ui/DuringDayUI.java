@@ -5,6 +5,9 @@
  */
 package ui;
 
+import static java.lang.Math.max;
+import static java.lang.Math.min;
+
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
@@ -14,8 +17,8 @@ import java.util.ArrayList;
 import model.Person;
 import view.InGame;
 
-import static java.lang.Math.max;
-import static java.lang.Math.min;
+import static utils.PlayingStates.PERK;
+import static utils.PlayingStates.setPlayingState;
 
 public class DuringDayUI extends UIComponent {
 
@@ -56,7 +59,7 @@ public class DuringDayUI extends UIComponent {
 	public void draw(Graphics g) {
 		g.setColor(new Color(220, 123, 15));
 		g.fillRect(x, y, width, height);
-		nextTaskButton.draw(g);
+		this.nextTaskButton.draw(g);
 		drawText(g);
 	}
 
@@ -93,8 +96,8 @@ public class DuringDayUI extends UIComponent {
 
 	public void mouseClicked(int x, int y) {
 		if (this.nextTaskButton.getBounds().contains(x, y)) {
-			if (areAllTasksDone) {
-				// go to next day
+			if (this.areAllTasksDone) {
+				setPlayingState(PERK);
 			} else {
 				int tasksNumber = 0;
 				for (Person person : this.persons) {
@@ -122,7 +125,7 @@ public class DuringDayUI extends UIComponent {
 	}
 
 	public void mouseReleased(int x, int y) {
-		nextTaskButton.resetBooleans();
+		this.nextTaskButton.resetBooleans();
 	}
 
 }
