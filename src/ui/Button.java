@@ -142,14 +142,6 @@ public class Button {
 		this.isMouseOver = isMouseOver;
 	}
 
-	public boolean isMouseOver() {
-		return isMouseOver;
-	}
-
-	public boolean isMousePressed() {
-		return isMousePressed;
-	}
-
 	// Getters and Setters
 	public Rectangle getBounds() {
 		return bounds;
@@ -157,26 +149,6 @@ public class Button {
 
 	public int getId() {
 		return id;
-	}
-
-	public int getX() {
-		return x;
-	}
-
-	public int getY() {
-		return y;
-	}
-
-	public int getWidth() {
-		return width;
-	}
-
-	public int getHeight() {
-		return height;
-	}
-
-	public String getText() {
-		return text;
 	}
 
 	public void setText(String text) {

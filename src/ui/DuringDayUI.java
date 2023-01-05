@@ -11,6 +11,7 @@ import model.Person;
 import view.GameGUI;
 import static java.lang.Math.max;
 import static java.lang.Math.min;
+import static utils.PlayingStates.*;
 
 public class DuringDayUI extends UIComponent {
 
@@ -94,8 +95,8 @@ public class DuringDayUI extends UIComponent {
 	 */
 	public void mouseClicked(int x, int y) {
 		if (this.nextTaskButton.getBounds().contains(x, y)) {
-			if (areAllTasksDone) {
-				// go to next day
+			if (this.areAllTasksDone) {
+				setPlayingState(PERK);
 			} else {
 				int tasksNumber = 0;
 				for (Person person : this.persons) {

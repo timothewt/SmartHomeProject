@@ -46,25 +46,16 @@ public class GUIManager extends JFrame implements Runnable {
 	 * Updates the views of the application
 	 */
 	private void updateGame() {
+		gameGUI.getTasksUI().setVisible(false);
+		gameGUI.getDuringDayUI().setVisible(false);
+		gameGUI.getPerksUI().setVisible(false);
 		switch (GameStates.gameState) {
-			case MENU -> {  
-				gameGUI.getTasksUI().setVisible(false);
-				gameGUI.getDuringDayUI().setVisible(false);
-			}
+			case MENU -> {}
 			case PLAYING -> {
 				switch (PlayingStates.playingState) {
-					case TASK -> {
-						gameGUI.getTasksUI().setVisible(true);
-						gameGUI.getDuringDayUI().setVisible(false);
-					}
-					case DAY -> {
-						gameGUI.getTasksUI().setVisible(false);
-						gameGUI.getDuringDayUI().setVisible(true);
-					}
-					case PERK -> {
-						gameGUI.getTasksUI().setVisible(false);
-						gameGUI.getDuringDayUI().setVisible(false);
-					}
+					case TASK -> gameGUI.getTasksUI().setVisible(true);
+					case DAY -> gameGUI.getDuringDayUI().setVisible(true);
+					case PERK -> gameGUI.getPerksUI().setVisible(true);
 				}
 			}
 			case SETTINGS -> {}

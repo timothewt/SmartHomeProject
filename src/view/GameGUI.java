@@ -7,9 +7,7 @@ package view;
 
 import java.awt.Graphics;
 import model.Game;
-import ui.DuringDayUI;
-import ui.InfoBarUI;
-import ui.TasksUI;
+import ui.*;
 import utils.PlayingStates;
 
 public class GameGUI extends GameScene implements SceneMethods {
@@ -18,6 +16,7 @@ public class GameGUI extends GameScene implements SceneMethods {
 	private final InfoBarUI infoBarUI; // info bar indicating the information of the weather and the house
 	private final TasksUI tasksUI; // UI of the tasks picking
 	private final DuringDayUI duringDayUI; // UI of the tasks execution
+	private final PerksUI perksUI;
 	private final GUIManager GUIManager; // manages all the views of the application
 	private final int gameElementsHeight; // height of the main game component
 
@@ -34,6 +33,7 @@ public class GameGUI extends GameScene implements SceneMethods {
 		infoBarUI = new InfoBarUI(0, gameElementsHeight, width, 120, this);
 		tasksUI = new TasksUI(0, 0, width, gameElementsHeight, this);
 		duringDayUI = new DuringDayUI(0, 0, width, gameElementsHeight, this);
+		perksUI = new PerksUI(0, 0, width, gameElementsHeight, this);
 	}
 
 	/**
@@ -43,14 +43,9 @@ public class GameGUI extends GameScene implements SceneMethods {
 	public void render(Graphics g) {
 		infoBarUI.draw(g);
 		switch (PlayingStates.playingState) {
-			case TASK:
-				tasksUI.draw(g);
-				break;
-			case DAY:
-				duringDayUI.draw(g);
-				break;
-			case PERK:
-				break;
+			case TASK -> tasksUI.draw(g);
+			case DAY -> duringDayUI.draw(g);
+			case PERK -> perksUI.draw(g);
 		}
 	}
 
@@ -63,16 +58,29 @@ public class GameGUI extends GameScene implements SceneMethods {
 	public void mouseClicked(int x, int y) {
 		if (y >= this.gameElementsHeight)
 			infoBarUI.mouseClicked(x, y);
-		tasksUI.mouseClicked(x, y);
-		duringDayUI.mouseClicked(x, y);
+
+		switch (PlayingStates.playingState) {
+			case TASK -> {
+				tasksUI.mouseClicked(x, y);
+			}
+			case DAY -> {
+				duringDayUI.mouseClicked(x, y);
+			}
+			case PERK -> {
+				perksUI.mouseClicked(x, y);
+			}
+		}
 	}
 
 	@Override
 	public void mouseMoved(int x, int y) {
 		if (y >= this.gameElementsHeight)
 			infoBarUI.mouseMoved(x, y);
-		tasksUI.mouseMoved(x, y);
-		duringDayUI.mouseMoved(x, y);
+		switch (PlayingStates.playingState) {
+			case TASK -> tasksUI.mouseMoved(x, y);
+			case DAY -> duringDayUI.mouseMoved(x, y);
+			case PERK -> perksUI.mouseMoved(x, y);
+		}
 
 	}
 
@@ -80,15 +88,21 @@ public class GameGUI extends GameScene implements SceneMethods {
 	public void mousePressed(int x, int y) {
 		if (y >= this.gameElementsHeight)
 			infoBarUI.mousePressed(x, y);
-		tasksUI.mousePressed(x, y);
-		duringDayUI.mousePressed(x, y);
+		switch (PlayingStates.playingState) {
+			case TASK -> tasksUI.mousePressed(x, y);
+			case DAY -> duringDayUI.mousePressed(x, y);
+			case PERK -> perksUI.mousePressed(x, y);
+		}
 	}
 
 	@Override
 	public void mouseReleased(int x, int y) {
 		infoBarUI.mouseReleased(x, y);
-		tasksUI.mouseReleased(x, y);
-		duringDayUI.mouseReleased(x, y);
+		switch (PlayingStates.playingState) {
+			case TASK -> tasksUI.mouseReleased(x, y);
+			case DAY -> duringDayUI.mouseReleased(x, y);
+			case PERK -> perksUI.mouseReleased(x, y);
+		}
 	}
 
 	@Override
@@ -109,5 +123,9 @@ public class GameGUI extends GameScene implements SceneMethods {
 
 	public DuringDayUI getDuringDayUI() {
 		return duringDayUI;
+	}
+
+	public PerksUI getPerksUI() {
+		return perksUI;
 	}
 }
