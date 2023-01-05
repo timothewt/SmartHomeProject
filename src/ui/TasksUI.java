@@ -50,12 +50,12 @@ public class TasksUI extends UIComponent {
 	 * init Buttons of a taskBar
 	 */
 	private void initControls() {
-		int w = 115;
-		int h = 30;
+		int buttonWidth = 125;
+		int buttonHeight = 30;
 		int xStart = 10;
 		int yStart = 10;
-		int xOffset = w + 10;
-		int yOffset = h + 10;
+		int xOffsetButtonsOrigin = buttonWidth + 10;
+		int yOffsetButtonsOrigin = buttonHeight + 10;
 
 		this.taskButtons = new ArrayList<>();
 
@@ -63,19 +63,19 @@ public class TasksUI extends UIComponent {
 		int currenTaskId = 0;
 		int line = 0;
 		for (Task task : this.inGame.getGame().getAvailableTasks()) {
-			if (xOffset * i > 640 - w) {
+			if (xOffsetButtonsOrigin * i > (this.y + this.width) - buttonWidth) {
 				i = 0;
 				line++;
 			}
-			taskButtons.add(new Button(task.getName(), xStart + xOffset * i, yStart + yOffset * line, w, h, currenTaskId));
+			taskButtons.add(new Button(task.getName(), xStart + xOffsetButtonsOrigin * i, yStart + yOffsetButtonsOrigin * line, buttonWidth, buttonHeight, currenTaskId));
 			i++;
 			currenTaskId++;
 		}
 		int tasksLinesNumber = line;
 
 		this.utilityButtons = new ArrayList<>();
-		this.utilityButtons.add(new Button("Reset",640 - 120, yStart + yOffset * (tasksLinesNumber + 1), 100, 30, 0));
-		this.utilityButtons.add(new Button("Start Day", 640 - 120, 550, 100, 30, 1));
+		this.utilityButtons.add(new Button("Reset",(this.x + this.width) - 120, yStart + yOffsetButtonsOrigin * (tasksLinesNumber + 1), 100, 30, 0));
+		this.utilityButtons.add(new Button("Start Day", (this.x + this.width) - 120, (this.y + this.height) - 50, 100, 30, 1));
 
 		CheckboxGroup cbg = new CheckboxGroup();
 		this.personsCheckboxes = new ArrayList<>();
@@ -85,7 +85,7 @@ public class TasksUI extends UIComponent {
 		persons.forEach(person -> {
 			int personId = person.getId();
 			Checkbox personCheckbox = new Checkbox(person.getName(), cbg, false);
-			personCheckbox.setBounds(10 + 60 * personId, yStart + yOffset * (tasksLinesNumber + 1), 50, 20);
+			personCheckbox.setBounds(x + 10 + 80 * persons.indexOf(person), yStart + yOffsetButtonsOrigin * (tasksLinesNumber + 1), 50, 20);
 			personCheckbox.addItemListener(e -> this.selectedPersonId = personId);
 			this.personsCheckboxes.add(personCheckbox);
 			inGame.getMain().add(personCheckbox);
@@ -93,7 +93,7 @@ public class TasksUI extends UIComponent {
 		this.selectedPersonId = 0;
 		this.personsCheckboxes.get(0).setState(true);
 
-		this.taskListY = yStart + yOffset * (tasksLinesNumber + 2);
+		this.taskListY = this.y + yStart + yOffsetButtonsOrigin * (tasksLinesNumber + 2);
 	}
 
 	/**
@@ -122,23 +122,23 @@ public class TasksUI extends UIComponent {
 
 		Person selectedPerson = this.inGame.getGame().getHouse().getCouple().getPersonsFromId(this.selectedPersonId);
 		int remainingStamina = selectedPerson.getMaxStamina() - selectedPerson.getResultingStaminaForCurrentTasks() * -1;
-		graphics2D.drawString("Remaining stamina:", 10, this.taskListY);
+		graphics2D.drawString("Remaining stamina:", this.x + 10, this.taskListY);
 		for (int i = 0; i < remainingStamina; i++) {
-			(new Button("",130 + (i * 20), this.taskListY - 10, 15, 10, 99 + i)).draw(g);
+			(new Button("",this.x + 130 + (i * 20), this.taskListY - 10, 15, 10, 99 + i)).draw(g);
 		}
 		ArrayList<Task> tasksToDisplay = selectedPerson.getTasks();
 
 		if (tasksToDisplay != null) {
 			for (int i = 0; i < tasksToDisplay.size(); i++) {
-				(new Button(tasksToDisplay.get(i).getName(), 263, this.taskListY + 10 + 40 * i, 115, 30)).draw(g);
+				(new Button(tasksToDisplay.get(i).getName(), this.x + this.width / 2 - 58, this.taskListY + 10 + 40 * i, 120, 30)).draw(g);
 				int taskStamina = tasksToDisplay.get(i).getStamina();
 				int xStart;
 				String sign;
 				if (taskStamina > 0) {
-					xStart = 388;
+					xStart = this.x + this.width / 2 + 58 + 10;
 					sign = "+";
 				} else {
-					xStart = 262 + taskStamina * 40;
+					xStart = this.x + this.width / 2 - 58 + taskStamina * 40;
 					sign = "-";
 				}
 				for (int j = 0; j < abs(taskStamina); j++) {

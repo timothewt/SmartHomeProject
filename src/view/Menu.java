@@ -27,15 +27,15 @@ public class Menu extends GameScene implements SceneMethods {
 	}
 
 	private void initButtons() {
-		int w = 150;
-		int h = w / 3;
-		int x = 640 / 2 - w / 2;
-		int y = 150;
-		int yOffset = 100;
+		int buttonWidth = 150;
+		int buttonHeight = buttonWidth / 3;
+		int x = this.GUIManager.getScreen().getSize().width / 2 - buttonWidth / 2;
+		int y = 200;
+		int yOffset = buttonHeight + 50;
 
 		this.buttons = new ArrayList<>();
-		this.buttons.add(new Button("Play", x, y, w, h, 0));
-		this.buttons.add(new Button("Quit", x, y + yOffset, w, h, 1));
+		this.buttons.add(new Button("Play", x, y, buttonWidth, buttonHeight, 0));
+		this.buttons.add(new Button("Quit", x, y + yOffset, buttonWidth, buttonHeight, 1));
 	}
 
 	// Control

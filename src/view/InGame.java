@@ -20,46 +20,46 @@ public class InGame extends GameScene implements SceneMethods {
 	private final TasksUI tasksUI;
 	private final DuringDayUI duringDayUI;
 	private final GUIManager GUIManager;
+	private final int gameElementsHeight;
 
 	public InGame(GUIManager GUIManager) {
 		super(GUIManager);
 		this.GUIManager = GUIManager;
+		this.gameElementsHeight = this.GUIManager.getScreen().getSize().height - 120;
 		this.game = new Game();
-		infoBar = new InfoBar(0, 640, 640, 90, this);
-		tasksUI = new TasksUI(0, 0, 640, 640, this);
-		duringDayUI = new DuringDayUI(0, 0, 640, 640, this);
+		int width = this.GUIManager.getScreen().getSize().width;
+		infoBar = new InfoBar(0, gameElementsHeight, width, 120, this);
+		tasksUI = new TasksUI(0, 0, width, gameElementsHeight, this);
+		duringDayUI = new DuringDayUI(0, 0, width, gameElementsHeight, this);
 	}
 
 	public void render(Graphics g) {
 		infoBar.draw(g);
-		
 		switch (PlayingStates.playingState) {
-		case TASK:
-			tasksUI.draw(g);
-			break;
-		case DAY:
-			duringDayUI.draw(g);
-			break;
-		case PERK:
-			break;
+			case TASK:
+				tasksUI.draw(g);
+				break;
+			case DAY:
+				duringDayUI.draw(g);
+				break;
+			case PERK:
+				break;
 		}
 	}
 
 	// Control
 	@Override
 	public void mouseClicked(int x, int y) {
-		if (y >= 640)
+		if (y >= this.gameElementsHeight)
 			infoBar.mouseClicked(x, y);
-
 		tasksUI.mouseClicked(x, y);
 		duringDayUI.mouseClicked(x, y);
 	}
 
 	@Override
 	public void mouseMoved(int x, int y) {
-		if (y >= 640)
+		if (y >= this.gameElementsHeight)
 			infoBar.mouseMoved(x, y);
-
 		tasksUI.mouseMoved(x, y);
 		duringDayUI.mouseMoved(x, y);
 
@@ -67,9 +67,8 @@ public class InGame extends GameScene implements SceneMethods {
 
 	@Override
 	public void mousePressed(int x, int y) {
-		if (y >= 640)
+		if (y >= this.gameElementsHeight)
 			infoBar.mousePressed(x, y);
-
 		tasksUI.mousePressed(x, y);
 		duringDayUI.mousePressed(x, y);
 	}
