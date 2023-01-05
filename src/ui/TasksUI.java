@@ -66,7 +66,7 @@ public class TasksUI extends UIComponent {
 				i = 0;
 				line++;
 			}
-			taskButtons.add(new Button(task.getName(), xStart + xOffsetButtonsOrigin * i, yStart + yOffsetButtonsOrigin * line, buttonWidth, buttonHeight, currenTaskId));
+			taskButtons.add(new Button(task.getName() + " (" + task.getStamina() + ")", xStart + xOffsetButtonsOrigin * i, yStart + yOffsetButtonsOrigin * line, buttonWidth, buttonHeight, currenTaskId));
 			i++;
 			currenTaskId++;
 		}
