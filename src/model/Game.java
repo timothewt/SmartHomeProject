@@ -36,8 +36,6 @@ public class Game {
 		this.weather.update(dayNumber);
 	}
 
-
-	@SuppressWarnings("resource")
 	public void run() {
 
 		Scanner scanner = new Scanner(System.in);
@@ -74,9 +72,7 @@ public class Game {
 			boolean taskRemaining = true;
 
 			do {
-
 				System.out.println(this.house);
-
 				for (Person person : this.house.getCouple().getPersons()) {
 					if (person.getTasks().size() == 0) {
 						taskRemaining = false;
@@ -209,30 +205,19 @@ public class Game {
 	 * @return
 	 */
 	private ArrayList<Task> initTasks() {
-		availableTasks = new ArrayList<Task>();
+		availableTasks = new ArrayList<>();
 
-		availableTasks.add(new Task(0, "Heater On", -1, 0, 0));
-		availableTasks.get(0).setMessage("Turning heater On !");
-		availableTasks.add(new Task(1, "Heater Off", -1, 0, 0));
-		availableTasks.get(1).setMessage("Turning heater Off !");
-		availableTasks.add(new Task(2, "AC On", -1, 0, 0));
-		availableTasks.get(2).setMessage("Turning AC On !");
-		availableTasks.add(new Task(3, "AC Off", -1, 0, 0));
-		availableTasks.get(3).setMessage("Turning AC Off !");
-		availableTasks.add(new Task(4, "Open windows", -1, 0, 0));
-		availableTasks.get(4).setMessage("Opening windows !");
-		availableTasks.add(new Task(5, "Close windows", -1, 0, 0));
-		availableTasks.get(5).setMessage("Closing closing windows !");
-		availableTasks.add(new Task(6, "Work", -5, 0, 0));
-		availableTasks.get(6).setMessage("Currently working !");
-		availableTasks.add(new Task(7, "Sleep", 2, 0, 0));
-		availableTasks.get(7).setMessage("Sleeping !");
-		availableTasks.add(new Task(8, "Biking", -4, 0, 50));
-		availableTasks.get(8).setMessage("Biking !");
-		availableTasks.add(new Task(9, "Cook", 2, 0, -30));
-		availableTasks.get(9).setMessage("Cooking and eating !");
-		availableTasks.add(new Task(10, "Repair Outage", -2, -200, 0));
-		availableTasks.get(10).setMessage("Repairing power Outage !");
+		availableTasks.add(new Task(0, "Heater On", "Turning heater On.",-1, 0, 0));
+		availableTasks.add(new Task(1, "Heater Off", "Turning heater Off.",-1, 0, 0));
+		availableTasks.add(new Task(2, "AC On", "Turning AC On.",-1, 0, 0));
+		availableTasks.add(new Task(3, "AC Off", "Turning AC Off.",-1, 0, 0));
+		availableTasks.add(new Task(4, "Open windows", "Opening windows.",-1, 0, 0));
+		availableTasks.add(new Task(5, "Closing windows.", "Closing closing windows.",-1, 0, 0));
+		availableTasks.add(new Task(6, "Work", "Currently working.",-5, 0, 0));
+		availableTasks.add(new Task(7, "Sleep", "Sleeping.",2, 0, 0));
+		availableTasks.add(new Task(8, "Biking", "Biking.",-4, 0, 50));
+		availableTasks.add(new Task(9, "Cook", "Cooking and eating.",2, 0, -30));
+		availableTasks.add(new Task(10, "Repair Outage", "Repairing power Outage.",-2, -200, 0));
 
 		return availableTasks;
 	}
@@ -253,6 +238,33 @@ public class Game {
 			System.out.println("Error system in Playing : id not recognized");
 		}
 		return null;
+	}
+
+	public void doNthTaskOfAllPersons(int n) {
+		this.house.getCouple().getPersons().forEach(person -> {
+			if (n < person.getTasks().size()) {
+				Task currentTask = person.getTasks().get(n);
+				float heaterTemp = 23;
+				float ACTemperature = 18; // Hard coded for the moment, has to depend on the UI entry
+				switch (currentTask.getId()) {
+					case 0 -> this.house.setAllHeatersTemperature(heaterTemp); // turn on all heaters
+					case 1 -> this.house.turnOffAllHeaters();					// turn off all heaters
+					case 2 -> this.house.setAllACTemperature(ACTemperature);	// turn on all AC
+					case 3 -> this.house.turnOffAllAC();						// turn off all AC
+					case 4 -> this.house.setAllWindowsOpen(true);				// open all windows
+					case 5 -> this.house.setAllWindowsOpen(false);				// close all windows
+					case 6 -> {}												// work
+					case 7 -> {}												// sleep
+					case 8 -> {}												// bike
+					case 9 -> {}												// cook
+					case 10 -> this.house.setOnPowerOutage(false);				// resolve power outage
+				}
+				person.setStamina(person.getStamina() + currentTask.getStamina());
+				this.house.getCouple().setMoney(this.house.getCouple().getMoney() + currentTask.getMoney());
+				this.house.setEnergy(this.house.getEnergy() + currentTask.getEnergy());
+			}
+		});
+		this.house.update(this.weather);
 	}
 
 	// Getters and Setters

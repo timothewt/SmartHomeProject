@@ -98,6 +98,7 @@ public class DuringDayUI extends UIComponent {
 				for (Person person : this.persons) {
 					tasksNumber = max(person.getTasks().size(), tasksNumber);
 				}
+				this.inGame.getGame().doNthTaskOfAllPersons(this.currentTaskIndex);
 				this.currentTaskIndex++;
 				this.areAllTasksDone = tasksNumber == this.currentTaskIndex;
 				if (this.areAllTasksDone) {
