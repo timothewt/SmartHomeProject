@@ -36,12 +36,10 @@ public class Perk {
 	}
 
 	public String toString() {
-		return "id=" + id +
-				", name='" + name + '\'' +
-				", installationCost=" + installationCost +
-				", dailyMoneyCost=" + dailyMoneyCost +
-				", dailyEnergyCost=" + dailyEnergyCost +
-				", isUpgraded=" + isUpgraded;
+		return	 name + " | " +
+				" installationCost = " + installationCost +
+				" dailyMoneyCost = " + dailyMoneyCost +
+				" dailyEnergyCost = " + dailyEnergyCost ;
 	}
 
 	/**

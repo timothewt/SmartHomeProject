@@ -14,6 +14,8 @@ public class Game {
 	private Weather weather;
 	private int dayNumber;
 	private ArrayList<Task> availableTasks;
+	private ArrayList<Perk> availablePerks;
+	private ArrayList<Perk> currentPerks;
 
 	/**
 	 * @brief Constructor
@@ -24,6 +26,8 @@ public class Game {
 		this.weather = new Weather();
 		this.dayNumber = 0;
 		this.availableTasks = this.initTasks();
+		this.availablePerks = this.house.getPerks();
+		this.currentPerks = new ArrayList<>();
 
 	}
 
@@ -38,6 +42,7 @@ public class Game {
 
 	public void run() {
 
+		@SuppressWarnings("resource")
 		Scanner scanner = new Scanner(System.in);
 
 		while (true) {
@@ -277,7 +282,15 @@ public class Game {
 	}
 
 	public ArrayList<Task> getAvailableTasks() {
-		return availableTasks;
+		return this.availableTasks;
+	}
+	
+	public ArrayList<Perk> getAvailablePerks() {
+		return this.availablePerks;
+	}
+	
+	public ArrayList<Perk> getCurrentPerks() {
+		return this.currentPerks;
 	}
 	
 	public int getDayNumber() {
