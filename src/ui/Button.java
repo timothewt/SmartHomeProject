@@ -1,28 +1,26 @@
 /**
  * @file Button.java
  * @date 27/12/2022
- * @brief Instanciate button
+ * Used to represent the buttons on the screen. Can also be used as a simple enhanced label
  */
 package ui;
 
-import java.awt.Color;
-import java.awt.Graphics;
-import java.awt.Rectangle;
+import java.awt.*;
 
 public class Button {
 
-	public int x, y, width, height, id;
-	private String text;
-	private Rectangle bounds;
-	private boolean isMouseOver, isMousePressed;
+	private int x, y, width, height, id; // horizontal position, vertical position, width of the button, height of the button, id of the button
+	private String text; // text displayed on the button
+	private Rectangle bounds; // bounds of the button (position and size)
+	private boolean isMouseOver, isMousePressed; // in order to know if there is an interaction with the user
 
 	/**
-	 * Normal Buttons without id
-	 * @param text
-	 * @param x
-	 * @param y
-	 * @param width
-	 * @param height
+	 * Class constructor of buttons without id
+	 * @param text: text to display on the button
+	 * @param x: horizontal position of the button
+	 * @param y: vertical position of the button
+	 * @param width: width of the button
+	 * @param height: height of the button
 	 */
 	public Button(String text, int x, int y, int width, int height) {
 		this.text = text;
@@ -31,18 +29,17 @@ public class Button {
 		this.width = width;
 		this.height = height;
 		this.id = -1;
-
-		initBounds();
+		this.bounds = new Rectangle(x, y, width, height);
 	}
 
 	/**
-	 * Normal Buttons with id
-	 * @param text
-	 * @param x
-	 * @param y
-	 * @param width
-	 * @param height
-	 * @param id
+	 * Class constructor of buttons with an id
+	 * @param text: text to display on the button
+	 * @param x: horizontal position of the button
+	 * @param y: vertical position of the button
+	 * @param width: width of the button
+	 * @param height: height of the button
+	 * @param id: id of the button
 	 */
 	public Button(String text, int x, int y, int width, int height, int id) {
 		this.text = text;
@@ -51,48 +48,22 @@ public class Button {
 		this.width = width;
 		this.height = height;
 		this.id = id;
-
-		initBounds();
-	}
-
-	/**
-	 * @brief Buttons without text
-	 * @param x
-	 * @param y
-	 * @param width
-	 * @param height
-	 * @param id
-	 */
-	public Button(int x, int y, int width, int height, int id) {
-		this.x = x;
-		this.y = y;
-		this.width = width;
-		this.height = height;
-		this.id = id;
-
-		initBounds();
-	}
-
-	/**
-	 * @brief Set the bounds of the button
-	 */
-	private void initBounds() {
 		this.bounds = new Rectangle(x, y, width, height);
 	}
 
+	/**
+	 * Draws components the button on the current scene
+	 * @param g: graphics component of the app
+	 */
 	public void draw(Graphics g) {
-		// Body
 		drawBody(g);
-		// Border
 		drawBorder(g);
-		// Text
-		if (text != null)
-			drawText(g);
+		drawText(g);
 	}
 
 	/**
-	 * @brief Draw the border of the button
-	 * @param g
+	 * Draws components the borders of the button
+	 * @param g: graphics component of the app
 	 */
 	private void drawBorder(Graphics g) {
 		g.setColor(Color.BLACK);
@@ -101,11 +72,11 @@ public class Button {
 			g.drawRect(x + 1, y + 1, width - 2, height - 2);
 			g.drawRect(x + 2, y + 2, width - 4, height - 4);
 		}
-
 	}
 
 	/**
-	 * @brief Draw the content of the button
+	 * Draws components the body of the button
+	 * @param g: graphics component of the app
 	 */
 	private void drawBody(Graphics g) {
 		if (isMouseOver)
@@ -116,8 +87,8 @@ public class Button {
 	}
 
 	/**
-	 * @brief Write the button text
-	 * @param g
+	 * Writes the text of the button
+	 * @param g: graphics component of the app
 	 */
 	private void drawText(Graphics g) {
 		int w = g.getFontMetrics().stringWidth(text);
@@ -126,14 +97,13 @@ public class Button {
 	}
 
 	/**
-	 * @brief Reset the button boolean
+	 * Resets the button boolean
 	 */
 	public void resetBooleans() {
 		this.isMouseOver = false;
 		this.isMousePressed = false;
 	}
 
-	// Control
 	public void setIsMousePressed(boolean isMousePressed) {
 		this.isMousePressed = isMousePressed;
 	}
