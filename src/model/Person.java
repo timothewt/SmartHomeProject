@@ -15,7 +15,6 @@ public class Person {
 	private int id;
 	private int maxStamina;
 	private int stamina;
-	private Task currentTask;
 	private ArrayList<Task> tasks;
 	
 	/**
@@ -26,7 +25,6 @@ public class Person {
 		this.id = 0;
 		this.maxStamina = 10;
 		this.stamina = 0;
-		this.currentTask = null;
 		this.tasks = new ArrayList<>();
 	}
 
@@ -35,7 +33,6 @@ public class Person {
 		this.id = id;
 		this.maxStamina = maxStamina;
 		this.stamina = maxStamina;
-		this.currentTask = null;
 		this.tasks = tasks;
 	}
 
@@ -100,5 +97,10 @@ public class Person {
 
 	public void setTasks(ArrayList<Task> tasks) {
 		this.tasks = tasks;
+	}
+
+	public void onNewDay() {
+		this.stamina = this.maxStamina;
+		this.tasks = new ArrayList<>();
 	}
 }

@@ -134,6 +134,7 @@ public class House {
 			this.energy += powerGenerator.getDailyProduction();
 			this.couple.setMoney(this.couple.getMoney() - powerGenerator.getDailyCost());
 		});
+		this.getCouple().getPersons().forEach(person -> person.onNewDay());
 	}
 
 	public String toString() {
