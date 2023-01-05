@@ -38,7 +38,7 @@ public class DuringDayUI extends UIComponent {
 		super(x, y, width, height);
 		this.inGame = inGame;
 		this.persons = inGame.getGame().getHouse().getCouple().getPersons();
-		this.currentTaskIndex = 0;
+		this.currentTaskIndex = -1;
 		this.areAllTasksDone = false;
 		initButtons();
 	}
@@ -47,7 +47,7 @@ public class DuringDayUI extends UIComponent {
 	 * @brief init buttons
 	 */
 	private void initButtons() {
-		this.nextTaskButton = new Button("Next Task", (x + width) - 140, (y + height) - 50, 120, 30);
+		this.nextTaskButton = new Button("Next Task", (x + width / 2) - 60, (y + height) - 50, 120, 30);
 	}
 
 	/**
@@ -72,16 +72,16 @@ public class DuringDayUI extends UIComponent {
 		Graphics2D graphics2D = (Graphics2D) g;
 		graphics2D.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 		graphics2D.drawString("Day #" + inGame.getGame().getDayNumber() + " is going on !", this.y + this.width / 2 - 40, 20);
-		int personTextWidth = (this.width - x) / this.persons.size();
+		int screenSplitWidth = (this.width - x) / this.persons.size();
 
 		this.persons.forEach(person -> {
-			int personTextX = x + (this.persons.indexOf(person) * personTextWidth);
-			graphics2D.drawLine(personTextX + personTextWidth, yStart - 10, personTextX + personTextWidth, this.y + this.height - 100);
+			int personTextX = x + (this.persons.indexOf(person) * screenSplitWidth);
+			graphics2D.drawLine(personTextX + screenSplitWidth, yStart - 10, personTextX + screenSplitWidth, this.y + this.height - 100);
 			graphics2D.drawString(person.getName() + ":", personTextX + 5, yStart);
 			for (int i = 0; i < person.getStamina(); i++) {
-				(new Button("", personTextX + 60 + 15 * i, yStart - 10, 10, 10)).draw(g);
+				(new Button("", personTextX + screenSplitWidth - 15 * (i + 2), yStart - 10, 10, 10)).draw(g);
 			}
-			for (int i = 0; i < min(this.currentTaskIndex, person.getTasks().size()); i++) {
+			for (int i = 0; i <= min(this.currentTaskIndex, person.getTasks().size() - 1); i++) {
 				graphics2D.drawString(person.getTasks().get(i).getMessage(), personTextX + 15, yStart + 20 * (i + 1));
 			}
 		});
@@ -101,13 +101,13 @@ public class DuringDayUI extends UIComponent {
 				for (Person person : this.persons) {
 					tasksNumber = max(person.getTasks().size(), tasksNumber);
 				}
-				this.inGame.getGame().doNthTaskOfAllPersons(this.currentTaskIndex);
 				this.currentTaskIndex++;
-				this.areAllTasksDone = tasksNumber == this.currentTaskIndex;
+				this.inGame.getGame().doNthTaskOfAllPersons(this.currentTaskIndex);
+				this.areAllTasksDone = tasksNumber == this.currentTaskIndex + 1;
 				if (this.areAllTasksDone) {
 					this.nextTaskButton.setText("End current day");
 					this.nextTaskButton.setWidth(150);
-					this.nextTaskButton.setX((this.x + width) - 170);
+					this.nextTaskButton.setX((this.x + width / 2) - 75);
 				}
 			}
 		}
