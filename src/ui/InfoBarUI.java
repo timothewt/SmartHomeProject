@@ -63,10 +63,10 @@ public class InfoBarUI extends UIComponent {
 		graphics2D.drawLine(x, y, x + width, y);
 
 		graphics2D.drawString("Day #" + gameGUI.getGame().getDayNumber(), this.x + 115, this.y + 20);
-		graphics2D.drawString("Money : " + gameGUI.getGame().getHouse().getCouple().getMoney(), this.x + 115, this.y + 45);
+		graphics2D.drawString("Money : " + gameGUI.getGame().getHouse().getFamily().getMoney(), this.x + 115, this.y + 45);
 		graphics2D.drawString("Energy : " + gameGUI.getGame().getHouse().getEnergy(), this.x + 115, this.y + 70);
 
-		for (Person person: gameGUI.getGame().getHouse().getCouple().getPersons()) {
+		for (Person person: gameGUI.getGame().getHouse().getFamily().getPersons()) {
 			graphics2D.drawString(person.toString(), this.x + 220, this.y + 20 + 25 * person.getId());
 		}
 

@@ -33,7 +33,7 @@ public class DuringDayUI extends UIComponent {
 	public DuringDayUI(int x, int y, int width, int height, GameGUI gameGUI) {
 		super(x, y, width, height);
 		this.gameGUI = gameGUI;
-		this.persons = gameGUI.getGame().getHouse().getCouple().getPersons();
+		this.persons = gameGUI.getGame().getHouse().getFamily().getPersons();
 		this.currentTaskIndex = -1;
 		this.areAllTasksDone = false;
 		initButtons();
@@ -85,7 +85,7 @@ public class DuringDayUI extends UIComponent {
 
 	
 	public void onNewDay() {
-		this.persons = gameGUI.getGame().getHouse().getCouple().getPersons();
+		this.persons = gameGUI.getGame().getHouse().getFamily().getPersons();
 		this.currentTaskIndex = -1;
 		this.areAllTasksDone = false;
 		this.nextTaskButton.setText("Next task");

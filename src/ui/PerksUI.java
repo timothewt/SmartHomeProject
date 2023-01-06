@@ -113,7 +113,7 @@ public class PerksUI extends UIComponent {
 	}
 
 	public boolean canAffordPerk(int id) {
-		return availablePerks.get(id).getInstallationCost() <= this.gameGUI.getGame().getHouse().getCouple().getMoney();
+		return availablePerks.get(id).getInstallationCost() <= this.gameGUI.getGame().getHouse().getFamily().getMoney();
 	}
 
 	/**
@@ -137,7 +137,7 @@ public class PerksUI extends UIComponent {
 		this.availablePerksButton.forEach(button -> {
 			if (button.getBounds().contains(x, y)) {
 				if (canAffordPerk(availablePerksButton.indexOf(button))) {
-					this.gameGUI.getGame().getHouse().getCouple().setMoney(this.gameGUI.getGame().getHouse().getCouple().getMoney() - this.availablePerks.get(availablePerksButton.indexOf(button)).getInstallationCost());
+					this.gameGUI.getGame().getHouse().getFamily().setMoney(this.gameGUI.getGame().getHouse().getFamily().getMoney() - this.availablePerks.get(availablePerksButton.indexOf(button)).getInstallationCost());
 					currentPerks.add(this.availablePerks.get(availablePerksButton.indexOf(button)));
 					availablePerks.remove(availablePerksButton.indexOf(button));
 					initPerksButton();

@@ -111,7 +111,7 @@ public class Game {
 	 * @param n: index of the tasks to execute
 	 */
 	public void doNthTaskOfAllPersons(int n) {
-		this.house.getCouple().getPersons().forEach(person -> {
+		this.house.getFamily().getPersons().forEach(person -> {
 			if (n < person.getTasks().size()) {
 				Task currentTask = person.getTasks().get(n);
 				float heaterTemp = 23;
@@ -129,7 +129,7 @@ public class Game {
 					case 9 -> {} // cook
 				}
 				person.setStamina(person.getStamina() + currentTask.stamina());
-				this.house.getCouple().setMoney(this.house.getCouple().getMoney() + currentTask.money());
+				this.house.getFamily().setMoney(this.house.getFamily().getMoney() + currentTask.money());
 				this.house.setEnergy(this.house.getEnergy() + currentTask.energy());
 			}
 		});

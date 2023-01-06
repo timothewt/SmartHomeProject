@@ -153,7 +153,7 @@ public class House {
 			this.energy += powerGenerator.getDailyProduction();
 			this.family.setMoney(this.family.getMoney() - powerGenerator.getDailyCost());
 		});
-		this.getCouple().getPersons().forEach(Person::onNewDay);
+		this.getFamily().getPersons().forEach(Person::onNewDay);
 	}
 
 	/**
@@ -178,7 +178,7 @@ public class House {
 		this.energy = energy;
 	}
 
-	public Family getCouple() {
+	public Family getFamily() {
 		return family;
 	}
 

@@ -71,7 +71,7 @@ public class TasksUI extends UIComponent {
 		CheckboxGroup cbg = new CheckboxGroup();
 		this.personsCheckboxes = new ArrayList<>();
 
-		ArrayList<Person> persons = this.gameGUI.getGame().getHouse().getCouple().getPersons();
+		ArrayList<Person> persons = this.gameGUI.getGame().getHouse().getFamily().getPersons();
 
 		persons.forEach(person -> {
 			int personId = person.getId();
@@ -111,7 +111,7 @@ public class TasksUI extends UIComponent {
 		Graphics2D graphics2D = (Graphics2D) g;
 		graphics2D.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 
-		Person selectedPerson = this.gameGUI.getGame().getHouse().getCouple().getPersonsFromId(this.selectedPersonId);
+		Person selectedPerson = this.gameGUI.getGame().getHouse().getFamily().getPersonsFromId(this.selectedPersonId);
 		int remainingStamina = selectedPerson.getMaxStamina() - selectedPerson.getResultingStaminaForCurrentTasks() * -1;
 		graphics2D.drawString("Remaining stamina:", this.x + 10, this.taskListY);
 		for (int i = 0; i < remainingStamina; i++) {
@@ -146,7 +146,7 @@ public class TasksUI extends UIComponent {
 	 */
 	private void addTaskToSelectedPerson(int id) {
 		Task selectedTask = gameGUI.getGame().findTaskFromId(id);
-		Person selectedPerson = gameGUI.getGame().getHouse().getCouple().getPersonsFromId(this.selectedPersonId);
+		Person selectedPerson = gameGUI.getGame().getHouse().getFamily().getPersonsFromId(this.selectedPersonId);
 		if ((selectedTask.stamina() + selectedPerson.getResultingStaminaForCurrentTasks()) * -1 <= selectedPerson.getMaxStamina()) { // * -1 because stamina decreases for task that needs it
 			selectedPerson.addTask(selectedTask);
 		}
@@ -156,7 +156,7 @@ public class TasksUI extends UIComponent {
 	 * Reset tasks of the selected player
 	 */
 	private void resetTasks() {
-		gameGUI.getGame().getHouse().getCouple().getPersonsFromId(this.selectedPersonId).getTasks().clear();
+		gameGUI.getGame().getHouse().getFamily().getPersonsFromId(this.selectedPersonId).getTasks().clear();
 	}
 
 	/**
