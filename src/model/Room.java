@@ -49,8 +49,8 @@ public class Room {
 			// Loss of humidity and temperature due to non-optimal isolation
 			int humidityChangeSign = this.humidityRate > outsideHumidityRate ? -1 : 1;
 			int temperatureChangeSign = this.temperature > outsideTemperature ? -1 : 1;
-			this.humidityRate = Math.max(Math.min(this.humidityRate + humidityChangeSign * (1 - this.isolationRate) * outsideHumidityRate, 1), 0);
-			this.temperature = this.temperature + temperatureChangeSign * (1 - this.isolationRate) * outsideTemperature;
+			this.humidityRate = Math.max(Math.min(this.humidityRate + humidityChangeSign * (1 - this.isolationRate) * .05f, 1), 0);
+			this.temperature = this.temperature + temperatureChangeSign * (1 - this.isolationRate) * 2;
 		}
 	}
 
