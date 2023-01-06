@@ -8,6 +8,7 @@ package view;
 import java.awt.Graphics;
 import model.Game;
 import ui.*;
+import utils.GameStates;
 import utils.PlayingStates;
 
 public class GameGUI extends GameScene implements SceneMethods {
@@ -16,7 +17,7 @@ public class GameGUI extends GameScene implements SceneMethods {
 	private final InfoBarUI infoBarUI; // info bar indicating the information of the weather and the house
 	private final TasksUI tasksUI; // UI of the tasks picking
 	private final DuringDayUI duringDayUI; // UI of the tasks execution
-	private final PerksUI perksUI;
+	private final PerksUI perksUI; // UI used to buy perks for the house
 	private final GUIManager GUIManager; // manages all the views of the application
 	private final int gameElementsHeight; // height of the main game component
 
@@ -50,10 +51,14 @@ public class GameGUI extends GameScene implements SceneMethods {
 	}
 
 	public void onNewDay() {
-		this.game.onNewDay();
-		this.tasksUI.onNewDay();
-		this.duringDayUI.onNewDay();
-		this.perksUI.onNewDay();
+		if (this.game.onNewDay()) {
+			this.tasksUI.onNewDay();
+			this.duringDayUI.onNewDay();
+			this.perksUI.onNewDay();
+			PlayingStates.setPlayingState(PlayingStates.TASK);
+		} else {
+			GameStates.setGameState(GameStates.GAMEOVER);
+		}
 	}
 	/**
 	 * Called when the user clicks anywhere on the screen

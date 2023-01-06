@@ -9,12 +9,14 @@ import java.awt.Graphics;
 import java.util.ArrayList;
 import ui.Button;
 import static utils.GameStates.PLAYING;
-import static utils.GameStates.SetGameState;
+import static utils.GameStates.setGameState;
+import static utils.PlayingStates.TASK;
+import static utils.PlayingStates.setPlayingState;
 
 public class Menu extends GameScene implements SceneMethods {
 
 	private ArrayList<Button> buttons; // buttons of the menu
-	private GUIManager GUIManager;
+	private final GUIManager GUIManager;
 
 	/**
 	 * Class constructor
@@ -64,11 +66,12 @@ public class Menu extends GameScene implements SceneMethods {
 		this.buttons.forEach(button -> {
 			if (button.getBounds().contains(x, y)) {
 				switch (button.getId()) {
-				case 0 -> {
-					SetGameState(PLAYING);
-					this.GUIManager.setPlay(new GameGUI(this.GUIManager));
-				}
-				case 1 -> System.exit(0);
+					case 0 -> {
+						setGameState(PLAYING);
+						setPlayingState(TASK);
+						this.GUIManager.setGameGUI(new GameGUI(this.GUIManager));
+					}
+					case 1 -> System.exit(0);
 				}
 			}
 		});

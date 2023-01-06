@@ -58,14 +58,16 @@ public class InfoBarUI extends UIComponent {
 	private void drawText(Graphics g) {
 
 		Graphics2D graphics2D = (Graphics2D) g;
+		graphics2D.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 
 		graphics2D.drawLine(x, y, x + width, y);
 
-		graphics2D.drawString("Money : " + gameGUI.getGame().getHouse().getCouple().getMoney(), this.x + 115, this.y + 25);
-		graphics2D.drawString("Energy : " + gameGUI.getGame().getHouse().getEnergy(), this.x + 115, this.y + 50);
+		graphics2D.drawString("Day #" + gameGUI.getGame().getDayNumber(), this.x + 115, this.y + 20);
+		graphics2D.drawString("Money : " + gameGUI.getGame().getHouse().getCouple().getMoney(), this.x + 115, this.y + 45);
+		graphics2D.drawString("Energy : " + gameGUI.getGame().getHouse().getEnergy(), this.x + 115, this.y + 70);
 
 		for (Person person: gameGUI.getGame().getHouse().getCouple().getPersons()) {
-			graphics2D.drawString(person.toString(), this.x + 220, this.y + 25 + 25 * person.getId());
+			graphics2D.drawString(person.toString(), this.x + 220, this.y + 20 + 25 * person.getId());
 		}
 
 		graphics2D.drawString(gameGUI.getGame().getWeather().toString(), this.x + 10, this.y + 95);
@@ -81,7 +83,7 @@ public class InfoBarUI extends UIComponent {
 		this.buttons.forEach(button -> {
 			if (button.getBounds().contains(x, y)) {
 				switch (button.getId()) {
-					case 0 -> SetGameState(MENU);
+					case 0 -> setGameState(MENU);
 					case 1 -> System.out.println("Game saved ! Not done yet, only this message in terminal to test");
 				}
 			}

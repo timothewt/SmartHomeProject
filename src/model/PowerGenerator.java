@@ -7,27 +7,17 @@ package model;
 
 public class PowerGenerator {
 
-	private final String name;
-	private final int installationCost;
-	private final int dailyCost;
-	private final int dailyProduction;
+	private final String name; // name of the power generator
+	private final int installationCost; // money cost of installation
+	private final int dailyCost; // daily money cost
+	private final int dailyProduction; // daily energy production
 
 	/**
-	 * @brief Constructor
-	 */
-	public PowerGenerator() {
-		this.name = "Default Gen";
-		this.installationCost = 0;
-		this.dailyCost = 0;
-		this.dailyProduction = 0;
-	}
-
-	/**
-	 * @brief Constructor
-	 * @param name
-	 * @param installationCost
-	 * @param dailyCost
-	 * @param dailyProduction
+	 * Class constructor
+	 * @param name: name of the power generator
+	 * @param installationCost: money cost of installation
+	 * @param dailyCost: daily money cost
+	 * @param dailyProduction: daily energy production
 	 */
 	public PowerGenerator(String name, int installationCost, int dailyCost, int dailyProduction) {
 		this.name = name;

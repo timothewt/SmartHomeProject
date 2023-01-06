@@ -17,8 +17,8 @@ public class MyMouseListener implements MouseListener, MouseMotionListener {
 	private final GUIManager GUIManager;
 
 	/**
-	 * @brief Constructor
-	 * @param GUIManager
+	 * Class constructor
+	 * @param GUIManager: manages all the views of the application
 	 */
 	public MyMouseListener(GUIManager GUIManager) {
 		this.GUIManager = GUIManager;
@@ -30,8 +30,7 @@ public class MyMouseListener implements MouseListener, MouseMotionListener {
 		switch (GameStates.gameState) {
 			case MENU -> GUIManager.getMenu().mouseDragged(e.getX(), e.getY());
 			case PLAYING -> GUIManager.getPlay().mouseDragged(e.getX(), e.getY());
-			default -> {
-			}
+			case GAMEOVER -> GUIManager.getGameOver().mouseDragged(e.getX(), e.getY());
 		}
 	}
 
@@ -40,8 +39,7 @@ public class MyMouseListener implements MouseListener, MouseMotionListener {
 		switch (GameStates.gameState) {
 			case MENU -> GUIManager.getMenu().mouseMoved(e.getX(), e.getY());
 			case PLAYING -> GUIManager.getPlay().mouseMoved(e.getX(), e.getY());
-			default -> {
-			}
+			case GAMEOVER -> GUIManager.getGameOver().mouseMoved(e.getX(), e.getY());
 		}
 	}
 
@@ -51,8 +49,7 @@ public class MyMouseListener implements MouseListener, MouseMotionListener {
 			switch (GameStates.gameState) {
 				case MENU -> GUIManager.getMenu().mouseClicked(e.getX(), e.getY());
 				case PLAYING -> GUIManager.getPlay().mouseClicked(e.getX(), e.getY());
-				default -> {
-				}
+				case GAMEOVER -> GUIManager.getGameOver().mouseClicked(e.getX(), e.getY());
 			}
 		}
 	}
@@ -62,8 +59,7 @@ public class MyMouseListener implements MouseListener, MouseMotionListener {
 		switch (GameStates.gameState) {
 			case MENU -> GUIManager.getMenu().mousePressed(e.getX(), e.getY());
 			case PLAYING -> GUIManager.getPlay().mousePressed(e.getX(), e.getY());
-			default -> {
-			}
+			case GAMEOVER -> GUIManager.getGameOver().mousePressed(e.getX(), e.getY());
 		}
 	}
 
@@ -72,21 +68,16 @@ public class MyMouseListener implements MouseListener, MouseMotionListener {
 		switch (GameStates.gameState) {
 			case MENU -> GUIManager.getMenu().mouseReleased(e.getX(), e.getY());
 			case PLAYING -> GUIManager.getPlay().mouseReleased(e.getX(), e.getY());
-			default -> {
-			}
+			case GAMEOVER -> GUIManager.getGameOver().mouseReleased(e.getX(), e.getY());
 		}
 	}
 
 	@Override
 	public void mouseEntered(MouseEvent e) {
-		// TODO Auto-generated method stub
-
 	}
 
 	@Override
 	public void mouseExited(MouseEvent e) {
-		// TODO Auto-generated method stub
-
 	}
 
 }

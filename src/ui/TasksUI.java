@@ -65,7 +65,7 @@ public class TasksUI extends UIComponent {
 				i = 0;
 				line++;
 			}
-			taskButtons.add(new Button(task.getName() + " (" + task.getStamina() + ")", xStart + xOffsetButtonsOrigin * i, yStart + yOffsetButtonsOrigin * line, buttonWidth, buttonHeight, currenTaskId));
+			taskButtons.add(new Button(task.getName() + " (" + (task.getStamina() > 0 ? "+" : "") + task.getStamina() + ")", xStart + xOffsetButtonsOrigin * i, yStart + yOffsetButtonsOrigin * line, buttonWidth, buttonHeight, currenTaskId));
 			i++;
 			currenTaskId++;
 		}
@@ -163,12 +163,15 @@ public class TasksUI extends UIComponent {
 	 * Reset tasks of the selected player
 	 */
 	private void resetTasks() {
-		gameGUI.getGame().getHouse().getCouple().getPersonsFromId(this.selectedPersonId).setTasks(new ArrayList<>());
+		gameGUI.getGame().getHouse().getCouple().getPersonsFromId(this.selectedPersonId).getTasks().clear();
 	}
 
-	
+	/**
+	 * Used to reset the values of the controls
+	 */
 	public void onNewDay() {
-		initControls();
+		this.selectedPersonId = 0;
+		this.personsCheckboxes.get(0).setState(true);
 	}
 	/**
 	 * Called when the user clicks anywhere on the screen. Used to know if the user clicked on the reset tasks or start day buttons

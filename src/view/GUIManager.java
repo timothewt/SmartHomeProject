@@ -10,7 +10,6 @@ import javax.swing.JFrame;
 import utils.GameStates;
 import utils.PlayingStates;
 
-@SuppressWarnings("serial")
 public class GUIManager extends JFrame implements Runnable {
 
 	private final Screen screen; // screen of the application
@@ -41,8 +40,7 @@ public class GUIManager extends JFrame implements Runnable {
 	 * Start the thread of the game
 	 */
 	public void start() {
-		Thread gameThread = new Thread(this) {
-		};
+		Thread gameThread = new Thread(this) {};
 		gameThread.start();
 	}
 
@@ -51,35 +49,30 @@ public class GUIManager extends JFrame implements Runnable {
 	 */
 	private void updateGame() {
 		switch (GameStates.gameState) {
-		case MENU -> {
-			gameGUI.getTasksUI().setVisible(false);
-			gameGUI.getDuringDayUI().setVisible(false);
-			gameGUI.getPerksUI().setVisible(false);
-		}
-		case PLAYING -> {
-			switch (PlayingStates.playingState) {
-			case TASK -> {
-				gameGUI.getTasksUI().setVisible(true);
+			case MENU, GAMEOVER -> {
+				gameGUI.getTasksUI().setVisible(false);
 				gameGUI.getDuringDayUI().setVisible(false);
 				gameGUI.getPerksUI().setVisible(false);
 			}
-			case DAY -> {
-				gameGUI.getTasksUI().setVisible(false);
-				gameGUI.getDuringDayUI().setVisible(true);
-				gameGUI.getPerksUI().setVisible(false);
+			case PLAYING -> {
+				switch (PlayingStates.playingState) {
+					case TASK -> {
+						gameGUI.getTasksUI().setVisible(true);
+						gameGUI.getDuringDayUI().setVisible(false);
+						gameGUI.getPerksUI().setVisible(false);
+					}
+					case DAY -> {
+						gameGUI.getTasksUI().setVisible(false);
+						gameGUI.getDuringDayUI().setVisible(true);
+						gameGUI.getPerksUI().setVisible(false);
+					}
+					case PERK -> {
+						gameGUI.getTasksUI().setVisible(false);
+						gameGUI.getPerksUI().setVisible(true);
+						gameGUI.getPerksUI().setVisible(false);
+					}
+				}
 			}
-			case PERK -> {
-				gameGUI.getTasksUI().setVisible(false);
-				gameGUI.getPerksUI().setVisible(true);
-				gameGUI.getPerksUI().setVisible(false);
-			}
-			}
-		}
-		case GAMEOVER -> {
-			gameGUI.getTasksUI().setVisible(false);
-			gameGUI.getDuringDayUI().setVisible(false);
-			gameGUI.getPerksUI().setVisible(false);
-		}
 		}
 	}
 
@@ -129,7 +122,7 @@ public class GUIManager extends JFrame implements Runnable {
 		return gameGUI;
 	}
 
-	public void setPlay(GameGUI gameGUI) {
+	public void setGameGUI(GameGUI gameGUI) {
 		this.gameGUI = gameGUI;
 	}
 
@@ -139,5 +132,9 @@ public class GUIManager extends JFrame implements Runnable {
 
 	public Screen getScreen() {
 		return this.screen;
+	}
+
+	public GameGUI getGameGUI() {
+		return this.gameGUI;
 	}
 }

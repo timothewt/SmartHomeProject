@@ -5,17 +5,12 @@
  */
 package ui;
 
+import java.awt.*;
 import static java.lang.Math.max;
 import static java.lang.Math.min;
 import static utils.PlayingStates.PERK;
 import static utils.PlayingStates.setPlayingState;
-
-import java.awt.Color;
-import java.awt.Graphics;
-import java.awt.Graphics2D;
-import java.awt.RenderingHints;
 import java.util.ArrayList;
-
 import model.Person;
 import view.GameGUI;
 
@@ -93,11 +88,9 @@ public class DuringDayUI extends UIComponent {
 		this.persons = gameGUI.getGame().getHouse().getCouple().getPersons();
 		this.currentTaskIndex = -1;
 		this.areAllTasksDone = false;
-		swapTaskButton();
-	}
-	
-	public void swapTaskButton() {
-		
+		this.nextTaskButton.setText("Next task");
+		this.nextTaskButton.setWidth(120);
+		this.nextTaskButton.setX(this.y + this.width / 2 - 60);
 	}
 	/**
 	 * Make the scene controls visible or not
@@ -107,7 +100,7 @@ public class DuringDayUI extends UIComponent {
 
 	/**
 	 * Called when the user clicks anywhere on the screen. Used to know if the user clicked on the Next task button
-	 * @param x: x position of the mous
+	 * @param x: x position of the mouse
 	 * @param y: y position of the mouse
 	 */
 	public void mouseClicked(int x, int y) {
@@ -125,7 +118,7 @@ public class DuringDayUI extends UIComponent {
 				if (this.areAllTasksDone) {
 					this.nextTaskButton.setText("End current day");
 					this.nextTaskButton.setWidth(150);
-					//this.nextTaskButton.setX((this.x + width / 2) - 75);
+					this.nextTaskButton.setX(this.y + this.width / 2 - 75);
 				}
 			}
 		}

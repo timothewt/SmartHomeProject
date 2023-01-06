@@ -18,22 +18,17 @@ public class Person {
 	private ArrayList<Task> tasks;
 	
 	/**
-	 * Constructors
+	 * Class constructor
+	 * @param name: name of the person
+	 * @param id: id of the person
+	 * @param maxStamina: maximum stamina in a day
 	 */
-	public Person()	{
-		this.name = "default";
-		this.id = 0;
-		this.maxStamina = 10;
-		this.stamina = 0;
-		this.tasks = new ArrayList<>();
-	}
-
-	public Person(String name, int id, int maxStamina, ArrayList<Task> tasks) {
+	public Person(String name, int id, int maxStamina) {
 		this.name = name;
 		this.id = id;
 		this.maxStamina = maxStamina;
 		this.stamina = maxStamina;
-		this.tasks = tasks;
+		this.tasks = new ArrayList<>();
 	}
 
 	/**
@@ -56,7 +51,7 @@ public class Person {
 	}
 
 	public String toString() {
-		return name + " - Stamina : " + stamina + ", max stamina : " + maxStamina;
+		return name + " - Stamina: " + stamina + ", max stamina: " + maxStamina;
 	}
 
 	/**
@@ -101,6 +96,6 @@ public class Person {
 
 	public void onNewDay() {
 		this.stamina = this.maxStamina;
-		this.tasks = new ArrayList<>();
+		this.tasks.clear();
 	}
 }

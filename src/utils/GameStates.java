@@ -15,7 +15,7 @@ public enum GameStates {
 	 * Static method called anywhere in the application changing the current state of the game
 	 * @param state: The new state
 	 */
-	public static void SetGameState(GameStates state) {
+	public static void setGameState(GameStates state) {
 		gameState = state;
 	}
 }

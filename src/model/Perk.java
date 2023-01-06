@@ -17,15 +17,6 @@ public class Perk {
 	/**
 	 * Constructors
 	 */
-	public Perk() {
-		this.id = 0;
-		this.name = "Default Perk";
-		this.installationCost = 0;
-		this.dailyMoneyCost = 0;
-		this.dailyEnergyCost = 0;
-		this.isUpgraded = false;
-	}
-
 	public Perk(int id, String name, int installationCost, int dailyMoneyCost, int dailyEnergyCost, boolean isUpgraded) {
 		this.id = id;
 		this.name = name;
@@ -36,10 +27,7 @@ public class Perk {
 	}
 
 	public String toString() {
-		return	 name + " | " +
-				" installationCost = " + installationCost +
-				" dailyMoneyCost = " + dailyMoneyCost +
-				" dailyEnergyCost = " + dailyEnergyCost ;
+		return name + " | " +" cost: " + installationCost + ", daily money cost: " + dailyMoneyCost + " daily energy cost: " + dailyEnergyCost ;
 	}
 
 	/**

@@ -47,8 +47,8 @@ public class House {
 	public boolean isViable() {
 		return temperature < optimalTemperature + 10 &&
 				temperature > optimalTemperature - 10 &&
-				humidityRate < optimalHumidityRate + .15 &&
-				humidityRate < optimalHumidityRate - .15;
+				humidityRate < optimalHumidityRate + .2 &&
+				humidityRate < optimalHumidityRate - .2;
 	}
 
 	/**
@@ -56,7 +56,6 @@ public class House {
 	 * @param weather: weather of the environment
 	 */
 	public void update(Weather weather) {
-
 		this.temperature = 0;
 		this.humidityRate = 0;
 
@@ -134,11 +133,14 @@ public class House {
 			this.energy += powerGenerator.getDailyProduction();
 			this.couple.setMoney(this.couple.getMoney() - powerGenerator.getDailyCost());
 		});
-		this.getCouple().getPersons().forEach(person -> person.onNewDay());
+		this.getCouple().getPersons().forEach(Person::onNewDay);
 	}
 
 	public String toString() {
-		return "House - T : " + (float)round(temperature * 10) / 10 + "°C, humidity : " + round(humidityRate * 100) + "%, optimal T : " + optimalTemperature + "°C, optimal humidity : " + round(optimalHumidityRate * 100) + "%";
+		String windowsStatus = this.rooms.get(0).isWindowOpen() ? "Open" : "Closed";
+		String heatersStatus = this.rooms.get(0).isHeaterTurnedOn() ? this.rooms.get(0).getHeaterTemperature() + "°C" : "Off";
+		String ACStatus = this.rooms.get(0).isACTurnedOn() ? this.rooms.get(0).getACTemperature() + "°C" : "Off";
+		return "House - T: " + (float)round(temperature * 10) / 10 + "°C, humidity: " + round(humidityRate * 100) + "%, windows: " + windowsStatus + ", heaters: " + heatersStatus + ", AC: " + ACStatus;
 	}
 
 	/**
@@ -150,10 +152,6 @@ public class House {
 
 	public void setEnergy(int energy) {
 		this.energy = energy;
-	}
-
-	public void setOnPowerOutage(boolean onPowerOutage) {
-		isOnPowerOutage = onPowerOutage;
 	}
 
 	public Couple getCouple() {
