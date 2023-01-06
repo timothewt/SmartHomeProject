@@ -29,7 +29,7 @@ public class MyMouseListener implements MouseListener {
 		if (e.getButton() == MouseEvent.BUTTON1) {
 			switch (GameStates.gameState) {
 				case MENU -> GUIManager.getMenu().mouseClicked(e.getX(), e.getY());
-				case PLAYING -> GUIManager.getPlay().mouseClicked(e.getX(), e.getY());
+				case PLAYING -> GUIManager.getGameGUI().mouseClicked(e.getX(), e.getY());
 				case GAMEOVER -> GUIManager.getGameOver().mouseClicked(e.getX(), e.getY());
 			}
 		}
@@ -39,7 +39,7 @@ public class MyMouseListener implements MouseListener {
 	public void mousePressed(MouseEvent e) {
 		switch (GameStates.gameState) {
 			case MENU -> GUIManager.getMenu().mousePressed(e.getX(), e.getY());
-			case PLAYING -> GUIManager.getPlay().mousePressed(e.getX(), e.getY());
+			case PLAYING -> GUIManager.getGameGUI().mousePressed(e.getX(), e.getY());
 			case GAMEOVER -> GUIManager.getGameOver().mousePressed(e.getX(), e.getY());
 		}
 	}
@@ -48,7 +48,7 @@ public class MyMouseListener implements MouseListener {
 	public void mouseReleased(MouseEvent e) {
 		switch (GameStates.gameState) {
 			case MENU -> GUIManager.getMenu().mouseReleased(e.getX(), e.getY());
-			case PLAYING -> GUIManager.getPlay().mouseReleased(e.getX(), e.getY());
+			case PLAYING -> GUIManager.getGameGUI().mouseReleased(e.getX(), e.getY());
 			case GAMEOVER -> GUIManager.getGameOver().mouseReleased(e.getX(), e.getY());
 		}
 	}

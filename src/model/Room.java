@@ -22,14 +22,14 @@ public class Room {
 	/**
 	 * Class constructors
 	 */
-	public Room(String name, int temperature, float humidityRate) {
+	public Room(String name, float temperature, float humidityRate) {
 		this.name = name;
 		this.heaterTemperature = 0f;
 		this.isHeaterTurnedOn = false;
 		this.ACTemperature = 0f;
 		this.isACTurnedOn = false;
-		this.temperature = 18f;
-		this.humidityRate = .4f;
+		this.temperature = temperature;
+		this.humidityRate = humidityRate;
 		this.isolationRate = .5f;
 		this.isWindowOpen = false;
 	}
@@ -49,9 +49,7 @@ public class Room {
 			// Loss of humidity and temperature due to non-optimal isolation
 			int humidityChangeSign = this.humidityRate > outsideHumidityRate ? -1 : 1;
 			int temperatureChangeSign = this.temperature > outsideTemperature ? -1 : 1;
-			System.out.println(this.humidityRate);
 			this.humidityRate = Math.max(Math.min(this.humidityRate + humidityChangeSign * (1 - this.isolationRate) * .05f, 1), 0);
-			System.out.println(this.humidityRate);
 			this.temperature = this.temperature + temperatureChangeSign * (1 - this.isolationRate) * 2;
 		}
 	}

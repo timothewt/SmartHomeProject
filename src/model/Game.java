@@ -6,6 +6,7 @@
 package model;
 
 import java.util.ArrayList;
+import java.util.Objects;
 
 public class Game {
 
@@ -13,6 +14,7 @@ public class Game {
 	private final Weather weather;
 	private int dayNumber;
 	private final ArrayList<Task> availableTasks;
+	private String gameOverReason;
 
 	/**
 	 * Class constructor
@@ -22,6 +24,7 @@ public class Game {
 		this.weather = new Weather();
 		this.dayNumber = 0;
 		this.availableTasks = new ArrayList<>();
+		this.gameOverReason = "";
 		initTasks();
 
 	}
@@ -31,7 +34,9 @@ public class Game {
 	 * @return True if the house is still viable, false otherwise
 	 */
 	public boolean onNewDay() {
-		if (!this.house.isViable()) {
+		String viability = this.house.isViable();
+		if (!Objects.equals(viability, "Viable")) {
+			this.gameOverReason = viability;
 			return false;
 		}
 		this.dayNumber++;
@@ -64,7 +69,7 @@ public class Game {
 		family.addPerson(new Person("Jean", 0, 10));
 		family.addPerson(new Person("Marie", 1, 10));
 
-		return new House(18f, .4f, 0, false, rooms, powerGenerators, perks, family, 21f, .45f);
+		return new House(18f, .4f, 0, rooms, powerGenerators, perks, family, 21f, .45f);
 	}
 
 	/**
@@ -149,5 +154,9 @@ public class Game {
 
 	public int getDayNumber() {
 		return this.dayNumber;
+	}
+
+	public String getGameOverReason() {
+		return this.gameOverReason;
 	}
 }

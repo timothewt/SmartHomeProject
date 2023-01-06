@@ -118,10 +118,6 @@ public class GUIManager extends JFrame implements Runnable {
 		return menu;
 	}
 
-	public GameGUI getPlay() {
-		return gameGUI;
-	}
-
 	public void setGameGUI(GameGUI gameGUI) {
 		this.gameGUI = gameGUI;
 	}

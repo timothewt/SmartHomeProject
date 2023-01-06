@@ -27,7 +27,7 @@ public class Render {
 	public void render(Graphics g) {
 		switch (GameStates.gameState) {
 			case MENU -> GUIManager.getMenu().render(g);
-			case PLAYING -> GUIManager.getPlay().render(g);
+			case PLAYING -> GUIManager.getGameGUI().render(g);
 			case GAMEOVER -> GUIManager.getGameOver().render(g);
 			default -> {
 			}

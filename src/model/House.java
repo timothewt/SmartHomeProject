@@ -15,7 +15,7 @@ public class House {
 	private float temperature; // temperature inside the house
 	private float humidityRate; // humidity rate inside the house
 	private int energy; // energy available in the house
-	private boolean isOnPowerOutage; // power outage, not yet implemented
+	// private boolean isOnPowerOutage; // power outage, not yet implemented
 	private final ArrayList<Room> rooms; // rooms of the house
 	private final ArrayList<PowerGenerator> powerSupply; // daily energy supplies of the house
 	private final ArrayList<Perk> availablePerks; // available perks
@@ -27,11 +27,11 @@ public class House {
 	/**
 	 * Class constructor
 	 */
-	public House(float temperature, float humidityRate, int energy, boolean isOnPowerOutage, ArrayList<Room> rooms, ArrayList<PowerGenerator> powerSupply, ArrayList<Perk> perks, Family family, float optimalTemperature, float optimalHumidityRate) {
+	public House(float temperature, float humidityRate, int energy, ArrayList<Room> rooms, ArrayList<PowerGenerator> powerSupply, ArrayList<Perk> perks, Family family, float optimalTemperature, float optimalHumidityRate) {
 		this.temperature = temperature;
 		this.humidityRate = humidityRate;
 		this.energy = energy;
-		this.isOnPowerOutage = isOnPowerOutage;
+		// this.isOnPowerOutage = isOnPowerOutage;
 		this.rooms = rooms;
 		this.powerSupply = powerSupply;
 		this.availablePerks = perks;
@@ -60,13 +60,25 @@ public class House {
 	
 	/**
 	 * Tells if the home is still viable or not, used to determine if the player can keep playing
-	 * @return true if the house is still viable, false otherwise.
+	 * @return "Viable" if the house is still viable, the reason of the non-viability as a String otherwise.
 	 */
-	public boolean isViable() {
-		return temperature < optimalTemperature + 10 &&
-				temperature > optimalTemperature - 10 &&
-				humidityRate < optimalHumidityRate + .2 &&
-				humidityRate < optimalHumidityRate - .2;
+	public String isViable() {
+		if (temperature > optimalTemperature + 10) {
+			return "Temperature too high: " + (float)round(temperature * 10) / 10 + "°C";
+		}
+		if (temperature < optimalTemperature - 10) {
+			return "Temperature too low: " + (float)round(temperature * 10) / 10 + "°C";
+		}
+		if (humidityRate > optimalHumidityRate + .2) {
+			return "Humidity too high: " + (float)round(humidityRate * 100) / 100 + "%";
+		}
+		if (humidityRate < optimalHumidityRate - .2) {
+			return "Humidity too low: " + (float)round(humidityRate * 100) / 100 + "%";
+		}
+		if (this.family.getMoney() <= 0) {
+			return "Not enough money to continue";
+		}
+		return "Viable";
 	}
 
 	/**

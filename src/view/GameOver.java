@@ -2,6 +2,7 @@ package view;
 
 import java.awt.*;
 
+import model.Game;
 import ui.Button;
 
 import static utils.GameStates.MENU;
@@ -33,6 +34,8 @@ public class GameOver extends GameScene implements SceneMethods {
 		this.menuButton.draw(g);
 		Graphics2D graphics2D = (Graphics2D) g;
 		graphics2D.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+		graphics2D.drawString("Game over!", this.GUIManager.getScreen().getSize().width / 2 - 30, 200);
+		graphics2D.drawString(this.GUIManager.getGameGUI().getGame().getGameOverReason(), this.GUIManager.getScreen().getSize().width / 2 - 70, 225);
 		graphics2D.drawString("Number of days: " + this.GUIManager.getGameGUI().getGame().getDayNumber(), this.GUIManager.getScreen().getSize().width / 2 - 50, 250);
 	}
 
