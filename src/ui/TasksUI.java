@@ -8,15 +8,8 @@ package ui;
 import static java.lang.Math.abs;
 import static utils.PlayingStates.DAY;
 import static utils.PlayingStates.setPlayingState;
-
-import java.awt.Checkbox;
-import java.awt.CheckboxGroup;
-import java.awt.Color;
-import java.awt.Graphics;
-import java.awt.Graphics2D;
-import java.awt.RenderingHints;
+import java.awt.*;
 import java.util.ArrayList;
-
 import model.Person;
 import model.Task;
 import view.GameGUI;
