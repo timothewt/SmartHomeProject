@@ -12,18 +12,18 @@ public class Perk {
 	private final int installationCost; // cost when buying the perk
 	private final int dailyMoneyCost; // daily money cost of the perk
 	private final int dailyEnergyCost; // daily energy cost of the perk
-	private final boolean isUpgraded; // true if the user bought it, false otherwise
+	private boolean isUpgraded; // true if the user bought it, false otherwise
 	
 	/**
 	 * Class constructor
 	 */
-	public Perk(int id, String name, int installationCost, int dailyMoneyCost, int dailyEnergyCost, boolean isUpgraded) {
+	public Perk(int id, String name, int installationCost, int dailyMoneyCost, int dailyEnergyCost) {
 		this.id = id;
 		this.name = name;
 		this.installationCost = installationCost;
 		this.dailyMoneyCost = dailyMoneyCost;
 		this.dailyEnergyCost = dailyEnergyCost;
-		this.isUpgraded = isUpgraded;
+		this.isUpgraded = false;
 	}
 
 	/**

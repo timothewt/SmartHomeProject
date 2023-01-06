@@ -59,7 +59,7 @@ public class House {
 		this.humidityRate = 0;
 
 		for (Room room: rooms) {
-			room.updateStats(weather.getHumidityRate(), weather.getTemperature());
+			room.update(weather.getHumidityRate(), weather.getTemperature());
 			this.temperature += room.getTemperature() / this.rooms.size();
 			this.humidityRate += room.getHumidityRate() / this.rooms.size();
 		}

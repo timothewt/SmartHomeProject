@@ -59,10 +59,10 @@ public class Game {
 		powerGenerators.add(new PowerGenerator("Linky", 0, 100, 100));
 
 		ArrayList<Perk> perks = new ArrayList<>();
-		perks.add(new Perk(0, "Automatic windows", 1000, 100, 30, false));
-		perks.add(new Perk(1, "Automatic AC and heaters", 1500, 150, 50, false));
-		perks.add(new Perk(2, "Better mattress", 1000, 0, 0, false));
-		perks.add(new Perk(3, "Cooking robot", 1000, 0, 0, false));
+		perks.add(new Perk(0, "Automatic windows", 1000, 100, 30));
+		perks.add(new Perk(1, "Automatic AC and heaters", 1500, 150, 50));
+		perks.add(new Perk(2, "Better mattress", 1000, 0, 0));
+		perks.add(new Perk(3, "Cooking robot", 1000, 0, 0));
 
 		Family family = new Family();
 		family.addPerson(new Person("Jean", 0, 10));

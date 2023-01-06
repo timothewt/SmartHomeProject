@@ -15,7 +15,7 @@ public class Person {
 	private final int id; // ID of the person
 	private final int maxStamina; // max stamina in a day
 	private int stamina; // current stamina of the day
-	private ArrayList<Task> tasks; // daily tasks to execute
+	private final ArrayList<Task> tasks; // daily tasks to execute
 	
 	/**
 	 * Class constructor

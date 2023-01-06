@@ -39,7 +39,7 @@ public class Room {
 	 * @param outsideHumidityRate: humidity rate outside the house
 	 * @param outsideTemperature: temperature outside the house
 	 */
-	public void updateStats(float outsideHumidityRate, float outsideTemperature) {
+	public void update(float outsideHumidityRate, float outsideTemperature) {
 		if (this.isWindowOpen) {
 			this.humidityRate = (this.humidityRate + outsideHumidityRate) / 2;
 			this.temperature = (this.temperature + outsideTemperature) / 2;
