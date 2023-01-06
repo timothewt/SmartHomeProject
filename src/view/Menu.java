@@ -16,16 +16,13 @@ import static utils.PlayingStates.setPlayingState;
 public class Menu extends GameScene implements SceneMethods {
 
 	private ArrayList<Button> buttons; // buttons of the menu
-	private final GUIManager GUIManager;
 
 	/**
 	 * Class constructor
-	 * 
 	 * @param GUIManager: manages all the views of the application
 	 */
 	public Menu(GUIManager GUIManager) {
 		super(GUIManager);
-		this.GUIManager = GUIManager;
 		initButtons();
 	}
 
@@ -46,7 +43,6 @@ public class Menu extends GameScene implements SceneMethods {
 
 	/**
 	 * Renders the buttons on the screen
-	 * 
 	 * @param g: graphics component of the app
 	 */
 	@Override
@@ -57,7 +53,6 @@ public class Menu extends GameScene implements SceneMethods {
 	/**
 	 * Called when the user clicks anywhere on the screen. Used to know if he
 	 * clicked on the buttons of the menu
-	 * 
 	 * @param x: x position of the mouse
 	 * @param y: y position of the mouse
 	 */

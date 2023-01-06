@@ -12,7 +12,7 @@ import java.awt.event.MouseMotionListener;
 import view.GUIManager;
 import utils.GameStates;
 
-public class MyMouseListener implements MouseListener, MouseMotionListener {
+public class MyMouseListener implements MouseListener {
 
 	private final GUIManager GUIManager;
 
@@ -22,25 +22,6 @@ public class MyMouseListener implements MouseListener, MouseMotionListener {
 	 */
 	public MyMouseListener(GUIManager GUIManager) {
 		this.GUIManager = GUIManager;
-	}
-
-	//Control
-	@Override
-	public void mouseDragged(MouseEvent e) {
-		switch (GameStates.gameState) {
-			case MENU -> GUIManager.getMenu().mouseDragged(e.getX(), e.getY());
-			case PLAYING -> GUIManager.getPlay().mouseDragged(e.getX(), e.getY());
-			case GAMEOVER -> GUIManager.getGameOver().mouseDragged(e.getX(), e.getY());
-		}
-	}
-
-	@Override
-	public void mouseMoved(MouseEvent e) {
-		switch (GameStates.gameState) {
-			case MENU -> GUIManager.getMenu().mouseMoved(e.getX(), e.getY());
-			case PLAYING -> GUIManager.getPlay().mouseMoved(e.getX(), e.getY());
-			case GAMEOVER -> GUIManager.getGameOver().mouseMoved(e.getX(), e.getY());
-		}
 	}
 
 	@Override

@@ -7,13 +7,13 @@ package ui;
 
 import java.awt.*;
 import java.util.ArrayList;
+import model.Game;
 import model.Person;
-import view.GameGUI;
 import static utils.GameStates.*;
 
 public class InfoBarUI extends UIComponent {
 
-	private final GameGUI gameGUI; // gameGUI containing the game model
+	private final Game game;
 	private ArrayList<Button> buttons; // buttons of the UI
 
 	/**
@@ -22,12 +22,12 @@ public class InfoBarUI extends UIComponent {
 	 * @param y: vertical position of the UI
 	 * @param width: width of the UI
 	 * @param height: height of the UI
-	 * @param gameGUI: class that contains the game model
+	 * @param game: game model
 	 */
-	public InfoBarUI(int x, int y, int width, int height, GameGUI gameGUI) {
+	public InfoBarUI(int x, int y, int width, int height, Game game) {
 		super(x, y, width, height);
 		initButtons();
-		this.gameGUI = gameGUI;
+		this.game = game;
 	}
 
 	/**
@@ -62,16 +62,16 @@ public class InfoBarUI extends UIComponent {
 
 		graphics2D.drawLine(x, y, x + width, y);
 
-		graphics2D.drawString("Day #" + gameGUI.getGame().getDayNumber(), this.x + 115, this.y + 20);
-		graphics2D.drawString("Money : " + gameGUI.getGame().getHouse().getFamily().getMoney(), this.x + 115, this.y + 45);
-		graphics2D.drawString("Energy : " + gameGUI.getGame().getHouse().getEnergy(), this.x + 115, this.y + 70);
+		graphics2D.drawString("Day #" + this.game.getDayNumber(), this.x + 115, this.y + 20);
+		graphics2D.drawString("Money : " + this.game.getHouse().getFamily().getMoney(), this.x + 115, this.y + 45);
+		graphics2D.drawString("Energy : " + this.game.getHouse().getEnergy(), this.x + 115, this.y + 70);
 
-		for (Person person: gameGUI.getGame().getHouse().getFamily().getPersons()) {
+		for (Person person: this.game.getHouse().getFamily().getPersons()) {
 			graphics2D.drawString(person.toString(), this.x + 220, this.y + 20 + 25 * person.getId());
 		}
 
-		graphics2D.drawString(gameGUI.getGame().getWeather().toString(), this.x + 10, this.y + 95);
-		graphics2D.drawString(gameGUI.getGame().getHouse().toString(), this.x + 10, this.y + 112);
+		graphics2D.drawString(this.game.getWeather().toString(), this.x + 10, this.y + 95);
+		graphics2D.drawString(this.game.getHouse().toString(), this.x + 10, this.y + 112);
 	}
 
 	/**

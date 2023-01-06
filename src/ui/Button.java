@@ -11,7 +11,7 @@ public class Button {
 
 	private int x, y, width, height, id; // horizontal position, vertical position, width of the button, height of the button, ID of the button
 	private String text; // text displayed on the button
-	private Rectangle bounds; // bounds of the button (position and size)
+	private final Rectangle bounds; // bounds of the button (position and size)
 	private boolean isMouseOver, isMousePressed; // in order to know if there is an interaction with the user
 
 	/**
@@ -104,6 +104,9 @@ public class Button {
 		this.isMousePressed = false;
 	}
 
+	/**
+	 * Getters and setters
+	 */
 	public void setIsMousePressed(boolean isMousePressed) {
 		this.isMousePressed = isMousePressed;
 	}
@@ -112,7 +115,6 @@ public class Button {
 		this.isMouseOver = isMouseOver;
 	}
 
-	// Getters and Setters
 	public Rectangle getBounds() {
 		return bounds;
 	}

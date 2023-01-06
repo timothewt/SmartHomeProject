@@ -7,13 +7,13 @@ package view;
 
 public class GameScene {
 
-	protected GUIManager GUIManager;
+	protected GUIManager GUIManager; // manages all the views of the application
 
 	public GameScene(GUIManager GUIManager) {
 		this.GUIManager = GUIManager;
 	}
 
-	public GUIManager getMain() {
+	public GUIManager getGUIManager() {
 		return GUIManager;
 	}
 

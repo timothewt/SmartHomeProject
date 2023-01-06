@@ -79,7 +79,7 @@ public class TasksUI extends UIComponent {
 			personCheckbox.setBounds(x + 10 + 80 * persons.indexOf(person), yStart + yOffsetButtonsOrigin * (tasksLinesNumber + 1), 50, 20);
 			personCheckbox.addItemListener(e -> this.selectedPersonId = personId);
 			this.personsCheckboxes.add(personCheckbox);
-			gameGUI.getMain().add(personCheckbox);
+			gameGUI.getGUIManager().add(personCheckbox);
 		});
 		this.selectedPersonId = 0;
 		this.personsCheckboxes.get(0).setState(true);

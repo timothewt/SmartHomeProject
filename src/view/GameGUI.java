@@ -18,7 +18,6 @@ public class GameGUI extends GameScene implements SceneMethods {
 	private final TasksUI tasksUI; // UI of the tasks picking
 	private final DuringDayUI duringDayUI; // UI of the tasks execution
 	private final PerksUI perksUI; // UI used to buy perks for the house
-	private final GUIManager GUIManager; // manages all the views of the application
 	private final int gameElementsHeight; // height of the main game component
 
 	/**
@@ -27,11 +26,10 @@ public class GameGUI extends GameScene implements SceneMethods {
 	 */
 	public GameGUI(GUIManager GUIManager) {
 		super(GUIManager);
-		this.GUIManager = GUIManager;
 		this.gameElementsHeight = this.GUIManager.getScreen().getSize().height - 120;
 		this.game = new Game();
 		int width = this.GUIManager.getScreen().getSize().width;
-		infoBarUI = new InfoBarUI(0, gameElementsHeight, width, 120, this);
+		infoBarUI = new InfoBarUI(0, gameElementsHeight, width, 120, this.game);
 		tasksUI = new TasksUI(0, 0, width, gameElementsHeight, this);
 		duringDayUI = new DuringDayUI(0, 0, width, gameElementsHeight, this);
 		perksUI = new PerksUI(0, 0, width, gameElementsHeight, this);
@@ -124,7 +122,7 @@ public class GameGUI extends GameScene implements SceneMethods {
 		return this.game;
 	}
 
-	public GUIManager getMain() {
+	public GUIManager getGUIManager() {
 		return this.GUIManager;
 	}
 

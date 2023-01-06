@@ -9,7 +9,6 @@ import static utils.GameStates.setGameState;
 
 public class GameOver extends GameScene implements SceneMethods {
 
-	private final GUIManager GUIManager; // manages all the views of the application
 	private Button menuButton; // button to go back to the menu
 	
 	/**
@@ -18,11 +17,10 @@ public class GameOver extends GameScene implements SceneMethods {
 	 */
 	public GameOver(GUIManager GUIManager) {
 		super(GUIManager);
-		this.GUIManager = GUIManager;
 		initButtons();
 	}
 	
-	public void initButtons() {
+	private void initButtons() {
 		int buttonWidth = 150;
 		int buttonHeight = buttonWidth / 3;
 		int x = this.GUIManager.getScreen().getSize().width / 2 - buttonWidth / 2;
