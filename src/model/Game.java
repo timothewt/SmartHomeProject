@@ -1,7 +1,7 @@
 /**
  * @file Menu.java
  * @date 18/12/2022
- * @brief Manage all the Play Scene component
+ * Core of the game model
  */
 package model;
 
@@ -9,29 +9,30 @@ import java.util.ArrayList;
 
 public class Game {
 
-	private House house;
-	private Weather weather;
+	private final House house;
+	private final Weather weather;
 	private int dayNumber;
-	private ArrayList<Task> availableTasks;
-	private ArrayList<Perk> availablePerks;
-	private ArrayList<Perk> currentPerks;
+	private final ArrayList<Task> availableTasks;
+	private final ArrayList<Perk> availablePerks;
+	private final ArrayList<Perk> currentPerks;
 
 	/**
-	 * @brief Constructor
+	 * Class constructor
 	 */
 	public Game() {
-
 		this.house = initHouse();
 		this.weather = new Weather();
 		this.dayNumber = 0;
-		this.availableTasks = this.initTasks();
+		this.availableTasks = new ArrayList<>();
+		initTasks();
 		this.availablePerks = this.house.getPerks();
 		this.currentPerks = new ArrayList<>();
 
 	}
 
 	/**
-	 * Update the house and the weather on a new day
+	 * Updates the house and the weather on a new day
+	 * @return True if the house is still viable, false otherwise
 	 */
 	public boolean onNewDay() {
 		if (!this.house.isViable()) {
@@ -44,11 +45,10 @@ public class Game {
 	}
 
 	/**
-	 * @brief Instantiating rooms and perks
-	 * @return
+	 * Instantiates the rooms, power generators, available perks and family
 	 */
 	private House initHouse() {
-		ArrayList<Room> rooms = new ArrayList<Room>();
+		ArrayList<Room> rooms = new ArrayList<>();
 		rooms.add(new Room("Cuisine"));
 		rooms.add(new Room("Chambre"));
 		rooms.add(new Room("Salon"));
@@ -58,26 +58,23 @@ public class Game {
 		ArrayList<PowerGenerator> powerGenerators = new ArrayList<PowerGenerator>();
 		powerGenerators.add(new PowerGenerator("Linky", 0, 100, 100));
 
-		ArrayList<Perk> perks = new ArrayList<Perk>();
+		ArrayList<Perk> perks = new ArrayList<>();
 		perks.add(new Perk(0, "Automatic windows", 1000, 100, 30, false));
 		perks.add(new Perk(1, "Automatic AC and heaters", 1500, 150, 50, false));
 		perks.add(new Perk(2, "Better mattress", 1000, 0, 0, false));
 		perks.add(new Perk(3, "Cooking robot", 1000, 0, 0, false));
 
-		Couple couple = new Couple();
-		couple.addPerson(new Person("Jean", 0, 10));
-		couple.addPerson(new Person("Marie", 1, 10));
+		Family family = new Family();
+		family.addPerson(new Person("Jean", 0, 10));
+		family.addPerson(new Person("Marie", 1, 10));
 
-		return new House(18f, .5f, 0, false, rooms, powerGenerators, perks, couple, 21f, .45f);
+		return new House(18f, .5f, 0, false, rooms, powerGenerators, perks, family, 21f, .45f);
 	}
 
 	/**
-	 * @brief instantiating tasks
-	 * @return
+	 * Instantiates all the available tasks
 	 */
-	private ArrayList<Task> initTasks() {
-		availableTasks = new ArrayList<>();
-
+	private void initTasks() {
 		availableTasks.add(new Task(0, "Heater On", "Turning heater On.", -1, 0, 0));
 		availableTasks.add(new Task(1, "Heater Off", "Turning heater Off.", -1, 0, 0));
 		availableTasks.add(new Task(2, "AC On", "Turning AC On.", -1, 0, 0));
@@ -89,35 +86,37 @@ public class Game {
 		availableTasks.add(new Task(8, "Biking", "Biking.", -4, 0, 50));
 		availableTasks.add(new Task(9, "Cook", "Cooking and eating.", 2, 0, -30));
 		// availableTasks.add(new Task(10, "Repair Outage", "Repairing power Outage.", -2, -200, 0)); // power outage not yet implemented
-
-		return availableTasks;
 	}
 
 	/**
-	 * @brief find a Task in all tasks using the task's id
-	 * @param id
-	 * @return the Task corresponding to the id
+	 * Finds a Task in all tasks using its ID
+	 * @param id: ID of the task
+	 * @return the Task corresponding to the ID
 	 */
 	public Task findTaskFromId(int id) {
 		if (id >= 0 && id < availableTasks.size()) {
 			for (Task task : availableTasks) {
-				if (task.getId() == id) {
+				if (task.ID() == id) {
 					return task;
 				}
 			}
 		} else {
-			System.out.println("Error system in Playing : id not recognized");
+			System.out.println("Error system in Playing : ID not recognized");
 		}
 		return null;
 	}
 
+	/**
+	 * Executes the task of every member of the house at the index n of their tasks list
+	 * @param n: index of the tasks to execute
+	 */
 	public void doNthTaskOfAllPersons(int n) {
 		this.house.getCouple().getPersons().forEach(person -> {
 			if (n < person.getTasks().size()) {
 				Task currentTask = person.getTasks().get(n);
 				float heaterTemp = 23;
-				float ACTemperature = 18; // Hard coded for the moment, has to depend on the UI entry
-				switch (currentTask.getId()) {
+				float ACTemperature = 18; // Hard coded for the moment, has to depend on the UI entry later
+				switch (currentTask.ID()) {
 					case 0 -> this.house.setAllHeatersTemperature(heaterTemp); // turn on all heaters
 					case 1 -> this.house.turnOffAllHeaters(); // turn off all heaters
 					case 2 -> this.house.setAllACTemperature(ACTemperature); // turn on all AC
@@ -129,15 +128,17 @@ public class Game {
 					case 8 -> {} // bike
 					case 9 -> {} // cook
 				}
-				person.setStamina(person.getStamina() + currentTask.getStamina());
-				this.house.getCouple().setMoney(this.house.getCouple().getMoney() + currentTask.getMoney());
-				this.house.setEnergy(this.house.getEnergy() + currentTask.getEnergy());
+				person.setStamina(person.getStamina() + currentTask.stamina());
+				this.house.getCouple().setMoney(this.house.getCouple().getMoney() + currentTask.money());
+				this.house.setEnergy(this.house.getEnergy() + currentTask.energy());
 			}
 		});
 		this.house.update(this.weather);
 	}
 
-	// Getters and Setters
+	/**
+	 * Getters and setters
+	 */
 	public House getHouse() {
 		return this.house;
 	}

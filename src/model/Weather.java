@@ -1,26 +1,25 @@
 /**
  * @file Weather.java
  * @date 18/12/2022
- * @brief Use to represent the weather of the environment
+ * Represents the weather of the environment outside the house
  */
 package model;
 
 import java.lang.Math;
-
 import static java.lang.Math.round;
 
 public class Weather {
 
-	private float temperature;
-	private float humidityRate;
-	private boolean isRainy;
-	private boolean isSnowy;
-	private boolean isSunny;
-	private boolean isLightning;
-	private float difficultyRate;
+	private float temperature; // temperature of the environment
+	private float humidityRate; // humidity rate of the environment
+	private boolean isRainy; // tells if it is currently raining outside
+	private boolean isSnowy; // tells if it is currently snowing outside
+	private boolean isSunny; // tells if it is currently sunny outside
+	private boolean isLightning; // tells if there are lightnings outside
+	private float difficultyRate; // difficulty of the current weather, makes weather variations smaller of bigger
 
 	/**
-	 * @brief Constructors
+	 * Class constructor
 	 */
 	public Weather() {
 		this.temperature = 20f;
@@ -32,21 +31,8 @@ public class Weather {
 	}
 
 	/**
-	 * @brief Constructors
-	 */
-	public Weather(float temperature, float humidityRate, boolean isRainy, boolean isSnowy, boolean isSunny,
-			boolean isLightning) {
-		this.temperature = temperature;
-		this.humidityRate = humidityRate;
-		this.isRainy = isRainy;
-		this.isSnowy = isSnowy;
-		this.isSunny = isSunny;
-		this.isLightning = isLightning;
-	}
-
-	/**
-	 * @brief update the weather
-	 * @param dayNumber
+	 * Update the weather according to the day number
+	 * @param dayNumber: current day of the game
 	 */
 	public void update(int dayNumber) {
 		this.updateDifficultyRate(dayNumber);
@@ -73,16 +59,17 @@ public class Weather {
 	}
 
 	/**
-	 * @brief update The difficulty of the game according to the day. The difficulty
-	 *        increases over days
-	 * @param dayNumber
+	 * Update The difficulty of the game according to the day. The difficulty increases over the days
+	 * Uses logistic function
+	 * @param dayNumber: current day of the game
 	 */
 	private void updateDifficultyRate(int dayNumber) {
 		this.difficultyRate = (float) (1 / (1 + Math.exp(-.5 * (dayNumber - 5))));
 	}
 
 	/**
-	 * @brief toString method
+	 * Stringifies the weather to display it
+	 * @return the infos of the weather as a String
 	 */
 	public String toString() {
 		String sky = isSnowy ? "Snowy" : isLightning ? "Lightnings" : isRainy ? "Rainy" : "Sunny";
@@ -96,36 +83,16 @@ public class Weather {
 		return temperature;
 	}
 
-	public void setTemperature(float temperature) {
-		this.temperature = temperature;
-	}
-
 	public float getHumidityRate() {
 		return humidityRate;
-	}
-
-	public void setHumidityRate(float humidityRate) {
-		this.humidityRate = humidityRate;
-	}
-
-	public boolean isRainy() {
-		return isRainy;
 	}
 
 	public void setRainy(boolean rainy) {
 		isRainy = rainy;
 	}
 
-	public boolean isSnowy() {
-		return isSnowy;
-	}
-
 	public void setSnowy(boolean snowy) {
 		isSnowy = snowy;
-	}
-
-	public boolean isSunny() {
-		return isSunny;
 	}
 
 	public void setSunny(boolean sunny) {
@@ -138,13 +105,5 @@ public class Weather {
 
 	public void setLightning(boolean lightning) {
 		isLightning = lightning;
-	}
-
-	public float getDifficultyRate() {
-		return difficultyRate;
-	}
-
-	public void setDifficultyRate(float difficultyRate) {
-		this.difficultyRate = difficultyRate;
 	}
 }

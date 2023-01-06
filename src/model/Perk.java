@@ -1,21 +1,21 @@
 /**
  * @file Perk.java
  * @date 14/12/2022
- * @brief Use to describe a Perk
+ * Describes a perk used to upgrade the house
  */
 package model;
 
 public class Perk {
 
-	private int id;
-	private String name;
-	private int installationCost;
-	private int dailyMoneyCost;
-	private int dailyEnergyCost;
-	private boolean isUpgraded;
+	private final int id; // ID of the perk
+	private final String name; // name of the perk
+	private final int installationCost; // cost when buying the perk
+	private final int dailyMoneyCost; // daily money cost of the perk
+	private final int dailyEnergyCost; // daily energy cost of the perk
+	private final boolean isUpgraded; // true if the user bought it, false otherwise
 	
 	/**
-	 * Constructors
+	 * Class constructor
 	 */
 	public Perk(int id, String name, int installationCost, int dailyMoneyCost, int dailyEnergyCost, boolean isUpgraded) {
 		this.id = id;
@@ -26,6 +26,10 @@ public class Perk {
 		this.isUpgraded = isUpgraded;
 	}
 
+	/**
+	 * Stringifies the perk to display it
+	 * @return the main infos of the perk as a String
+	 */
 	public String toString() {
 		return name + " | " +" cost: " + installationCost + ", daily money cost: " + dailyMoneyCost + " daily energy cost: " + dailyEnergyCost ;
 	}
@@ -37,47 +41,19 @@ public class Perk {
 		return id;
 	}
 
-	public void setId(int id) {
-		this.id = id;
-	}
-
-	public String getName() {
-		return name;
-	}
-
-	public void setName(String name) {
-		this.name = name;
-	}
-
 	public int getInstallationCost() {
 		return installationCost;
-	}
-
-	public void setInstallationCost(int installationCost) {
-		this.installationCost = installationCost;
 	}
 
 	public int getDailyMoneyCost() {
 		return dailyMoneyCost;
 	}
 
-	public void setDailyMoneyCost(int dailyMoneyCost) {
-		this.dailyMoneyCost = dailyMoneyCost;
-	}
-
 	public int getDailyEnergyCost() {
 		return dailyEnergyCost;
 	}
 
-	public void setDailyEnergyCost(int dailyEnergyCost) {
-		this.dailyEnergyCost = dailyEnergyCost;
-	}
-
 	public boolean isUpgraded() {
 		return isUpgraded;
-	}
-
-	public void setUpgraded(boolean upgraded) {
-		isUpgraded = upgraded;
 	}
 }

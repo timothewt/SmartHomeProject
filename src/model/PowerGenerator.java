@@ -1,7 +1,7 @@
 /**
  * @file PowerGenerator.java
  * @date 14/12/2022
- * @brief 
+ * Describes a daily energy source
  */
 package model;
 
@@ -26,15 +26,9 @@ public class PowerGenerator {
 		this.dailyProduction = dailyProduction;
 	}
 
-	//Getters and Setters
-	public String getName() {
-		return name;
-	}
-
-	public int getInstallationCost() {
-		return installationCost;
-	}
-
+	/**
+	 * Getters and setters
+	 */
 	public int getDailyCost() {
 		return dailyCost;
 	}

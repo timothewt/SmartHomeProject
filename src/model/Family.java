@@ -1,28 +1,23 @@
 /**
  * @file Couple.java
  * @date 14/12/2022
- * @brief Use to manipulate people in the House
+ * Used to group the persons in the house
  */
 package model;
 
 import java.util.ArrayList;
 
-public class Couple {
+public class Family {
 
-	private int money;
-	private final ArrayList<Person> persons;
+	private int money; // money of the family
+	private final ArrayList<Person> persons; // persons members of the family
 
 	/**
 	 * Constructors
 	 */
-	public Couple() {
+	public Family() {
 		this.money = 500;
-		this.persons = new ArrayList<Person>();
-	}
-
-	public Couple(int money, ArrayList<Person> persons)	{
-		this.money = money;
-		this.persons = persons;
+		this.persons = new ArrayList<>();
 	}
 	
 	/**
@@ -34,7 +29,7 @@ public class Couple {
 	}
 
 	/**
-	 * Getter and setter
+	 * Getters and setters
 	 */
 	public int getMoney() {
 		return money;
@@ -53,7 +48,7 @@ public class Couple {
 			if (id == person.getId()) {
 				result = person;
 			}
-		};
+		}
 		return result;
 	}
 }

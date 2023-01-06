@@ -1,7 +1,7 @@
 /**
  * @file Home.java
  * @date 18/12/2022
- * @brief Class that create a Home
+ * Used to represent the house, with the rooms and persons
  */
 package model;
 
@@ -12,22 +12,21 @@ import static java.lang.Math.round;
 
 public class House {
 
-	private float temperature;
-	private float humidityRate;
-	private int energy;
-	private boolean isOnPowerOutage;
-	private final ArrayList<Room> rooms;
-	private ArrayList<PowerGenerator> powerSupply;
-	private ArrayList<Perk> perks;
-	private final Couple couple;
-	private final float optimalTemperature;
-	private final float optimalHumidityRate;
+	private float temperature; // temperature inside the house
+	private float humidityRate; // humidity rate inside the house
+	private int energy; // energy available in the house
+	private boolean isOnPowerOutage; // power outage, not yet implemented
+	private final ArrayList<Room> rooms; // rooms of the house
+	private final ArrayList<PowerGenerator> powerSupply; // daily energy supplies of the house
+	private final ArrayList<Perk> perks; // available perks
+	private final Family family; // members of the house
+	private final float optimalTemperature; // optimal viable temperature inside
+	private final float optimalHumidityRate; // optimal viable humidity rate inside
 	
 	/**
-	 * Constructors
+	 * Class constructor
 	 */
-
-	public House(float temperature, float humidityRate, int energy, boolean isOnPowerOutage, ArrayList<Room> rooms, ArrayList<PowerGenerator> powerSupply, ArrayList<Perk> perks, Couple couple, float optimalTemperature, float optimalHumidityRate) {
+	public House(float temperature, float humidityRate, int energy, boolean isOnPowerOutage, ArrayList<Room> rooms, ArrayList<PowerGenerator> powerSupply, ArrayList<Perk> perks, Family family, float optimalTemperature, float optimalHumidityRate) {
 		this.temperature = temperature;
 		this.humidityRate = humidityRate;
 		this.energy = energy;
@@ -35,7 +34,7 @@ public class House {
 		this.rooms = rooms;
 		this.powerSupply = powerSupply;
 		this.perks = perks;
-		this.couple = couple;
+		this.family = family;
 		this.optimalTemperature = optimalTemperature;
 		this.optimalHumidityRate = optimalHumidityRate;
 	}
@@ -91,7 +90,7 @@ public class House {
 					break;
 			}
 			this.energy -= perk.getDailyEnergyCost();
-			this.couple.setMoney(this.couple.getMoney() - perk.getDailyMoneyCost());
+			this.family.setMoney(this.family.getMoney() - perk.getDailyMoneyCost());
 		}
 
 		for (Room room: rooms) {
@@ -102,10 +101,18 @@ public class House {
 
 	}
 
+	/**
+	 * Opens all the windows of each rooms
+	 * @param status: true if the windows will be open, false otherwise
+	 */
 	public void setAllWindowsOpen(boolean status) {
 		this.rooms.forEach(room -> room.setWindowOpen(status));
 	}
 
+	/**
+	 * Turns on all the heaters of the house at a certain temperature
+	 * @param temperature: temperature of the heaters
+	 */
 	public void setAllHeatersTemperature(float temperature) {
 		this.rooms.forEach(room -> {
 			room.setHeaterTemperature(temperature);
@@ -113,10 +120,17 @@ public class House {
 		});
 	}
 
+	/**
+	 * Turns off all the heaters of the house
+	 */
 	public void turnOffAllHeaters() {
 		this.rooms.forEach(room -> room.setHeaterTurnedOn(false));
 	}
 
+	/**
+	 * Turns on all the ACs of the house at a certain temperature
+	 * @param temperature: temperature of the ACs
+	 */
 	public void setAllACTemperature(float temperature) {
 		this.rooms.forEach(room -> {
 			room.setACTemperature(temperature);
@@ -124,18 +138,28 @@ public class House {
 		});
 	}
 
+	/**
+	 * Turns off all the ACs of the house
+	 */
 	public void turnOffAllAC() {
 		this.rooms.forEach(room -> room.setACTurnedOn(false));
 	}
 
+	/**
+	 * Called at each new day
+	 */
 	public void onNewDay() {
 		this.powerSupply.forEach(powerGenerator -> {
 			this.energy += powerGenerator.getDailyProduction();
-			this.couple.setMoney(this.couple.getMoney() - powerGenerator.getDailyCost());
+			this.family.setMoney(this.family.getMoney() - powerGenerator.getDailyCost());
 		});
 		this.getCouple().getPersons().forEach(Person::onNewDay);
 	}
 
+	/**
+	 * Stringifies the house to display
+	 * @return the main infos of the house as a String
+	 */
 	public String toString() {
 		String windowsStatus = this.rooms.get(0).isWindowOpen() ? "Open" : "Closed";
 		String heatersStatus = this.rooms.get(0).isHeaterTurnedOn() ? this.rooms.get(0).getHeaterTemperature() + "°C" : "Off";
@@ -154,8 +178,8 @@ public class House {
 		this.energy = energy;
 	}
 
-	public Couple getCouple() {
-		return couple;
+	public Family getCouple() {
+		return family;
 	}
 
 	public ArrayList<Perk> getPerks() {

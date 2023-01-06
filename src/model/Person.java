@@ -1,7 +1,7 @@
 /**
  * @file Person.java
  * @date 14/12/2022
- * @brief Person class
+ * Describes a member of the house
  */
 package model;
 
@@ -11,16 +11,16 @@ import java.util.concurrent.atomic.AtomicBoolean;
 
 public class Person {
 
-	private String name;
-	private int id;
-	private int maxStamina;
-	private int stamina;
-	private ArrayList<Task> tasks;
+	private final String name; // name of the person
+	private final int id; // ID of the person
+	private final int maxStamina; // max stamina in a day
+	private int stamina; // current stamina of the day
+	private ArrayList<Task> tasks; // daily tasks to execute
 	
 	/**
 	 * Class constructor
 	 * @param name: name of the person
-	 * @param id: id of the person
+	 * @param id: ID of the person
 	 * @param maxStamina: maximum stamina in a day
 	 */
 	public Person(String name, int id, int maxStamina) {
@@ -33,13 +33,13 @@ public class Person {
 
 	/**
 	 * Adds a task to the ArrayList link to the Person
-	 * @param task : Task to add
+	 * @param task: Task to add
 	 */
 	public void addTask(Task task)	{
-		if (task.getStamina() >= 0) {
+		if (task.stamina() >= 0) {
 			AtomicBoolean taskAlreadyPicked = new AtomicBoolean(false);
 			this.tasks.forEach(pickedTask -> {
-				if(pickedTask.getId() == task.getId()) {
+				if(pickedTask.ID() == task.ID()) {
 					taskAlreadyPicked.set(true);
 				}
 			});
@@ -50,6 +50,18 @@ public class Person {
 		this.tasks.add(task);
 	}
 
+	/**
+	 * Called at each new day, resets tasks and stamina
+	 */
+	public void onNewDay() {
+		this.stamina = this.maxStamina;
+		this.tasks.clear();
+	}
+
+	/**
+	 * Stringifies the person to display it
+	 * @return the main infos of the person as a String
+	 */
 	public String toString() {
 		return name + " - Stamina: " + stamina + ", max stamina: " + maxStamina;
 	}
@@ -57,7 +69,13 @@ public class Person {
 	/**
 	 * Getters and setters
 	 */
-
+	public int getResultingStaminaForCurrentTasks() {
+		int result = 0;
+		for (Task task: this.tasks) {
+			result += task.stamina(); // - : necessary stamina are negative values
+		}
+		return result;
+	}
 	public String getName() {
 		return name;
 	}
@@ -78,24 +96,7 @@ public class Person {
 		this.stamina = stamina;
 	}
 
-	public int getResultingStaminaForCurrentTasks() {
-		int result = 0;
-		for (Task task: this.tasks) {
-			result += task.getStamina(); // - : necessary stamina are negative values
-		}
-		return result;
-	}
-
 	public ArrayList<Task> getTasks() {
 		return tasks;
-	}
-
-	public void setTasks(ArrayList<Task> tasks) {
-		this.tasks = tasks;
-	}
-
-	public void onNewDay() {
-		this.stamina = this.maxStamina;
-		this.tasks.clear();
 	}
 }

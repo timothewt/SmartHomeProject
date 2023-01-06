@@ -78,7 +78,7 @@ public class DuringDayUI extends UIComponent {
 				(new Button("", personTextX + screenSplitWidth - 15 * (i + 2), yStart - 10, 10, 10)).draw(g);
 			}
 			for (int i = 0; i <= min(this.currentTaskIndex, person.getTasks().size() - 1); i++) {
-				graphics2D.drawString(person.getTasks().get(i).getMessage(), personTextX + 15, yStart + 20 * (i + 1));
+				graphics2D.drawString(person.getTasks().get(i).message(), personTextX + 15, yStart + 20 * (i + 1));
 			}
 		});
 	}

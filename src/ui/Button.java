@@ -9,13 +9,13 @@ import java.awt.*;
 
 public class Button {
 
-	private int x, y, width, height, id; // horizontal position, vertical position, width of the button, height of the button, id of the button
+	private int x, y, width, height, id; // horizontal position, vertical position, width of the button, height of the button, ID of the button
 	private String text; // text displayed on the button
 	private Rectangle bounds; // bounds of the button (position and size)
 	private boolean isMouseOver, isMousePressed; // in order to know if there is an interaction with the user
 
 	/**
-	 * Class constructor of buttons without id
+	 * Class constructor of buttons without ID
 	 * @param text: text to display on the button
 	 * @param x: horizontal position of the button
 	 * @param y: vertical position of the button
@@ -33,13 +33,13 @@ public class Button {
 	}
 
 	/**
-	 * Class constructor of buttons with an id
+	 * Class constructor of buttons with an ID
 	 * @param text: text to display on the button
 	 * @param x: horizontal position of the button
 	 * @param y: vertical position of the button
 	 * @param width: width of the button
 	 * @param height: height of the button
-	 * @param id: id of the button
+	 * @param id: ID of the button
 	 */
 	public Button(String text, int x, int y, int width, int height, int id) {
 		this.text = text;

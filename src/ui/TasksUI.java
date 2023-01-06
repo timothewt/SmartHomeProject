@@ -24,7 +24,7 @@ import view.GameGUI;
 public class TasksUI extends UIComponent {
 
 	private final GameGUI gameGUI; // gameGUI containing the game model
-	private int selectedPersonId; // id of the selected person by the user
+	private int selectedPersonId; // ID of the selected person by the user
 	private ArrayList<Button> taskButtons; // button used to add a task to a person
 	private ArrayList<Button> utilityButtons; // buttons managing the game like reset tasks or start the day
 	private ArrayList<Checkbox> personsCheckboxes; // checkboxes used by the user to pick a person in order to add tasks to him
@@ -65,7 +65,7 @@ public class TasksUI extends UIComponent {
 				i = 0;
 				line++;
 			}
-			taskButtons.add(new Button(task.getName() + " (" + (task.getStamina() > 0 ? "+" : "") + task.getStamina() + ")", xStart + xOffsetButtonsOrigin * i, yStart + yOffsetButtonsOrigin * line, buttonWidth, buttonHeight, currenTaskId));
+			taskButtons.add(new Button(task.name() + " (" + (task.stamina() > 0 ? "+" : "") + task.stamina() + ")", xStart + xOffsetButtonsOrigin * i, yStart + yOffsetButtonsOrigin * line, buttonWidth, buttonHeight, currenTaskId));
 			i++;
 			currenTaskId++;
 		}
@@ -128,8 +128,8 @@ public class TasksUI extends UIComponent {
 
 		if (tasksToDisplay != null) {
 			for (int i = 0; i < tasksToDisplay.size(); i++) {
-				(new Button(tasksToDisplay.get(i).getName(), this.x + this.width / 2 - 58, this.taskListY + 10 + 40 * i, 120, 30)).draw(g);
-				int taskStamina = tasksToDisplay.get(i).getStamina();
+				(new Button(tasksToDisplay.get(i).name(), this.x + this.width / 2 - 58, this.taskListY + 10 + 40 * i, 120, 30)).draw(g);
+				int taskStamina = tasksToDisplay.get(i).stamina();
 				int xStart;
 				String sign;
 				if (taskStamina > 0) {
@@ -149,12 +149,12 @@ public class TasksUI extends UIComponent {
 
 	/**
 	 * Add the selected task to the Person tasks
-	 * @param id: id of the task to add
+	 * @param id: ID of the task to add
 	 */
 	private void addTaskToSelectedPerson(int id) {
 		Task selectedTask = gameGUI.getGame().findTaskFromId(id);
 		Person selectedPerson = gameGUI.getGame().getHouse().getCouple().getPersonsFromId(this.selectedPersonId);
-		if ((selectedTask.getStamina() + selectedPerson.getResultingStaminaForCurrentTasks()) * -1 <= selectedPerson.getMaxStamina()) { // * -1 because stamina decreases for task that needs it
+		if ((selectedTask.stamina() + selectedPerson.getResultingStaminaForCurrentTasks()) * -1 <= selectedPerson.getMaxStamina()) { // * -1 because stamina decreases for task that needs it
 			selectedPerson.addTask(selectedTask);
 		}
 	}

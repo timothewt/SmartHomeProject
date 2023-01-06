@@ -1,7 +1,7 @@
 /**
  * @file Room.java
  * @date 18/12/2022
- * @brief Class that Manage the room object. A House is composed of rooms
+ * Describes a room of the house
  */
 package model;
 
@@ -9,18 +9,18 @@ import java.lang.Math;
 
 public class Room {
 
-	private String name;
-	private float heaterTemperature;
-	private boolean isHeaterTurnedOn;
-	private float ACTemperature;
-	private boolean isACTurnedOn;
-	private float temperature;
-	private float humidityRate; // Rates are set to stay between 0 and 1
-	private float isolationRate;
-	private boolean isWindowOpen;
+	private String name; // name of the room
+	private float heaterTemperature; // temperature of the heaters
+	private boolean isHeaterTurnedOn; // tells if the heater is on
+	private float ACTemperature; // temperature of the AC
+	private boolean isACTurnedOn; // tells if the AC is on
+	private float temperature; // temperature of the room
+	private float humidityRate; // humidity of the room ([0,1])
+	private float isolationRate; // isolation rate of the walls ([0,1])
+	private boolean isWindowOpen; // tells if the window is open
 
 	/**
-	 * @brief Constructors
+	 * Class constructors
 	 */
 	public Room(String name) {
 		this.name = name;
@@ -35,32 +35,15 @@ public class Room {
 	}
 
 	/**
-	 * @brief Constructors
-	 */
-	public Room(String name, float heaterTemperature, boolean isHeaterTurnedOn, float temperature, float humidityRate, float isolationRate, boolean isWindowOpen) {
-		this.name = name;
-		this.heaterTemperature = heaterTemperature;
-		this.isHeaterTurnedOn = isHeaterTurnedOn;
-		this.temperature = temperature;
-		this.humidityRate = humidityRate;
-		this.isolationRate = isolationRate;
-		this.isWindowOpen = isWindowOpen;
-	}
-
-	/**
-	 * @brief Used to update the stats of the room at each task
+	 * Used to update the stats of the room at each task
 	 * @param outsideHumidityRate: humidity rate outside the house
 	 * @param outsideTemperature: temperature outside the house
 	 */
 	public void updateStats(float outsideHumidityRate, float outsideTemperature) {
-
 		if (this.isWindowOpen) {
-
 			this.humidityRate = (this.humidityRate + outsideHumidityRate) / 2;
 			this.temperature = (this.temperature + outsideTemperature) / 2;
-
 		} else {
-
 			this.temperature = isHeaterTurnedOn && heaterTemperature > this.temperature ? (this.temperature + this.heaterTemperature) / 2 : this.temperature;
 			this.temperature = isACTurnedOn && ACTemperature < this.temperature ? (this.temperature + this.ACTemperature) / 2 : this.temperature;
 			// Loss of humidity and temperature due to non-optimal isolation
@@ -68,13 +51,12 @@ public class Room {
 			int temperatureChangeSign = this.temperature > outsideTemperature ? -1 : 1;
 			this.humidityRate = Math.max(Math.min(this.humidityRate + humidityChangeSign * (1 - this.isolationRate) * outsideHumidityRate, 1), 0);
 			this.temperature = this.temperature + temperatureChangeSign * (1 - this.isolationRate) * outsideTemperature;
-
 		}
-
 	}
 
 	/**
-	 * @brief toString method
+	 * Stringifies the room
+	 * @return the infos of the room as a String
 	 */
 	public String toString() {
 		return "Room:\n" +
@@ -110,24 +92,8 @@ public class Room {
 		return temperature;
 	}
 
-	public void setTemperature(float temperature) {
-		this.temperature = temperature;
-	}
-
 	public float getHumidityRate() {
 		return humidityRate;
-	}
-
-	public void setHumidityRate(float humidityRate) {
-		this.humidityRate = Math.max(Math.min(humidityRate, 1), 0);
-	}
-
-	public float getIsolationRate() {
-		return isolationRate;
-	}
-
-	public void setIsolationRate(float isolationRate) {
-		this.isolationRate = Math.max(Math.min(isolationRate, 1), 0);
 	}
 
 	public boolean isWindowOpen() {
@@ -136,14 +102,6 @@ public class Room {
 
 	public void setWindowOpen(boolean windowOpen) {
 		isWindowOpen = windowOpen;
-	}
-
-	public String getName() {
-		return name;
-	}
-
-	public void setName(String name) {
-		this.name = name;
 	}
 
 	public float getACTemperature() {
