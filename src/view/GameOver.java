@@ -40,7 +40,6 @@ public class GameOver extends GameScene implements SceneMethods {
 
 	@Override
 	public void mouseClicked(int x, int y) {
-		System.out.println(x + " " + y);
 		if (this.menuButton.getBounds().contains(x, y)) {
 			setGameState(MENU);
 		}

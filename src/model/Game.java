@@ -13,8 +13,6 @@ public class Game {
 	private final Weather weather;
 	private int dayNumber;
 	private final ArrayList<Task> availableTasks;
-	private final ArrayList<Perk> availablePerks;
-	private final ArrayList<Perk> currentPerks;
 
 	/**
 	 * Class constructor
@@ -25,8 +23,6 @@ public class Game {
 		this.dayNumber = 0;
 		this.availableTasks = new ArrayList<>();
 		initTasks();
-		this.availablePerks = this.house.getPerks();
-		this.currentPerks = new ArrayList<>();
 
 	}
 
@@ -149,14 +145,6 @@ public class Game {
 
 	public ArrayList<Task> getAvailableTasks() {
 		return this.availableTasks;
-	}
-
-	public ArrayList<Perk> getAvailablePerks() {
-		return this.availablePerks;
-	}
-
-	public ArrayList<Perk> getCurrentPerks() {
-		return this.currentPerks;
 	}
 
 	public int getDayNumber() {

@@ -21,9 +21,7 @@ public class PerksUI extends UIComponent {
 
 	private final GameGUI gameGUI; // gameGUI containing the game model
 	private Button nextDayButton; // button used to go to the next day
-	private ArrayList<Perk> availablePerks; // list of all the available perks to buy
-	private ArrayList<Perk> currentPerks; // list of all the perks already ought by the user
-	private ArrayList<Button> availablePerksButton;
+	private ArrayList<Button> availablePerksButtons;
 
 	/**
 	 * Class constructor specifying the size and position of the window, and the gameGUI
@@ -36,8 +34,6 @@ public class PerksUI extends UIComponent {
 	public PerksUI(int x, int y, int width, int height, GameGUI gameGUI) {
 		super(x, y, width, height);
 		this.gameGUI = gameGUI;
-		this.availablePerks = this.gameGUI.getGame().getAvailablePerks();
-		this.currentPerks = this.gameGUI.getGame().getCurrentPerks();
 		initButtons();
 	}
 
@@ -53,9 +49,10 @@ public class PerksUI extends UIComponent {
 		int x = this.x + 20;
 		int yStart = this.y + 70;
 
-		availablePerksButton = new ArrayList<>();
-		this.availablePerks.forEach(perk -> {
-			availablePerksButton.add(new Button("BUY", x, yStart + 50 * availablePerks.indexOf(perk), 100, 30, perk.getId()));
+		availablePerksButtons = new ArrayList<>();
+		ArrayList<Perk> availablePerks = this.gameGUI.getGame().getHouse().getAvailablePerks();
+		availablePerks.forEach(perk -> {
+			availablePerksButtons.add(new Button("BUY", x, yStart + 50 * availablePerks.indexOf(perk), 100, 30, perk.ID()));
 		});
 	}
 
@@ -78,8 +75,7 @@ public class PerksUI extends UIComponent {
 	public void drawText(Graphics g) {
 		Graphics2D graphics2D = (Graphics2D) g;
 		graphics2D.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-		graphics2D.drawString("Day #" + gameGUI.getGame().getDayNumber() + ": Choose your upgrades !",
-				this.y + this.width / 2 - 50, 20);
+		graphics2D.drawString("Day #" + gameGUI.getGame().getDayNumber() + ": Choose your upgrades !", this.y + this.width / 2 - 50, 20);
 	}
 
 	/**
@@ -90,18 +86,22 @@ public class PerksUI extends UIComponent {
 		int x = this.x + 20;
 		int yStart = this.y + 70;
 
+		ArrayList<Perk> availablePerks = this.gameGUI.getGame().getHouse().getAvailablePerks();
+		ArrayList<Perk> boughtPerks = this.gameGUI.getGame().getHouse().getBoughtPerks();
+		initPerksButton();
+
 		Graphics2D graphics2D = (Graphics2D) g;
 		graphics2D.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 		graphics2D.drawString("Purchasable perks :", x, 50);
 
-		this.availablePerks.forEach(perk -> {
-			availablePerksButton.get(availablePerks.indexOf(perk)).draw(g);
-			graphics2D.drawString(perk.toString(), x + 120, yStart + 20 + 50 * availablePerks.indexOf(perk)); // yStart +20 to line up the text with the button
+		availablePerksButtons.forEach(perkButton -> {
+			perkButton.draw(g);
+			graphics2D.drawString(this.gameGUI.getGame().getHouse().getPerkById(perkButton.getId()).toString(), x + 120, yStart + 20 + 50 * availablePerksButtons.indexOf(perkButton)); // yStart +20 to line up the text with the button
 		});
 
-		graphics2D.drawString("Current perks :", x, yStart + 20 + 50 * this.availablePerks.size());
-		this.currentPerks.forEach(perk -> {
-			graphics2D.drawString(perk.toString(), x + 120, yStart + 20 + 50 * this.availablePerks.size() + 50 * currentPerks.indexOf(perk)); // yStart +20 to line up the text with the button
+		graphics2D.drawString("Current perks :", x, yStart + 20 + 50 * availablePerks.size());
+		boughtPerks.forEach(perk -> {
+			graphics2D.drawString(perk.toString(), x + 120, yStart + 20 + 50 * availablePerks.size() + 50 * boughtPerks.indexOf(perk)); // yStart +20 to line up the text with the button
 		});
 	}
 
@@ -110,10 +110,6 @@ public class PerksUI extends UIComponent {
 	 */
 	public void onNewDay() {
 		initPerksButton();
-	}
-
-	public boolean canAffordPerk(int id) {
-		return availablePerks.get(id).getInstallationCost() <= this.gameGUI.getGame().getHouse().getFamily().getMoney();
 	}
 
 	/**
@@ -134,31 +130,26 @@ public class PerksUI extends UIComponent {
 			setPlayingState(TASK);
 		}
 
-		this.availablePerksButton.forEach(button -> {
+		this.availablePerksButtons.forEach(button -> {
 			if (button.getBounds().contains(x, y)) {
-				if (canAffordPerk(availablePerksButton.indexOf(button))) {
-					this.gameGUI.getGame().getHouse().getFamily().setMoney(this.gameGUI.getGame().getHouse().getFamily().getMoney() - this.availablePerks.get(availablePerksButton.indexOf(button)).getInstallationCost());
-					currentPerks.add(this.availablePerks.get(availablePerksButton.indexOf(button)));
-					availablePerks.remove(availablePerksButton.indexOf(button));
-					initPerksButton();
-				}
+				this.gameGUI.getGame().getHouse().buyPerkFromId(button.getId());
 			}
 		});
 	}
 
 	public void mouseMoved(int x, int y) {
 		this.nextDayButton.setIsMouseOver(nextDayButton.getBounds().contains(x, y));
-		this.availablePerksButton.forEach(button -> button.setIsMouseOver(button.getBounds().contains(x, y)));
+		this.availablePerksButtons.forEach(button -> button.setIsMouseOver(button.getBounds().contains(x, y)));
 	}
 
 	public void mousePressed(int x, int y) {
 		this.nextDayButton.setIsMousePressed(nextDayButton.getBounds().contains(x, y));
-		this.availablePerksButton.forEach(button -> button.setIsMousePressed(button.getBounds().contains(x, y)));
+		this.availablePerksButtons.forEach(button -> button.setIsMousePressed(button.getBounds().contains(x, y)));
 	}
 
 	public void mouseReleased(int x, int y) {
 		this.nextDayButton.resetBooleans();
-		this.availablePerksButton.forEach(Button::resetBooleans);
+		this.availablePerksButtons.forEach(Button::resetBooleans);
 	}
 
 }

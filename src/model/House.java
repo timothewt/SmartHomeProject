@@ -18,7 +18,8 @@ public class House {
 	private boolean isOnPowerOutage; // power outage, not yet implemented
 	private final ArrayList<Room> rooms; // rooms of the house
 	private final ArrayList<PowerGenerator> powerSupply; // daily energy supplies of the house
-	private final ArrayList<Perk> perks; // available perks
+	private ArrayList<Perk> availablePerks; // available perks
+	private ArrayList<Perk> boughtPerks; // perks bought
 	private final Family family; // members of the house
 	private final float optimalTemperature; // optimal viable temperature inside
 	private final float optimalHumidityRate; // optimal viable humidity rate inside
@@ -33,10 +34,28 @@ public class House {
 		this.isOnPowerOutage = isOnPowerOutage;
 		this.rooms = rooms;
 		this.powerSupply = powerSupply;
-		this.perks = perks;
+		this.availablePerks = perks;
+		this.boughtPerks = new ArrayList<>();
 		this.family = family;
 		this.optimalTemperature = optimalTemperature;
 		this.optimalHumidityRate = optimalHumidityRate;
+	}
+
+	private boolean canAffordPerk(Perk perk) {
+		return perk.installationCost() <= this.family.getMoney();
+	}
+
+	public void buyPerkFromId(int id) {
+		for (Perk perk: this.availablePerks) {
+			if (perk.ID() == id) {
+				if (this.canAffordPerk(perk)) {
+					this.availablePerks.remove(perk);
+					this.boughtPerks.add(perk);
+					this.family.setMoney(this.family.getMoney() - perk.installationCost());
+				}
+				break;
+			}
+		}
 	}
 	
 	/**
@@ -68,11 +87,8 @@ public class House {
 			this.isOnPowerOutage = true;
 		}
 
-		for (Perk perk: perks) {
-			if (!perk.isUpgraded()) {
-				break;
-			}
-			switch (perk.getId()) {
+		for (Perk perk: this.boughtPerks) {
+			switch (perk.ID()) {
 				case 0: // automatic windows
 					this.setAllWindowsOpen(temperature < this.optimalTemperature && temperature < weather.getTemperature() ||
 											temperature > this.optimalTemperature && temperature > weather.getTemperature()); // if the temperature is better outside
@@ -89,8 +105,8 @@ public class House {
 					}
 					break;
 			}
-			this.energy -= perk.getDailyEnergyCost();
-			this.family.setMoney(this.family.getMoney() - perk.getDailyMoneyCost());
+			this.energy -= perk.dailyEnergyCost();
+			this.family.setMoney(this.family.getMoney() - perk.dailyMoneyCost());
 		}
 
 		for (Room room: rooms) {
@@ -182,7 +198,20 @@ public class House {
 		return family;
 	}
 
-	public ArrayList<Perk> getPerks() {
-		return perks;
+	public Perk getPerkById(int id) {
+		for (Perk perk: this.availablePerks) {
+			if (perk.ID() == id) {
+				return perk;
+			}
+		}
+		return null;
+	}
+
+	public ArrayList<Perk> getAvailablePerks() {
+		return this.availablePerks;
+	}
+
+	public ArrayList<Perk> getBoughtPerks() {
+		return this.boughtPerks;
 	}
 }
