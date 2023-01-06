@@ -9,27 +9,27 @@ import java.lang.Math;
 
 public class Room {
 
-	private String name; // name of the room
+	private final String name; // name of the room
 	private float heaterTemperature; // temperature of the heaters
 	private boolean isHeaterTurnedOn; // tells if the heater is on
 	private float ACTemperature; // temperature of the AC
 	private boolean isACTurnedOn; // tells if the AC is on
 	private float temperature; // temperature of the room
 	private float humidityRate; // humidity of the room ([0,1])
-	private float isolationRate; // isolation rate of the walls ([0,1])
+	private final float isolationRate; // isolation rate of the walls ([0,1])
 	private boolean isWindowOpen; // tells if the window is open
 
 	/**
 	 * Class constructors
 	 */
-	public Room(String name) {
+	public Room(String name, int temperature, float humidityRate) {
 		this.name = name;
 		this.heaterTemperature = 0f;
 		this.isHeaterTurnedOn = false;
 		this.ACTemperature = 0f;
 		this.isACTurnedOn = false;
 		this.temperature = 18f;
-		this.humidityRate = .1f;
+		this.humidityRate = .4f;
 		this.isolationRate = .5f;
 		this.isWindowOpen = false;
 	}
@@ -49,7 +49,9 @@ public class Room {
 			// Loss of humidity and temperature due to non-optimal isolation
 			int humidityChangeSign = this.humidityRate > outsideHumidityRate ? -1 : 1;
 			int temperatureChangeSign = this.temperature > outsideTemperature ? -1 : 1;
+			System.out.println(this.humidityRate);
 			this.humidityRate = Math.max(Math.min(this.humidityRate + humidityChangeSign * (1 - this.isolationRate) * .05f, 1), 0);
+			System.out.println(this.humidityRate);
 			this.temperature = this.temperature + temperatureChangeSign * (1 - this.isolationRate) * 2;
 		}
 	}

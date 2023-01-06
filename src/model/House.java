@@ -18,8 +18,8 @@ public class House {
 	private boolean isOnPowerOutage; // power outage, not yet implemented
 	private final ArrayList<Room> rooms; // rooms of the house
 	private final ArrayList<PowerGenerator> powerSupply; // daily energy supplies of the house
-	private ArrayList<Perk> availablePerks; // available perks
-	private ArrayList<Perk> boughtPerks; // perks bought
+	private final ArrayList<Perk> availablePerks; // available perks
+	private final ArrayList<Perk> boughtPerks; // perks bought
 	private final Family family; // members of the house
 	private final float optimalTemperature; // optimal viable temperature inside
 	private final float optimalHumidityRate; // optimal viable humidity rate inside
@@ -82,11 +82,11 @@ public class House {
 			this.temperature += room.getTemperature() / this.rooms.size();
 			this.humidityRate += room.getHumidityRate() / this.rooms.size();
 		}
-
+		/*
 		if (weather.isLightning() && Math.random() < .1) {
 			this.isOnPowerOutage = true;
 		}
-
+		*/
 		for (Perk perk: this.boughtPerks) {
 			switch (perk.ID()) {
 				case 0: // automatic windows

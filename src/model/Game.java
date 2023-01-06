@@ -45,11 +45,11 @@ public class Game {
 	 */
 	private House initHouse() {
 		ArrayList<Room> rooms = new ArrayList<>();
-		rooms.add(new Room("Cuisine"));
-		rooms.add(new Room("Chambre"));
-		rooms.add(new Room("Salon"));
-		rooms.add(new Room("Salle de bain"));
-		rooms.add(new Room("Bureau"));
+		rooms.add(new Room("Cuisine", 18, .4f));
+		rooms.add(new Room("Chambre", 18, .4f));
+		rooms.add(new Room("Salon", 18, .4f));
+		rooms.add(new Room("Salle de bain", 18, .4f));
+		rooms.add(new Room("Bureau", 18, .4f));
 
 		ArrayList<PowerGenerator> powerGenerators = new ArrayList<PowerGenerator>();
 		powerGenerators.add(new PowerGenerator("Linky", 0, 100, 100));
@@ -64,7 +64,7 @@ public class Game {
 		family.addPerson(new Person("Jean", 0, 10));
 		family.addPerson(new Person("Marie", 1, 10));
 
-		return new House(18f, .5f, 0, false, rooms, powerGenerators, perks, family, 21f, .45f);
+		return new House(18f, .4f, 0, false, rooms, powerGenerators, perks, family, 21f, .45f);
 	}
 
 	/**
