@@ -7,13 +7,8 @@ package ui;
 
 import static utils.PlayingStates.TASK;
 import static utils.PlayingStates.setPlayingState;
-
-import java.awt.Color;
-import java.awt.Graphics;
-import java.awt.Graphics2D;
-import java.awt.RenderingHints;
+import java.awt.*;
 import java.util.ArrayList;
-
 import model.Perk;
 import view.GameGUI;
 
