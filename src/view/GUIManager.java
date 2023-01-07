@@ -45,60 +45,18 @@ public class GUIManager extends JFrame implements Runnable {
 	}
 
 	/**
-	 * Updates the views of the application
-	 */
-	private void updateGame() {
-		switch (GameStates.gameState) {
-			case MENU, GAMEOVER -> {
-				gameGUI.getTasksUI().setVisible(false);
-				gameGUI.getDuringDayUI().setVisible(false);
-				gameGUI.getPerksUI().setVisible(false);
-			}
-			case PLAYING -> {
-				switch (PlayingStates.playingState) {
-					case TASK -> {
-						gameGUI.getTasksUI().setVisible(true);
-						gameGUI.getDuringDayUI().setVisible(false);
-						gameGUI.getPerksUI().setVisible(false);
-					}
-					case DAY -> {
-						gameGUI.getTasksUI().setVisible(false);
-						gameGUI.getDuringDayUI().setVisible(true);
-						gameGUI.getPerksUI().setVisible(false);
-					}
-					case PERK -> {
-						gameGUI.getTasksUI().setVisible(false);
-						gameGUI.getPerksUI().setVisible(true);
-						gameGUI.getPerksUI().setVisible(false);
-					}
-				}
-			}
-		}
-	}
-
-	/**
 	 * Main game loop, updates the view and the game model
 	 */
 	@Override
 	public void run() {
-
 		long lastFrame = System.nanoTime();
-		long lastUpdate = System.nanoTime();
-
 		double FPS_SET = 90.0;
-		double UPS_SET = 48.0;
 		double timePerFrame = 1000000000.0 / FPS_SET;
-		double timePerUpdate = 1000000000.0 / UPS_SET;
 
 		long now;
 
 		while (true) {
 			now = System.nanoTime();
-			// Updates
-			if (now - lastUpdate >= timePerUpdate) {
-				lastUpdate = now;
-				updateGame();
-			}
 			// Render
 			if (now - lastFrame >= timePerFrame) {
 				lastFrame = now;

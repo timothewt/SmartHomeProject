@@ -108,13 +108,6 @@ public class PerksUI extends UIComponent {
 	}
 
 	/**
-	 * Make the scene controls visible or not
-	 * @param isVisible: tells if the UI is visible
-	 */
-	public void setVisible(boolean isVisible) {
-	}
-
-	/**
 	 * Called when the user clicks anywhere on the screen. Used to know if he clicked on the nextDay button
 	 * @param x: x position of the mouse
 	 * @param y: y position of the mouse

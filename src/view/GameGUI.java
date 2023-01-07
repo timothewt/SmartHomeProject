@@ -69,15 +69,9 @@ public class GameGUI extends GameScene implements SceneMethods {
 			infoBarUI.mouseClicked(x, y);
 
 		switch (PlayingStates.playingState) {
-			case TASK -> {
-				tasksUI.mouseClicked(x, y);
-			}
-			case DAY -> {
-				duringDayUI.mouseClicked(x, y);
-			}
-			case PERK -> {
-				perksUI.mouseClicked(x, y);
-			}
+			case TASK -> tasksUI.mouseClicked(x, y);
+			case DAY -> duringDayUI.mouseClicked(x, y);
+			case PERK -> perksUI.mouseClicked(x, y);
 		}
 	}
 

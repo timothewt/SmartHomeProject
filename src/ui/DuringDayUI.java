@@ -92,11 +92,6 @@ public class DuringDayUI extends UIComponent {
 		this.nextTaskButton.setWidth(120);
 		this.nextTaskButton.setX(this.y + this.width / 2 - 60);
 	}
-	/**
-	 * Make the scene controls visible or not
-	 * @param isVisible: tells if the UI is visible
-	 */
-	public void setVisible(boolean isVisible) {}
 
 	/**
 	 * Called when the user clicks anywhere on the screen. Used to know if the user clicked on the Next task button

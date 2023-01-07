@@ -20,7 +20,7 @@ public class TasksUI extends UIComponent {
 	private int selectedPersonId; // ID of the selected person by the user
 	private ArrayList<Button> taskButtons; // button used to add a task to a person
 	private ArrayList<Button> utilityButtons; // buttons managing the game like reset tasks or start the day
-	private ArrayList<Checkbox> personsCheckboxes; // checkboxes used by the user to pick a person in order to add tasks to him
+	private ArrayList<Button> personsButtons; // checkboxes used by the user to pick a person in order to add tasks to him
 	private int taskListY; // vertical position of the tasks list of the current person selected
 
 	/**
@@ -68,31 +68,17 @@ public class TasksUI extends UIComponent {
 		this.utilityButtons.add(new Button("Reset",(this.x + this.width) - 120, yStart + yOffsetButtonsOrigin * (tasksLinesNumber + 1), 100, 30, 0));
 		this.utilityButtons.add(new Button("Start Day", (this.x + this.width) - 120, (this.y + this.height) - 50, 100, 30, 1));
 
-		CheckboxGroup cbg = new CheckboxGroup();
-		this.personsCheckboxes = new ArrayList<>();
+		this.personsButtons = new ArrayList<>();
 
 		ArrayList<Person> persons = this.gameGUI.getGame().getHouse().getFamily().getPersons();
 
 		persons.forEach(person -> {
-			int personId = person.getId();
-			Checkbox personCheckbox = new Checkbox(person.getName(), cbg, false);
-			personCheckbox.setBounds(x + 10 + 80 * persons.indexOf(person), yStart + yOffsetButtonsOrigin * (tasksLinesNumber + 1), 50, 20);
-			personCheckbox.addItemListener(e -> this.selectedPersonId = personId);
-			this.personsCheckboxes.add(personCheckbox);
-			gameGUI.getGUIManager().add(personCheckbox);
+			Button personButton = new Button(person.getName(), x + xStart + 100 * person.getId(), yStart + yOffsetButtonsOrigin * (tasksLinesNumber + 1), 80, 25, person.getId());
+			this.personsButtons.add(personButton);
 		});
-		this.selectedPersonId = 0;
-		this.personsCheckboxes.get(0).setState(true);
+		this.selectedPersonId = persons.get(0).getId();
 
-		this.taskListY = this.y + yStart + yOffsetButtonsOrigin * (tasksLinesNumber + 2);
-	}
-
-	/**
-	 * Make the scene controls visible or not
-	 * @param isVisible: tells if the UI is visible
-	 */
-	public void setVisible(boolean isVisible) {
-		this.personsCheckboxes.forEach(checkbox -> checkbox.setVisible(isVisible));
+		this.taskListY = this.y + yStart + yOffsetButtonsOrigin * (tasksLinesNumber + 2) + 10;
 	}
 
 	/**
@@ -106,7 +92,11 @@ public class TasksUI extends UIComponent {
 
 		// Buttons
 		this.utilityButtons.forEach(button -> button.draw(g));
-		taskButtons.forEach(button -> button.draw(g));
+		this.taskButtons.forEach(button -> button.draw(g));
+		this.personsButtons.forEach(button -> button.draw(g));
+
+		Rectangle activePersonBounds = this.personsButtons.get(selectedPersonId).getBounds();
+		(new Button("", activePersonBounds.x, activePersonBounds.y + 26, activePersonBounds.width, 4)).draw(g);
 
 		Graphics2D graphics2D = (Graphics2D) g;
 		graphics2D.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
@@ -163,8 +153,6 @@ public class TasksUI extends UIComponent {
 	 * Used to reset the values of the controls
 	 */
 	public void onNewDay() {
-		this.selectedPersonId = 0;
-		this.personsCheckboxes.get(0).setState(true);
 		this.initControls();
 	}
 	/**
@@ -181,10 +169,14 @@ public class TasksUI extends UIComponent {
 				}
 			}
 		});
-
 		this.taskButtons.forEach(button -> {
 			if (button.getBounds().contains(x, y)) {
 				addTaskToSelectedPerson(button.getId());
+			}
+		});
+		this.personsButtons.forEach(button -> {
+			if (button.getBounds().contains(x, y)) {
+				this.selectedPersonId = button.getId();
 			}
 		});
 	}
@@ -192,16 +184,18 @@ public class TasksUI extends UIComponent {
 	public void mouseMoved(int x, int y) {
 		this.utilityButtons.forEach(button -> button.setIsMouseOver(button.getBounds().contains(x, y)));
 		this.taskButtons.forEach(button -> button.setIsMouseOver(button.getBounds().contains(x, y)));
+		this.personsButtons.forEach(button -> button.setIsMouseOver(button.getBounds().contains(x, y)));
 	}
 
 	public void mousePressed(int x, int y) {
 		this.utilityButtons.forEach(button -> button.setIsMousePressed(button.getBounds().contains(x, y)));
-
 		this.taskButtons.forEach(button -> button.setIsMousePressed(button.getBounds().contains(x, y)));
+		this.personsButtons.forEach(button -> button.setIsMousePressed(button.getBounds().contains(x, y)));
 	}
 
 	public void mouseReleased(int x, int y) {
 		this.utilityButtons.forEach(Button::resetBooleans);
 		this.taskButtons.forEach(Button::resetBooleans);
+		this.personsButtons.forEach(Button::resetBooleans);
 	}
 }

@@ -6,8 +6,6 @@
 package model;
 
 import java.util.ArrayList;
-import java.lang.Math;
-
 import static java.lang.Math.round;
 
 public class House {

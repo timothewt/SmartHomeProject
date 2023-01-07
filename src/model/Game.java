@@ -10,13 +10,13 @@ import java.util.Objects;
 
 public class Game {
 
-	private final House house;
-	private final Weather weather;
-	private int dayNumber;
-	private final ArrayList<Task> availableTasks;
+	private final House house; // house where the persons live
+	private final Weather weather; // outside weather
+	private int dayNumber; // current day number in the game
+	private final ArrayList<Task> availableTasks; // available tasks the user can pick
 	private final ArrayList<Perk> availablePerks; // available perks
 	private final ArrayList<Perk> boughtPerks; // perks bought
-	private String gameOverReason;
+	private String gameOverReason; // filled when the game is over by the reason
 
 	/**
 	 * Class constructor
@@ -54,11 +54,11 @@ public class Game {
 	 */
 	private House initHouse() {
 		ArrayList<Room> rooms = new ArrayList<>();
-		rooms.add(new Room("Cuisine", 18, .4f));
-		rooms.add(new Room("Chambre", 18, .4f));
-		rooms.add(new Room("Salon", 18, .4f));
-		rooms.add(new Room("Salle de bain", 18, .4f));
-		rooms.add(new Room("Bureau", 18, .4f));
+		rooms.add(new Room("Kitchen", 18, .4f));
+		rooms.add(new Room("Bedroom", 18, .4f));
+		rooms.add(new Room("Living room", 18, .4f));
+		rooms.add(new Room("Bathroom", 18, .4f));
+		rooms.add(new Room("Office", 18, .4f));
 
 		ArrayList<PowerGenerator> powerGenerators = new ArrayList<PowerGenerator>();
 		powerGenerators.add(new PowerGenerator("Linky", 0, 100, 100));
@@ -87,6 +87,9 @@ public class Game {
 		// availableTasks.add(new Task(10, "Repair Outage", "Repairing power Outage.", -2, -200, 0)); // power outage not yet implemented
 	}
 
+	/**
+	 * Instantiates the perks
+	 */
 	private void initPerks() {
 		this.availablePerks.add(new Perk(0, "Automatic windows", 1000, 100, 100));
 		this.availablePerks.add(new Perk(1, "Automatic AC and heaters", 1500, 150, 100));
@@ -96,10 +99,20 @@ public class Game {
 		this.availablePerks.add(new Perk(5, "Wind turbine (100 daily energy)", 2000, 0, 0));
 	}
 
+	/**
+	 * True if the user can afford the perk
+	 * @param perk: perk to test
+	 * @return true if he can afford it false otherwise
+	 */
 	private boolean canAffordPerk(Perk perk) {
 		return perk.installationCost() <= this.house.getFamily().getMoney();
 	}
 
+
+	/**
+	 * Buys a perk from its id. Has different effect depending on the perk
+	 * @param id: id of the perk to buy
+	 */
 	public void buyPerkFromId(int id) {
 		for (Perk perk: this.availablePerks) {
 			if (perk.ID() == id) {
