@@ -16,7 +16,7 @@ public class Room {
 	private boolean isACTurnedOn; // tells if the AC is on
 	private float temperature; // temperature of the room
 	private float humidityRate; // humidity of the room ([0,1])
-	private final float isolationRate; // isolation rate of the walls ([0,1])
+	private float isolationRate; // isolation rate of the walls ([0,1])
 	private boolean isWindowOpen; // tells if the window is open
 
 	/**
@@ -47,10 +47,8 @@ public class Room {
 			this.temperature = isHeaterTurnedOn && heaterTemperature > this.temperature ? (this.temperature + this.heaterTemperature) / 2 : this.temperature;
 			this.temperature = isACTurnedOn && ACTemperature < this.temperature ? (this.temperature + this.ACTemperature) / 2 : this.temperature;
 			// Loss of humidity and temperature due to non-optimal isolation
-			int humidityChangeSign = this.humidityRate > outsideHumidityRate ? -1 : 1;
-			int temperatureChangeSign = this.temperature > outsideTemperature ? -1 : 1;
-			this.humidityRate = Math.max(Math.min(this.humidityRate + humidityChangeSign * (1 - this.isolationRate) * .05f, 1), 0);
-			this.temperature = this.temperature + temperatureChangeSign * (1 - this.isolationRate) * 2;
+			this.humidityRate = Math.max(Math.min(this.humidityRate + (1 - this.isolationRate) * (outsideHumidityRate - this.humidityRate) * .1f, 1), 0);
+			this.temperature = this.temperature + (1 - this.isolationRate) * (outsideTemperature - this.temperature) * .2f;
 		}
 	}
 
@@ -119,4 +117,6 @@ public class Room {
 	public void setACTurnedOn(boolean ACTurnedOn) {
 		isACTurnedOn = ACTurnedOn;
 	}
+
+	public void setIsolationRate(float isolationRate) { this.isolationRate = isolationRate; }
 }

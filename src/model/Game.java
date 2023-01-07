@@ -97,6 +97,8 @@ public class Game {
 		this.availablePerks.add(new Perk(3, "Cooking robot", 1000, 0, 50));
 		this.availablePerks.add(new Perk(4, "Solar panels (100 daily energy)", 2000, 0, 0)); // power generators are special perks
 		this.availablePerks.add(new Perk(5, "Wind turbine (100 daily energy)", 2000, 0, 0));
+		this.availablePerks.add(new Perk(6, "Isolate rooms at 65%", 2000, 0, 0));
+		this.availablePerks.add(new Perk(7, "Isolate rooms at 90%", 5000, 0, 0));
 	}
 
 	/**
@@ -125,6 +127,18 @@ public class Game {
 						case 3 -> this.availableTasks.set(this.availableTasks.indexOf(this.findTaskFromId(9)), new Task(9, "Cook", "Cooking and eating.", 3, -50, -30));
 						case 4 -> this.house.addPowerSupply(new PowerGenerator("Solar panel", 2000, 50, 100));
 						case 5 -> this.house.addPowerSupply(new PowerGenerator("Wind turbine", 2000, 50, 100));
+						case 6 -> {
+							this.house.getRooms().forEach(room -> room.setIsolationRate(.65f));
+							for (Perk availablePerk: this.availablePerks) {
+								if (availablePerk.ID() == 7) {
+									this.availablePerks.set(this.availablePerks.indexOf(availablePerk), new Perk(7, "Isolate rooms at 90%", 2500, 0, 0));
+								}
+							}
+						}
+						case 7 -> {
+							this.house.getRooms().forEach(room -> room.setIsolationRate(.9f));
+							this.availablePerks.removeIf(availablePerk -> availablePerk.ID() == 6); // remove lower isolation level is the player bought the higher one
+						}
 					}
 				}
 				break;

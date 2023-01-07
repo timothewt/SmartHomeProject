@@ -7,9 +7,6 @@ package view;
 
 import javax.swing.JFrame;
 
-import utils.GameStates;
-import utils.PlayingStates;
-
 public class GUIManager extends JFrame implements Runnable {
 
 	private final Screen screen; // screen of the application

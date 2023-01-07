@@ -192,4 +192,6 @@ public class House {
 	public Family getFamily() {
 		return family;
 	}
+
+	public ArrayList<Room> getRooms() { return rooms; }
 }
