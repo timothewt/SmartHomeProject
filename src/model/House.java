@@ -52,8 +52,11 @@ public class House {
 		if (humidityRate < optimalHumidityRate - .2) {
 			return "Humidity too low: " + (float)round(humidityRate * 100) / 100 + "%";
 		}
-		if (this.family.getMoney() <= 0) {
+		if (this.family.getMoney() < 0) {
 			return "Not enough money to continue";
+		}
+		if (this.energy < 0) {
+			return "Not enough energy to continue";
 		}
 		return "Viable";
 	}
