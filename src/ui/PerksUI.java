@@ -96,7 +96,7 @@ public class PerksUI extends UIComponent {
 
 		graphics2D.drawString("Current perks :", x, yStart + 20 + 50 * availablePerks.size());
 		boughtPerks.forEach(perk -> {
-			graphics2D.drawString(perk.toString(), x + 120, yStart + 20 + 50 * availablePerks.size() + 50 * boughtPerks.indexOf(perk)); // yStart +20 to line up the text with the button
+			graphics2D.drawString(perk.toString(), x + 120, yStart + 20 + 50 * availablePerks.size() + 30 * boughtPerks.indexOf(perk)); // yStart +20 to line up the text with the button
 		});
 	}
 
