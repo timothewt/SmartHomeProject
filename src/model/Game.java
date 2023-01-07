@@ -60,14 +60,14 @@ public class Game {
 		rooms.add(new Room("Bathroom", 18, .4f));
 		rooms.add(new Room("Office", 18, .4f));
 
-		ArrayList<PowerGenerator> powerGenerators = new ArrayList<PowerGenerator>();
+		ArrayList<PowerGenerator> powerGenerators = new ArrayList<>();
 		powerGenerators.add(new PowerGenerator("Linky", 0, 100, 100));
 
 		Family family = new Family();
 		family.addPerson(new Person("Jean", 0, 10));
 		family.addPerson(new Person("Marie", 1, 10));
 
-		return new House(18f, .4f, 0, rooms, powerGenerators, family, 21f, .45f);
+		return new House(18f, .4f, 100, rooms, powerGenerators, family, 21f, .45f);
 	}
 
 	/**
