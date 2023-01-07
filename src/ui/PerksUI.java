@@ -45,7 +45,7 @@ public class PerksUI extends UIComponent {
 		int yStart = this.y + 70;
 
 		availablePerksButtons = new ArrayList<>();
-		ArrayList<Perk> availablePerks = this.gameGUI.getGame().getHouse().getAvailablePerks();
+		ArrayList<Perk> availablePerks = this.gameGUI.getGame().getAvailablePerks();
 		availablePerks.forEach(perk -> {
 			availablePerksButtons.add(new Button("BUY", x, yStart + 50 * availablePerks.indexOf(perk), 100, 30, perk.ID()));
 		});
@@ -81,8 +81,8 @@ public class PerksUI extends UIComponent {
 		int x = this.x + 20;
 		int yStart = this.y + 70;
 
-		ArrayList<Perk> availablePerks = this.gameGUI.getGame().getHouse().getAvailablePerks();
-		ArrayList<Perk> boughtPerks = this.gameGUI.getGame().getHouse().getBoughtPerks();
+		ArrayList<Perk> availablePerks = this.gameGUI.getGame().getAvailablePerks();
+		ArrayList<Perk> boughtPerks = this.gameGUI.getGame().getBoughtPerks();
 		initPerksButton();
 
 		Graphics2D graphics2D = (Graphics2D) g;
@@ -91,7 +91,7 @@ public class PerksUI extends UIComponent {
 
 		availablePerksButtons.forEach(perkButton -> {
 			perkButton.draw(g);
-			graphics2D.drawString(this.gameGUI.getGame().getHouse().getPerkById(perkButton.getId()).toString(), x + 120, yStart + 20 + 50 * availablePerksButtons.indexOf(perkButton)); // yStart +20 to line up the text with the button
+			graphics2D.drawString(this.gameGUI.getGame().getPerkById(perkButton.getId()).toString(), x + 120, yStart + 20 + 50 * availablePerksButtons.indexOf(perkButton)); // yStart +20 to line up the text with the button
 		});
 
 		graphics2D.drawString("Current perks :", x, yStart + 20 + 50 * availablePerks.size());
@@ -127,7 +127,7 @@ public class PerksUI extends UIComponent {
 
 		this.availablePerksButtons.forEach(button -> {
 			if (button.getBounds().contains(x, y)) {
-				this.gameGUI.getGame().getHouse().buyPerkFromId(button.getId());
+				this.gameGUI.getGame().buyPerkFromId(button.getId());
 			}
 		});
 	}

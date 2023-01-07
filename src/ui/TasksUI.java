@@ -41,7 +41,7 @@ public class TasksUI extends UIComponent {
 	 * Initializes the controls of tje UI, the tasks, tasks reset and start day buttons, and the checkboxes to select a person
 	 */
 	private void initControls() {
-		int buttonWidth = 125;
+		int buttonWidth = 220;
 		int buttonHeight = 30;
 		int xStart = 10;
 		int yStart = 10;
@@ -58,7 +58,7 @@ public class TasksUI extends UIComponent {
 				i = 0;
 				line++;
 			}
-			taskButtons.add(new Button(task.name() + " (" + (task.stamina() > 0 ? "+" : "") + task.stamina() + ")", xStart + xOffsetButtonsOrigin * i, yStart + yOffsetButtonsOrigin * line, buttonWidth, buttonHeight, currenTaskId));
+			taskButtons.add(new Button(task.name() + " (" + (task.stamina() > 0 ? "+" : "") + task.stamina() + " Stamina, " + (task.money() > 0 ? "+" : "") + task.money() + " Money)", xStart + xOffsetButtonsOrigin * i, yStart + yOffsetButtonsOrigin * line, buttonWidth, buttonHeight, currenTaskId));
 			i++;
 			currenTaskId++;
 		}
@@ -165,6 +165,7 @@ public class TasksUI extends UIComponent {
 	public void onNewDay() {
 		this.selectedPersonId = 0;
 		this.personsCheckboxes.get(0).setState(true);
+		this.initControls();
 	}
 	/**
 	 * Called when the user clicks anywhere on the screen. Used to know if the user clicked on the reset tasks or start day buttons

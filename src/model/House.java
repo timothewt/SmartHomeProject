@@ -18,8 +18,6 @@ public class House {
 	// private boolean isOnPowerOutage; // power outage, not yet implemented
 	private final ArrayList<Room> rooms; // rooms of the house
 	private final ArrayList<PowerGenerator> powerSupply; // daily energy supplies of the house
-	private final ArrayList<Perk> availablePerks; // available perks
-	private final ArrayList<Perk> boughtPerks; // perks bought
 	private final Family family; // members of the house
 	private final float optimalTemperature; // optimal viable temperature inside
 	private final float optimalHumidityRate; // optimal viable humidity rate inside
@@ -27,35 +25,16 @@ public class House {
 	/**
 	 * Class constructor
 	 */
-	public House(float temperature, float humidityRate, int energy, ArrayList<Room> rooms, ArrayList<PowerGenerator> powerSupply, ArrayList<Perk> perks, Family family, float optimalTemperature, float optimalHumidityRate) {
+	public House(float temperature, float humidityRate, int energy, ArrayList<Room> rooms, ArrayList<PowerGenerator> powerSupply, Family family, float optimalTemperature, float optimalHumidityRate) {
 		this.temperature = temperature;
 		this.humidityRate = humidityRate;
 		this.energy = energy;
 		// this.isOnPowerOutage = isOnPowerOutage;
 		this.rooms = rooms;
 		this.powerSupply = powerSupply;
-		this.availablePerks = perks;
-		this.boughtPerks = new ArrayList<>();
 		this.family = family;
 		this.optimalTemperature = optimalTemperature;
 		this.optimalHumidityRate = optimalHumidityRate;
-	}
-
-	private boolean canAffordPerk(Perk perk) {
-		return perk.installationCost() <= this.family.getMoney();
-	}
-
-	public void buyPerkFromId(int id) {
-		for (Perk perk: this.availablePerks) {
-			if (perk.ID() == id) {
-				if (this.canAffordPerk(perk)) {
-					this.availablePerks.remove(perk);
-					this.boughtPerks.add(perk);
-					this.family.setMoney(this.family.getMoney() - perk.installationCost());
-				}
-				break;
-			}
-		}
 	}
 	
 	/**
@@ -85,7 +64,7 @@ public class House {
 	 * Updates all the house elements according to the current weather and perks
 	 * @param weather: weather of the environment
 	 */
-	public void update(Weather weather) {
+	public void update(Weather weather, ArrayList<Perk> perks) {
 		this.temperature = 0;
 		this.humidityRate = 0;
 
@@ -99,7 +78,7 @@ public class House {
 			this.isOnPowerOutage = true;
 		}
 		*/
-		for (Perk perk: this.boughtPerks) {
+		for (Perk perk: perks) {
 			switch (perk.ID()) {
 				case 0: // automatic windows
 					this.setAllWindowsOpen(temperature < this.optimalTemperature && temperature < weather.getTemperature() ||
@@ -117,13 +96,11 @@ public class House {
 					}
 					break;
 			}
-			this.energy -= perk.dailyEnergyCost();
-			this.family.setMoney(this.family.getMoney() - perk.dailyMoneyCost());
 		}
 
 		for (Room room: rooms) {
 			if (room.isHeaterTurnedOn() || room.isACTurnedOn()) {
-				this.energy -= 1;
+				this.energy -= 5;
 			}
 		}
 
@@ -176,12 +153,20 @@ public class House {
 	/**
 	 * Called at each new day
 	 */
-	public void onNewDay() {
+	public void onNewDay(ArrayList<Perk> perks) {
 		this.powerSupply.forEach(powerGenerator -> {
 			this.energy += powerGenerator.getDailyProduction();
 			this.family.setMoney(this.family.getMoney() - powerGenerator.getDailyCost());
 		});
 		this.getFamily().getPersons().forEach(Person::onNewDay);
+		perks.forEach(perk -> {
+			this.energy -= perk.dailyEnergyCost();
+			this.family.setMoney(this.family.getMoney() - perk.dailyMoneyCost());
+		});
+	}
+
+	public void addPowerSupply(PowerGenerator powerGenerator) {
+		this.powerSupply.add(powerGenerator);
 	}
 
 	/**
@@ -208,22 +193,5 @@ public class House {
 
 	public Family getFamily() {
 		return family;
-	}
-
-	public Perk getPerkById(int id) {
-		for (Perk perk: this.availablePerks) {
-			if (perk.ID() == id) {
-				return perk;
-			}
-		}
-		return null;
-	}
-
-	public ArrayList<Perk> getAvailablePerks() {
-		return this.availablePerks;
-	}
-
-	public ArrayList<Perk> getBoughtPerks() {
-		return this.boughtPerks;
 	}
 }

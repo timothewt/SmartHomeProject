@@ -14,6 +14,8 @@ public class Game {
 	private final Weather weather;
 	private int dayNumber;
 	private final ArrayList<Task> availableTasks;
+	private final ArrayList<Perk> availablePerks; // available perks
+	private final ArrayList<Perk> boughtPerks; // perks bought
 	private String gameOverReason;
 
 	/**
@@ -24,9 +26,11 @@ public class Game {
 		this.weather = new Weather();
 		this.dayNumber = 0;
 		this.availableTasks = new ArrayList<>();
+		this.availablePerks = new ArrayList<>();
+		this.boughtPerks = new ArrayList<>();
 		this.gameOverReason = "";
 		initTasks();
-
+		initPerks();
 	}
 
 	/**
@@ -40,7 +44,7 @@ public class Game {
 			return false;
 		}
 		this.dayNumber++;
-		this.house.onNewDay();
+		this.house.onNewDay(this.boughtPerks);
 		this.weather.update(this.dayNumber);
 		return true;
 	}
@@ -59,17 +63,11 @@ public class Game {
 		ArrayList<PowerGenerator> powerGenerators = new ArrayList<PowerGenerator>();
 		powerGenerators.add(new PowerGenerator("Linky", 0, 100, 100));
 
-		ArrayList<Perk> perks = new ArrayList<>();
-		perks.add(new Perk(0, "Automatic windows", 1000, 100, 30));
-		perks.add(new Perk(1, "Automatic AC and heaters", 1500, 150, 50));
-		perks.add(new Perk(2, "Better mattress", 1000, 0, 0));
-		perks.add(new Perk(3, "Cooking robot", 1000, 0, 0));
-
 		Family family = new Family();
 		family.addPerson(new Person("Jean", 0, 10));
 		family.addPerson(new Person("Marie", 1, 10));
 
-		return new House(18f, .4f, 0, rooms, powerGenerators, perks, family, 21f, .45f);
+		return new House(18f, .4f, 0, rooms, powerGenerators, family, 21f, .45f);
 	}
 
 	/**
@@ -85,8 +83,40 @@ public class Game {
 		availableTasks.add(new Task(6, "Work", "Currently working.", -5, 200, 0));
 		availableTasks.add(new Task(7, "Sleep", "Sleeping.", 2, 0, 0));
 		availableTasks.add(new Task(8, "Biking", "Biking.", -4, 0, 50));
-		availableTasks.add(new Task(9, "Cook", "Cooking and eating.", 2, 0, -30));
+		availableTasks.add(new Task(9, "Cook", "Cooking and eating.", 1, -50, -30));
 		// availableTasks.add(new Task(10, "Repair Outage", "Repairing power Outage.", -2, -200, 0)); // power outage not yet implemented
+	}
+
+	private void initPerks() {
+		this.availablePerks.add(new Perk(0, "Automatic windows", 1000, 100, 100));
+		this.availablePerks.add(new Perk(1, "Automatic AC and heaters", 1500, 150, 100));
+		this.availablePerks.add(new Perk(2, "Better mattress", 1000, 0, 0));
+		this.availablePerks.add(new Perk(3, "Cooking robot", 1000, 0, 50));
+		this.availablePerks.add(new Perk(4, "Solar panels (100 daily energy)", 2000, 0, 0)); // power generators are special perks
+		this.availablePerks.add(new Perk(5, "Wind turbine (100 daily energy)", 2000, 0, 0));
+	}
+
+	private boolean canAffordPerk(Perk perk) {
+		return perk.installationCost() <= this.house.getFamily().getMoney();
+	}
+
+	public void buyPerkFromId(int id) {
+		for (Perk perk: this.availablePerks) {
+			if (perk.ID() == id) {
+				if (this.canAffordPerk(perk)) {
+					this.availablePerks.remove(perk);
+					this.boughtPerks.add(perk);
+					this.house.getFamily().setMoney(this.house.getFamily().getMoney() - perk.installationCost());
+					switch (perk.ID()) {
+						case 2 -> this.availableTasks.set(this.availableTasks.indexOf(this.findTaskFromId(7)), new Task(7, "Sleep", "Sleeping.", 3, 0, 0));
+						case 3 -> this.availableTasks.set(this.availableTasks.indexOf(this.findTaskFromId(9)), new Task(9, "Cook", "Cooking and eating.", 3, -50, -30));
+						case 4 -> this.house.addPowerSupply(new PowerGenerator("Solar panel", 2000, 50, 100));
+						case 5 -> this.house.addPowerSupply(new PowerGenerator("Wind turbine", 2000, 50, 100));
+					}
+				}
+				break;
+			}
+		}
 	}
 
 	/**
@@ -134,7 +164,7 @@ public class Game {
 				this.house.setEnergy(this.house.getEnergy() + currentTask.energy());
 			}
 		});
-		this.house.update(this.weather);
+		this.house.update(this.weather, this.boughtPerks);
 	}
 
 	/**
@@ -158,5 +188,22 @@ public class Game {
 
 	public String getGameOverReason() {
 		return this.gameOverReason;
+	}
+
+	public Perk getPerkById(int id) {
+		for (Perk perk: this.availablePerks) {
+			if (perk.ID() == id) {
+				return perk;
+			}
+		}
+		return null;
+	}
+
+	public ArrayList<Perk> getAvailablePerks() {
+		return this.availablePerks;
+	}
+
+	public ArrayList<Perk> getBoughtPerks() {
+		return this.boughtPerks;
 	}
 }
