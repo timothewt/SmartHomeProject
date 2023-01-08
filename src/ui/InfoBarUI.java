@@ -5,14 +5,19 @@
  */
 package ui;
 
-import java.awt.*;
+import static utils.GameStates.MENU;
+import static utils.GameStates.setGameState;
+
+import java.awt.Color;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
+import java.awt.RenderingHints;
 import java.util.ArrayList;
+
 import model.Game;
-import model.Perk;
 import model.Person;
 import utils.LoadSave;
-
-import static utils.GameStates.*;
+import utils.PlayingStates;
 
 public class InfoBarUI extends UIComponent {
 
@@ -50,7 +55,15 @@ public class InfoBarUI extends UIComponent {
 		g.setColor(new Color(220, 123, 15));
 		g.fillRect(this.x, this.y, this.width, this.height);
 		g.drawLine(this.x, this.y - 1, this.width, this.height);
-		this.buttons.forEach(button -> button.draw(g));
+		this.buttons.forEach(button -> {
+			if (button.getId() == 1) {
+				switch(PlayingStates.playingState) {
+					case TASK : button.draw(g);
+				}
+			}
+			else 
+				button.draw(g);
+		});
 		drawText(g);
 	}
 
@@ -128,7 +141,11 @@ public class InfoBarUI extends UIComponent {
 			if (button.getBounds().contains(x, y)) {
 				switch (button.getId()) {
 					case 0 -> setGameState(MENU);
-					case 1 -> saveGame();
+					case 1 -> {
+						switch(PlayingStates.playingState) {
+							case TASK : saveGame();
+						}
+					}
 				}
 			}
 		});
