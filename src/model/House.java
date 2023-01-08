@@ -62,10 +62,12 @@ public class House {
 	}
 
 	/**
-	 * Updates all the house elements according to the current weather and perks
+	 * Updates all the house elements according to the current weather and boughtPerks
 	 * @param weather: weather of the environment
+	 * @param boughtPerks: perks currently owned by the user
 	 */
-	public void update(Weather weather, ArrayList<Perk> perks) {
+	public void update(Weather weather, ArrayList<Perk> boughtPerks) {
+		boughtPerks.forEach(System.out::println);
 		this.temperature = 0;
 		this.humidityRate = 0;
 
@@ -79,12 +81,12 @@ public class House {
 			this.isOnPowerOutage = true;
 		}
 		*/
-		for (Perk perk: perks) {
+		for (Perk perk: boughtPerks) {
 			switch (perk.ID()) {
-				case 0: // automatic windows
-					this.setAllWindowsOpen(temperature < this.optimalTemperature && temperature < weather.getTemperature() ||
-											temperature > this.optimalTemperature && temperature > weather.getTemperature()); // if the temperature is better outside
-				case 1: // automatic heaters and AC
+				case 0 -> // automatic windows
+						this.setAllWindowsOpen(temperature < this.optimalTemperature && temperature < weather.getTemperature() ||
+								               temperature > this.optimalTemperature && temperature > weather.getTemperature()); // if the temperature is better outside
+				case 1 -> { // automatic heaters and AC
 					if (this.rooms.get(0).isWindowOpen()) {
 						break;
 					}
@@ -92,10 +94,11 @@ public class House {
 						this.setAllHeatersTemperature(this.optimalTemperature);
 						this.turnOffAllAC();
 					} else {
+						System.out.println("AC on pd");
 						this.setAllACTemperature(this.optimalTemperature);
 						this.turnOffAllHeaters();
 					}
-					break;
+				}
 			}
 		}
 

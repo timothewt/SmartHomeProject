@@ -12,6 +12,6 @@ public record Perk (int ID, String name, int installationCost, int dailyMoneyCos
 	 * @return the main infos of the perk as a String
 	 */
 	public String toString() {
-		return name + " | " +" cost: " + installationCost + ", daily money cost: " + dailyMoneyCost + " daily energy cost: " + dailyEnergyCost ;
+		return name + " | " +" cost: " + installationCost + ", daily money cost: " + dailyMoneyCost + ", daily energy cost: " + dailyEnergyCost ;
 	}
 }
