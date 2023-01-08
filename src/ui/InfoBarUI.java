@@ -8,7 +8,10 @@ package ui;
 import java.awt.*;
 import java.util.ArrayList;
 import model.Game;
+import model.Perk;
 import model.Person;
+import utils.LoadSave;
+
 import static utils.GameStates.*;
 
 public class InfoBarUI extends UIComponent {
@@ -73,6 +76,44 @@ public class InfoBarUI extends UIComponent {
 		graphics2D.drawString(this.game.getWeather().toString(), this.x + 10, this.y + 95);
 		graphics2D.drawString(this.game.getHouse().toString(), this.x + 10, this.y + 112);
 	}
+	
+	/**
+	 * Save the current game
+	 */
+	private void saveGame() {
+		float temp;
+		int idArr[] = new int[25];
+		idArr[0] = this.game.getDayNumber();
+		idArr[1] = this.game.getHouse().getFamily().getMoney();
+		idArr[2] = this.game.getHouse().getEnergy();
+		temp = this.game.getWeather().getTemperature()*100;
+		idArr[3] = (int) temp;
+		temp = this.game.getWeather().getHumidityRate()*100;
+		idArr[4] = (int) temp;
+		if (this.game.getWeather().isRainy())
+			idArr[5] = 0;
+		else if (this.game.getWeather().isSnowy())
+			idArr[5] = 1;
+		else if (this.game.getWeather().isSunny())
+			idArr[5] = 2;
+		else if (this.game.getWeather().isLightning())
+			idArr[5] = 3;
+		else
+			idArr[5] = 2;
+		temp = this.game.getHouse().getTemperature()*100;
+		idArr[6] = (int) temp;
+		temp = this.game.getHouse().getHumidityRate()*100;
+		idArr[7] = (int) temp;
+		int i = 8;
+		if (i < this.game.getBoughtPerks().size()-1) {
+			for (Perk perk : this.game.getBoughtPerks()) {
+				idArr[i] = perk.ID();
+				i++;
+			}
+		}
+		
+		LoadSave.SaveLevel("game", idArr);
+	}
 
 	/**
 	 * Called when the user clicks anywhere on the screen. Used to know if he clicked on the menu or save buttons.
@@ -84,7 +125,7 @@ public class InfoBarUI extends UIComponent {
 			if (button.getBounds().contains(x, y)) {
 				switch (button.getId()) {
 					case 0 -> setGameState(MENU);
-					case 1 -> System.out.println("Game saved ! Not done yet, only this message in terminal to test");
+					case 1 -> saveGame();
 				}
 			}
 		});

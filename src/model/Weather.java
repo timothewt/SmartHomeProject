@@ -31,6 +31,24 @@ public class Weather {
 	}
 
 	/**
+	 * class constructor when load from a save
+	 * @param temperature
+	 * @param humidityRate
+	 * @param isRainy
+	 * @param isSnowy
+	 * @param isSunny
+	 * @param isLightning
+	 */
+	public Weather(float temperature, float humidityRate, boolean isRainy, boolean isSnowy, boolean isSunny, boolean isLightning) {
+		this.temperature = temperature;
+		this.humidityRate = humidityRate;
+		this.isRainy = isRainy;
+		this.isSnowy = isSnowy;
+		this.isSunny = isSunny;
+		this.isLightning = isLightning;
+	}
+	
+	/**
 	 * Update the weather according to the day number
 	 * @param dayNumber: current day of the game
 	 */
@@ -80,30 +98,42 @@ public class Weather {
 	 * Getters and setters
 	 */
 	public float getTemperature() {
-		return temperature;
+		return this.temperature;
 	}
 
 	public float getHumidityRate() {
-		return humidityRate;
+		return this.humidityRate;
 	}
 
 	public void setRainy(boolean rainy) {
-		isRainy = rainy;
+		this.isRainy = rainy;
 	}
 
 	public void setSnowy(boolean snowy) {
-		isSnowy = snowy;
+		this.isSnowy = snowy;
 	}
 
 	public void setSunny(boolean sunny) {
-		isSunny = sunny;
+		this.isSunny = sunny;
 	}
 
 	public boolean isLightning() {
-		return isLightning;
+		return this.isLightning;
+	}
+	
+	public boolean isSunny() {
+		return this.isSunny;
+	}
+	
+	public boolean isSnowy() {
+		return this.isSnowy;
+	}
+	
+	public boolean isRainy() {
+		return this.isRainy;
 	}
 
 	public void setLightning(boolean lightning) {
-		isLightning = lightning;
+		this.isLightning = lightning;
 	}
 }

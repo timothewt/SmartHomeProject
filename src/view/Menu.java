@@ -8,6 +8,8 @@ package view;
 import java.awt.Graphics;
 import java.util.ArrayList;
 import ui.Button;
+import utils.LoadSave;
+
 import static utils.GameStates.PLAYING;
 import static utils.GameStates.setGameState;
 import static utils.PlayingStates.TASK;
@@ -38,7 +40,8 @@ public class Menu extends GameScene implements SceneMethods {
 
 		this.buttons = new ArrayList<>();
 		this.buttons.add(new Button("Play", x, y, buttonWidth, buttonHeight, 0));
-		this.buttons.add(new Button("Quit", x, y + yOffset, buttonWidth, buttonHeight, 1));
+		this.buttons.add(new Button("Load Save", x, y + yOffset, buttonWidth, buttonHeight, 1));
+		this.buttons.add(new Button("Quit", x, y + yOffset*2, buttonWidth, buttonHeight, 2));
 	}
 
 	/**
@@ -66,7 +69,12 @@ public class Menu extends GameScene implements SceneMethods {
 						setPlayingState(TASK);
 						this.GUIManager.setGameGUI(new GameGUI(this.GUIManager));
 					}
-					case 1 -> System.exit(0);
+					case 1 -> {
+						setGameState(PLAYING);
+						setPlayingState(TASK);
+						this.GUIManager.setGameGUI(new GameGUI(this.GUIManager, LoadSave.LoadGame()));
+					}
+					case 2 -> System.exit(0);
 				}
 			}
 		});

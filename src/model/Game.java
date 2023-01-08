@@ -32,6 +32,25 @@ public class Game {
 		initTasks();
 		initPerks();
 	}
+	
+	/**
+	 * class constructpr when load from a save
+	 * @param dayNumber
+	 * @param weather
+	 * @param availablePerks
+	 * @param boughtPerks
+	 */
+	public Game(int dayNumber, Weather weather) {
+		this.house = initHouse();
+		this.weather = weather;
+		this.dayNumber = dayNumber;
+		this.availableTasks = new ArrayList<>();
+		this.availablePerks = new ArrayList<>();
+		this.boughtPerks = new ArrayList<>();
+		
+		initTasks();
+		initPerks();
+	}
 
 	/**
 	 * Updates the house and the weather on a new day
@@ -146,6 +165,37 @@ public class Game {
 		}
 	}
 
+	/**
+	 * Add a perk from its ID when loading a save
+	 * @param id
+	 */
+	public void addPerkFromID(int id) {
+		for (Perk perk: this.availablePerks) {
+			if (perk.ID() == id) {
+				this.availablePerks.remove(perk);
+				this.boughtPerks.add(perk);
+				switch (perk.ID()) {
+					case 2 -> this.availableTasks.set(this.availableTasks.indexOf(this.findTaskFromId(7)), new Task(7, "Sleep", "Sleeping.", 3, 0, 0));
+					case 3 -> this.availableTasks.set(this.availableTasks.indexOf(this.findTaskFromId(9)), new Task(9, "Cook", "Cooking and eating.", 3, -50, -30));
+					case 4 -> this.house.addPowerSupply(new PowerGenerator("Solar panel", 2000, 50, 100));
+					case 5 -> this.house.addPowerSupply(new PowerGenerator("Wind turbine", 2000, 50, 100));
+					case 6 -> {
+						this.house.getRooms().forEach(room -> room.setIsolationRate(.65f));
+						for (Perk availablePerk: this.availablePerks) {
+							if (availablePerk.ID() == 7) {
+								this.availablePerks.set(this.availablePerks.indexOf(availablePerk), new Perk(7, "Isolate rooms at 90%", 2500, 0, 0));
+							}
+						}
+					}
+					case 7 -> {
+						this.house.getRooms().forEach(room -> room.setIsolationRate(.9f));
+						this.availablePerks.removeIf(availablePerk -> availablePerk.ID() == 6); // remove lower isolation level is the player bought the higher one
+					}
+				}
+			break;
+			}
+		}
+	}
 	/**
 	 * Finds a Task in all tasks using its ID
 	 * @param id: ID of the task

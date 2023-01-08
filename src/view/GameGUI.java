@@ -35,6 +35,17 @@ public class GameGUI extends GameScene implements SceneMethods {
 		perksUI = new PerksUI(0, 0, width, gameElementsHeight, this);
 	}
 
+	public GameGUI(GUIManager GUIManager, Game game) {
+		super(GUIManager);
+		this.gameElementsHeight = this.GUIManager.getScreen().getSize().height - 120;
+		this.game = game;
+		int width = this.GUIManager.getScreen().getSize().width;
+		infoBarUI = new InfoBarUI(0, gameElementsHeight, width, 120, this.game);
+		tasksUI = new TasksUI(0, 0, width, gameElementsHeight, this);
+		duringDayUI = new DuringDayUI(0, 0, width, gameElementsHeight, this);
+		perksUI = new PerksUI(0, 0, width, gameElementsHeight, this);
+	}
+	
 	/**
 	 * Draws a different UI depending on the current state of the game
 	 * @param g: graphics component of the app

@@ -191,7 +191,23 @@ public class House {
 	public void setEnergy(int energy) {
 		this.energy = energy;
 	}
+	
+	public void setTemperature(float temperature) {
+		this.temperature = temperature;
+	}
+	
+	public void setHumidityRate(float humidityRate) {
+		this.humidityRate = humidityRate;
+	}
+	
+	public float getTemperature() {
+		return this.temperature;
+	}
 
+	public float getHumidityRate() {
+		return this.humidityRate;
+	}
+	
 	public Family getFamily() {
 		return family;
 	}
