@@ -72,11 +72,7 @@ public class LoadSave {
 		ArrayList<Integer> save = ReadFromFile(new File("game"+".txt"));
 		float weatherTemperature = (float)save.get(3)/100;
 		float weatherHumidity = (float)save.get(4)/100;
-		boolean isRainy = false;
-		boolean isSnowy = false;
-		boolean isSunny = false;
-		boolean isLightning = false;
-		Weather weather = new Weather(weatherTemperature, weatherHumidity, isRainy, isSnowy, isSunny, isLightning);
+		Weather weather = new Weather(weatherTemperature, weatherHumidity);
 		switch(save.get(5)) {
 			case 0 : weather.setRainy(true);
 			case 1 : weather.setSnowy(true);

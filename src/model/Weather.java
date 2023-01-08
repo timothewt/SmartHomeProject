@@ -39,13 +39,13 @@ public class Weather {
 	 * @param isSunny
 	 * @param isLightning
 	 */
-	public Weather(float temperature, float humidityRate, boolean isRainy, boolean isSnowy, boolean isSunny, boolean isLightning) {
+	public Weather(float temperature, float humidityRate) {
 		this.temperature = temperature;
 		this.humidityRate = humidityRate;
-		this.isRainy = isRainy;
-		this.isSnowy = isSnowy;
-		this.isSunny = isSunny;
-		this.isLightning = isLightning;
+		this.isRainy = false;
+		this.isSnowy = false;
+		this.isSunny = false;
+		this.isLightning = false;
 	}
 	
 	/**
