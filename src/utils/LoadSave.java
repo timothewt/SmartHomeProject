@@ -89,12 +89,9 @@ public class LoadSave {
 		game.getHouse().setEnergy(save.get(2));
 		game.getHouse().setTemperature((float)save.get(6)/100);
 		game.getHouse().setHumidityRate((float)save.get(7)/100);
-		int i = 8;
-		if (i < save.size()-1 ) {
-			while (i < save.size()-1) {
-				game.addPerkFromID(save.get(i));
-				i++;
-			}
+		for (int i = 0; i < save.get(8); i++) {
+			game.addPerkFromID(save.get(i+9));
+			System.out.println(save.get(i+9));
 		}
 		return game;
 	}

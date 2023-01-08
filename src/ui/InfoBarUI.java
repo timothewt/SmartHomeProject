@@ -82,34 +82,37 @@ public class InfoBarUI extends UIComponent {
 	 */
 	private void saveGame() {
 		float temp;
-		int idArr[] = new int[25];
-		idArr[0] = this.game.getDayNumber();
-		idArr[1] = this.game.getHouse().getFamily().getMoney();
-		idArr[2] = this.game.getHouse().getEnergy();
+		int i = 0;
+		int j = 0;
+		int idArr[] = new int[8+this.game.getBoughtPerks().size()+1];
+		idArr[i++] = this.game.getDayNumber();
+		idArr[i++] = this.game.getHouse().getFamily().getMoney();
+		idArr[i++] = this.game.getHouse().getEnergy();
 		temp = this.game.getWeather().getTemperature()*100;
-		idArr[3] = (int) temp;
+		idArr[i++] = (int) temp;
 		temp = this.game.getWeather().getHumidityRate()*100;
-		idArr[4] = (int) temp;
+		idArr[i++] = (int) temp;
 		if (this.game.getWeather().isRainy())
-			idArr[5] = 0;
+			idArr[i++] = 0;
 		else if (this.game.getWeather().isSnowy())
-			idArr[5] = 1;
+			idArr[i++] = 1;
 		else if (this.game.getWeather().isSunny())
-			idArr[5] = 2;
+			idArr[i++] = 2;
 		else if (this.game.getWeather().isLightning())
-			idArr[5] = 3;
+			idArr[i++] = 3;
 		else
-			idArr[5] = 2;
+			idArr[i++] = 2;
 		temp = this.game.getHouse().getTemperature()*100;
-		idArr[6] = (int) temp;
+		idArr[i++] = (int) temp;
 		temp = this.game.getHouse().getHumidityRate()*100;
-		idArr[7] = (int) temp;
-		int i = 8;
-		if (i < this.game.getBoughtPerks().size()-1) {
-			for (Perk perk : this.game.getBoughtPerks()) {
-				idArr[i] = perk.ID();
-				i++;
-			}
+		idArr[i++] = (int) temp;
+		idArr[i++] = this.game.getBoughtPerks().size();
+		//System.out.println("Get bought perk quantity : "+ this.game.getBoughtPerks().size());
+
+		while (j < this.game.getBoughtPerks().size()) {
+			idArr[i++] = this.game.getBoughtPerks().get(j).ID();
+			//System.out.println("Bought Perk ID : " +this.game.getBoughtPerks().get(j).ID());
+			j++;
 		}
 		
 		LoadSave.SaveLevel("game", idArr);
