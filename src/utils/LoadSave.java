@@ -45,7 +45,6 @@ public class LoadSave {
 			WriteToFile(levelFile, idArr);
 		} else {
 			System.out.println("File:" + name + " does not exists!");
-			return;
 		}
 
 	}
@@ -78,10 +77,10 @@ public class LoadSave {
 		boolean isLightning = false;
 		Weather weather = new Weather(weatherTemperature, weatherHumidity, isRainy, isSnowy, isSunny, isLightning);
 		switch(save.get(5)) {
-			case 0 : weather.setRainy(true);
-			case 1 : weather.setSnowy(true);
-			case 2 : weather.setSunny(true);
-			case 3 : weather.setLightning(true);
+			case 0 -> weather.setRainy(true);
+			case 1 -> weather.setSnowy(true);
+			case 2 -> weather.setSunny(true);
+			case 3 -> weather.setLightning(true);
 		}
 		
 		Game game = new Game(save.get(0), weather);	

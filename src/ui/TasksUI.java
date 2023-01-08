@@ -165,7 +165,15 @@ public class TasksUI extends UIComponent {
 			if (button.getBounds().contains(x, y)) {
 				switch (button.getId()) {
 					case 0 -> resetTasks();
-					case 1 -> setPlayingState(DAY);
+					case 1 -> {
+                        int tasksCount = 0;
+                        for (Person person: this.gameGUI.getGame().getHouse().getFamily().getPersons()) {
+                            tasksCount += person.getTasks().size();
+                        }
+                        if (tasksCount > 0) {
+                            setPlayingState(DAY);
+                        }
+                    }
 				}
 			}
 		});

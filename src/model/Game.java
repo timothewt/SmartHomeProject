@@ -34,11 +34,9 @@ public class Game {
 	}
 	
 	/**
-	 * class constructpr when load from a save
-	 * @param dayNumber
-	 * @param weather
-	 * @param availablePerks
-	 * @param boughtPerks
+	 * class constructor when load from a save
+	 * @param dayNumber: current day number
+	 * @param weather: weather of the environment
 	 */
 	public Game(int dayNumber, Weather weather) {
 		this.house = initHouse();
@@ -138,27 +136,8 @@ public class Game {
 		for (Perk perk: this.availablePerks) {
 			if (perk.ID() == id) {
 				if (this.canAffordPerk(perk)) {
-					this.availablePerks.remove(perk);
-					this.boughtPerks.add(perk);
-					this.house.getFamily().setMoney(this.house.getFamily().getMoney() - perk.installationCost());
-					switch (perk.ID()) {
-						case 2 -> this.availableTasks.set(this.availableTasks.indexOf(this.findTaskFromId(7)), new Task(7, "Sleep", "Sleeping.", 3, 0, 0));
-						case 3 -> this.availableTasks.set(this.availableTasks.indexOf(this.findTaskFromId(9)), new Task(9, "Cook", "Cooking and eating.", 3, -50, -30));
-						case 4 -> this.house.addPowerSupply(new PowerGenerator("Solar panel", 2000, 50, 100));
-						case 5 -> this.house.addPowerSupply(new PowerGenerator("Wind turbine", 2000, 50, 100));
-						case 6 -> {
-							this.house.getRooms().forEach(room -> room.setIsolationRate(.65f));
-							for (Perk availablePerk: this.availablePerks) {
-								if (availablePerk.ID() == 7) {
-									this.availablePerks.set(this.availablePerks.indexOf(availablePerk), new Perk(7, "Isolate rooms at 90%", 2500, 0, 0));
-								}
-							}
-						}
-						case 7 -> {
-							this.house.getRooms().forEach(room -> room.setIsolationRate(.9f));
-							this.availablePerks.removeIf(availablePerk -> availablePerk.ID() == 6); // remove lower isolation level is the player bought the higher one
-						}
-					}
+                    addPerkFromID(id);
+                    this.house.getFamily().setMoney(this.house.getFamily().getMoney() - perk.installationCost());
 				}
 				break;
 			}
@@ -166,8 +145,8 @@ public class Game {
 	}
 
 	/**
-	 * Add a perk from its ID when loading a save
-	 * @param id
+	 * Adds a perk from its id
+	 * @param id: id of the perk
 	 */
 	public void addPerkFromID(int id) {
 		for (Perk perk: this.availablePerks) {
@@ -192,7 +171,7 @@ public class Game {
 						this.availablePerks.removeIf(availablePerk -> availablePerk.ID() == 6); // remove lower isolation level is the player bought the higher one
 					}
 				}
-			break;
+			    break;
 			}
 		}
 	}

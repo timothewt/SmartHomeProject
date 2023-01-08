@@ -130,16 +130,4 @@ public class GameGUI extends GameScene implements SceneMethods {
 	public GUIManager getGUIManager() {
 		return this.GUIManager;
 	}
-
-	public TasksUI getTasksUI() {
-		return tasksUI;
-	}
-
-	public DuringDayUI getDuringDayUI() {
-		return duringDayUI;
-	}
-
-	public PerksUI getPerksUI() {
-		return perksUI;
-	}
 }

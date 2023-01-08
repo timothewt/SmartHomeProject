@@ -39,7 +39,7 @@ public class Menu extends GameScene implements SceneMethods {
 		int yOffset = buttonHeight + 50;
 
 		this.buttons = new ArrayList<>();
-		this.buttons.add(new Button("Play", x, y, buttonWidth, buttonHeight, 0));
+		this.buttons.add(new Button("New Game", x, y, buttonWidth, buttonHeight, 0));
 		this.buttons.add(new Button("Load Save", x, y + yOffset, buttonWidth, buttonHeight, 1));
 		this.buttons.add(new Button("Quit", x, y + yOffset*2, buttonWidth, buttonHeight, 2));
 	}

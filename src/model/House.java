@@ -41,16 +41,16 @@ public class House {
 	 */
 	public String isViable() {
 		if (temperature > optimalTemperature + 10) {
-			return "Temperature too high: " + (float)round(temperature * 10) / 10 + "°C";
+			return "Temperature too high: " + round(temperature * 10) + "°C";
 		}
 		if (temperature < optimalTemperature - 10) {
-			return "Temperature too low: " + (float)round(temperature * 10) / 10 + "°C";
+			return "Temperature too low: " + round(temperature * 10) + "°C";
 		}
 		if (humidityRate > optimalHumidityRate + .2) {
-			return "Humidity too high: " + (float)round(humidityRate * 100) / 100 + "%";
+			return "Humidity too high: " + round(humidityRate * 100) + "%";
 		}
 		if (humidityRate < optimalHumidityRate - .2) {
-			return "Humidity too low: " + (float)round(humidityRate * 100) / 100 + "%";
+			return "Humidity too low: " + round(humidityRate * 100)+ "%";
 		}
 		if (this.family.getMoney() < 0) {
 			return "Not enough money to continue";
